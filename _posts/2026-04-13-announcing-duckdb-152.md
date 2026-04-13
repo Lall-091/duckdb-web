@@ -38,6 +38,19 @@ To make DuckDB as robust as possible, we started a collaboration with [Jepsen](h
 
 The test suite has uncovered a bug that was triggered by `INSERT INTO` statements that perform conflict resolution on a primary key, and already [shipped a fix](https://github.com/duckdb/duckdb/pull/21489) in this release.
 
+## New Online Shell
+
+The online [WebAssembly]({% link docs/current/clients/wasm/overview.md %}) shell at [`shell.duckdb.org`](https://shell.duckdb.org/) received a complete overhaul.
+A highlight of the new shell is the ability to store and list files using the `.files` dot command and its variants.
+
+Using the file storage feature, you can turn your browser session into workbench: you can drag-and-drop files from your local file system to upload them, create new ones using DuckDB's [`COPY ... TO` statement]({% link docs/current/sql/statements/copy.md %}#copy--to) and download the results. For more information on this feature, use the `.help` command.
+
+<img src="{% link images/blog/online-shell-example.png %}" alt="Example use of the new online shell at shell.duckdb.org" width="800" />
+
+The new shell comes with a few built-in datasets: you're welcome to try them out and experiment.
+Your old links to `shell.duckdb.org` should still work but if you experience any problems, please submit an issue in the [`duckdb-web` repository](https://github.com/duckdb/duckdb-wasm).
+
+
 ## Benchmarks
 
 We benchmarked DuckDB using the Linux v7 kernel on an [r8gd.8xlarge](https://instances.vantage.sh/aws/ec2/r8gd.8xlarge?currency=USD) instance with 32 vCPUs, 256 GiB RAM, and an NVMe SSD.
