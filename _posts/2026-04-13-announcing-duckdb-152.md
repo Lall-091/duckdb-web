@@ -19,7 +19,7 @@ To install the new version, please visit the [installation page]({% link install
 
 We are proud to release a stable, production-ready lakehouse specification and its reference implementation in DuckDB.
 
-We will publish a detailed post on the DuckLake blog in the coming hours, but for now, here's a quick summary: DuckLake v1.0 ships dozens of bugfixes and guarantees backward-compatibility. DuckLake v1.0 supports [data inlining](https://ducklake.select/2026/04/02/data-inlining-in-ducklake/), sorted tables, bucket partitioning, and deletion buffers as Iceberg-compatible Puffin files. More on all this later!
+We published a [detailed blog post on the DuckLake site](https://ducklake.select/2026/04/13/ducklake-10/) but here's a quick summary: DuckLake v1.0 ships dozens of bugfixes and guarantees backward-compatibility. Additionally, it has a number of cool features: [data inlining](https://ducklake.select/2026/04/02/data-inlining-in-ducklake/), sorted tables, bucket partitioning, and deletion buffers as Iceberg-compatible Puffin files. More on this in the [annoucement blog post](https://ducklake.select/2026/04/13/ducklake-10/).
 
 ### Iceberg
 
