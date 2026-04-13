@@ -269,7 +269,7 @@ if (append) {
       if (secret_type !== "") {
          var secret_query = "CREATE OR REPLACE SECRET __my_secret__ (TYPE "+ secret_type + ", KEY_ID '" + secret_id + "', SECRET '" + secret_key + "');";
          if (secret_type == "iceberg") {
-           secret_query = "CREATE OR REPLACE SECRET __my_secret__ (TYPE "+ secret_type + ", ENDPOINT '" + secret_id + "', TOKEN '" + secret_key + "');";
+           secret_query = "CREATE OR REPLACE SECRET __my_secret__ (TYPE "+ secret_type + ", ENDPOINT '" + secret_id + "', TOKEN '" + secret_key + "', REGION 'us-west-1');";
          }
 
          last_res = await executeQuery(conn, secret_query, true);
