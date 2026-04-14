@@ -1,117 +1,137 @@
 const canvas = document.getElementById('snake-canvas');
-if (canvas) {
+if (canvas && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const ctx = canvas.getContext('2d');
     const svgPaths = document.querySelectorAll('.track-path');
-    
-    // --- CONFIGURATION ---
-    const SNAKE_LENGTH = 400; // Gradient tail length
-    const SPEED = 500; // Pixels per second
+
+    const SNAKE_LENGTH = 400;
+    const SPEED = 500;
     const SNAKE_WIDTH = 1;
-    
-    const isDark = () => document.documentElement.classList.contains('darkmode');
-    let COLOR = isDark() ? '#665D00' : '#EDDD0C';
-    new MutationObserver(() => { COLOR = isDark() ? '#665D00' : '#EDDD0C'; })
-        .observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    
-    // Random delay range (in milliseconds)
-    const MIN_DELAY = 1500; 
+    const STEP = 1;
+    const MIN_DELAY = 1500;
     const MAX_DELAY = 6000;
-    
-    // --- SETUP ---
+
+    const COLOR_LIGHT = '#EDDD0C';
+    const COLOR_DARK = '#665D00';
+    const currentColor = () =>
+        document.documentElement.classList.contains('darkmode') ? COLOR_DARK : COLOR_LIGHT;
+
     const width = 1440;
     const height = 842;
     canvas.width = width;
     canvas.height = height;
-    
-    ctx.lineCap = 'butt'; 
+
+    ctx.lineCap = 'butt';
     ctx.lineWidth = SNAKE_WIDTH;
-    
-    // Pre-calculate path lengths
-    const pathData = Array.from(svgPaths).map(p => ({
-        el: p,
-        totalLen: p.getTotalLength()
-    }));
-    
-    // --- STATE ---
+
+    // Pre-sample each path into a Float32Array once. Eliminates getPointAtLength() per frame.
+    const pathData = Array.from(svgPaths).map(p => {
+        const totalLen = p.getTotalLength();
+        const stepCount = Math.ceil(totalLen / STEP) + 1;
+        const points = new Float32Array(stepCount * 2);
+        for (let i = 0; i < stepCount; i++) {
+            const d = Math.min(i * STEP, totalLen);
+            const pt = p.getPointAtLength(d);
+            points[i * 2] = pt.x;
+            points[i * 2 + 1] = pt.y;
+        }
+        return { totalLen, points, stepCount };
+    });
+
+    const SNAKE_STEPS = Math.floor(SNAKE_LENGTH / STEP);
+    const opacityLUT = new Float32Array(SNAKE_STEPS + 1);
+    for (let i = 0; i <= SNAKE_STEPS; i++) {
+        opacityLUT[i] = Math.sin((i / SNAKE_STEPS) * Math.PI);
+    }
+
     let activeSnakes = [];
     let nextPathIndex = 0;
     let timeUntilNextSpawn = 0;
     let lastTime = 0;
-    
-    function getRandomDelay() {
-        return Math.random() * (MAX_DELAY - MIN_DELAY) + MIN_DELAY;
-    }
-    
+    let running = false;
+    let rafId = null;
+
+    const getRandomDelay = () => Math.random() * (MAX_DELAY - MIN_DELAY) + MIN_DELAY;
+
     function spawnSnake() {
-        const pIndex = nextPathIndex;
-        const path = pathData[pIndex];
-        
+        const path = pathData[nextPathIndex];
         activeSnakes.push({
-            ...path,
-            currentDist: -SNAKE_LENGTH, 
-            done: false
+            points: path.points,
+            stepCount: path.stepCount,
+            totalLen: path.totalLen,
+            currentDist: -SNAKE_LENGTH,
         });
         nextPathIndex = (nextPathIndex + 1) % pathData.length;
-        timeUntilNextSpawn = getRandomDelay(); 
+        timeUntilNextSpawn = getRandomDelay();
     }
-    
-    // --- ANIMATION LOOP ---
+
     function animate(timestamp) {
+        if (!running) return;
         if (!lastTime) lastTime = timestamp;
-        const dt = (timestamp - lastTime); 
+        const dt = timestamp - lastTime;
         lastTime = timestamp;
-    
+
         timeUntilNextSpawn -= dt;
         if (timeUntilNextSpawn <= 0) {
             spawnSnake();
         }
-    
+
         ctx.clearRect(0, 0, width, height);
-    
+        ctx.strokeStyle = currentColor();
+
         for (let i = activeSnakes.length - 1; i >= 0; i--) {
             const snake = activeSnakes[i];
             snake.currentDist += (SPEED * dt) / 1000;
-    
+
             if (snake.currentDist - SNAKE_LENGTH > snake.totalLen) {
                 activeSnakes.splice(i, 1);
                 continue;
             }
-            drawSnakeSmooth(snake);
+            drawSnake(snake);
         }
-        requestAnimationFrame(animate);
+        rafId = requestAnimationFrame(animate);
     }
 
-    function drawSnakeSmooth(snake) {
+    function drawSnake(snake) {
         const headDist = snake.currentDist;
         const tailDist = headDist - SNAKE_LENGTH;
-        const step = .5;
+        const { points, stepCount } = snake;
 
-        let prevPoint = null;
+        const startLUT = Math.max(0, Math.ceil(-tailDist / STEP));
+        const endLUT = Math.min(SNAKE_STEPS, Math.floor((snake.totalLen - tailDist) / STEP));
 
-        for (let d = 0; d <= SNAKE_LENGTH; d += step) {
-            const currentPosOnPath = tailDist + d;
+        let prevX = 0, prevY = 0, havePrev = false;
 
-            if (currentPosOnPath < 0 || currentPosOnPath > snake.totalLen) {
-                prevPoint = null;
+        for (let j = startLUT; j <= endLUT; j++) {
+            const pathIdx = Math.floor((tailDist + j * STEP) / STEP);
+            if (pathIdx < 0 || pathIdx >= stepCount) {
+                havePrev = false;
                 continue;
             }
+            const x = points[pathIdx * 2];
+            const y = points[pathIdx * 2 + 1];
 
-            const point = snake.el.getPointAtLength(currentPosOnPath);
-
-            if (prevPoint) {
-                const t = d / SNAKE_LENGTH;
-                const opacity = Math.sin(t * Math.PI); 
-
+            if (havePrev) {
+                ctx.globalAlpha = opacityLUT[j];
                 ctx.beginPath();
-                ctx.moveTo(prevPoint.x, prevPoint.y);
-                ctx.lineTo(point.x, point.y);
-                ctx.globalAlpha = opacity;
-                ctx.strokeStyle = COLOR;
+                ctx.moveTo(prevX, prevY);
+                ctx.lineTo(x, y);
                 ctx.stroke();
             }
-            prevPoint = point;
+            prevX = x;
+            prevY = y;
+            havePrev = true;
         }
     }
 
-    requestAnimationFrame(animate);
+    const io = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting && !running) {
+            running = true;
+            lastTime = 0;
+            rafId = requestAnimationFrame(animate);
+        } else if (!entry.isIntersecting && running) {
+            running = false;
+            if (rafId) cancelAnimationFrame(rafId);
+        }
+    });
+    io.observe(canvas);
 }
