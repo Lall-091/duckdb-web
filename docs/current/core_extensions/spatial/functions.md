@@ -72,6 +72,7 @@ title: Spatial Functions
 | [`ST_HasM`](#st_hasm) | Check if the input geometry has M values. |
 | [`ST_HasZ`](#st_hasz) | Check if the input geometry has Z values. |
 | [`ST_Hilbert`](#st_hilbert) | Encodes the X and Y values as the hilbert curve index for a curve covering the given bounding box. |
+| [`ST_InterpolatePoint`](#st_interpolatepoint) | Computes the closest point on a LINESTRING to a given POINT and returns the interpolated M value of that point. |
 | [`ST_Intersection`](#st_intersection) | Returns the intersection of two geometries |
 | [`ST_Intersects`](#st_intersects) | Returns true if the geometries intersect |
 | [`ST_Intersects_Extent`](#st_intersects_extent) | Returns true if the extent of two geometries intersects |
@@ -1519,6 +1520,24 @@ Encodes the X and Y values as the hilbert curve index for a curve covering the g
 If a geometry is provided, the center of the approximate bounding box is used as the point to encode.
 If no bounding box is provided, the hilbert curve index is mapped to the full range of a single-presicion float.
 For the BOX_2D and BOX_2DF variants, the center of the box is used as the point to encode.
+
+----
+
+### ST_InterpolatePoint
+
+
+#### Signature
+
+```sql
+DOUBLE ST_InterpolatePoint (line GEOMETRY, point GEOMETRY)
+```
+
+#### Description
+
+Computes the closest point on a LINESTRING to a given POINT and returns the interpolated M value of that point.
+
+First argument must be a linestring and must have a M dimension. The second argument must be a point. 
+Neither argument can be empty.
 
 ----
 
