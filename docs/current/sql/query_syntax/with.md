@@ -366,9 +366,9 @@ ORDER BY length(path), path;
 > DuckDB 1.5.0 will be the last release supporting the `UNION` syntax without
 > explicitly enabling it.
 >
-> DuckDB 1.6.0 disables the `UNION` syntax by default.
+> DuckDB 2.0.0 disables the `UNION` syntax by default.
 >
-> DuckDB 1.7.0 removes the `deprecated_using_key_syntax` flag and fully
+> DuckDB 2.1.0 removes the `deprecated_using_key_syntax` flag and fully
 > deprecates the `UNION` syntax.
 
 `USING KEY` alters the behavior of a regular recursive CTE.
