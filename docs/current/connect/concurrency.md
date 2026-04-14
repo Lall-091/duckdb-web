@@ -24,15 +24,9 @@ DuckDB supports concurrency within a single process according to the following r
 
 ## Writing to DuckDB from Multiple Processes
 
-Writing to DuckDB from multiple processes is not supported automatically and is not a primary design goal (see [Handling Concurrency](#handling-concurrency)).
+Writing to DuckDB's native database format from multiple processes is not currently supported (see [Handling Concurrency](#handling-concurrency)).
 
-If multiple processes must write to the same file, several design patterns are possible, but would need to be implemented in application logic. For example, each process could acquire a cross-process mutex lock, then open the database in read/write mode and close it when the query is complete. Instead of using a mutex lock, each process could instead retry the connection if another process is already connected to the database (being sure to close the connection upon query completion). Another alternative would be to do multi-process transactions on a MySQL, PostgreSQL, or SQLite database, and use DuckDB's [MySQL]({% link docs/current/core_extensions/mysql.md %}), [PostgreSQL]({% link docs/current/core_extensions/postgres.md %}), or [SQLite]({% link docs/current/core_extensions/sqlite.md %}) extensions to execute analytical queries on that data periodically.
-
-Additional options include writing data to Parquet files and using DuckDB's ability to [read multiple Parquet files]({% link docs/current/data/parquet/overview.md %}), taking a similar approach with [CSV files]({% link docs/current/data/csv/overview.md %}), or creating a web server to receive requests and manage reads and writes to DuckDB.
-
-> DuckDB handles concurrent database access requests using file locks.
-> Exercise extra caution when accessing a DuckDB file in a shared directory (e.g., from different operating systems using different file systems).
-> If you cannot guarantee file locking, consider using a DuckLake setup, e.g., [DuckLake with PostgreSQL as the catalog database](https://ducklake.select/).
+If you would like to have read-write access to the same database, consider storing it in the [DuckLake format with PostgreSQL as the catalog database](https://ducklake.select/). By coordinating through a central PostgreSQL database, you can achieve concurrent read-writes on the same database.
 
 ## Optimistic Concurrency Control
 
@@ -43,3 +37,9 @@ Transaction conflict: cannot update a table that has been altered!
 ```
 
 > Tip A common workaround when a transaction conflict is encountered is to rerun the transaction.
+
+## Troubleshooting
+
+**File locks.**
+DuckDB handles concurrent database access requests using file locks.
+Exercise extra caution when accessing a DuckDB database file in a shared directory (e.g., from different operating systems using different file systems or on network attached storage).
