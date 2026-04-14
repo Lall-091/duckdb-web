@@ -97,6 +97,7 @@ title: Spatial Functions
 | [`ST_MakeBox2D`](#st_makebox2d) | Create a BOX2D from two POINT geometries |
 | [`ST_MakeEnvelope`](#st_makeenvelope) | Create a rectangular polygon from min/max coordinates |
 | [`ST_MakeLine`](#st_makeline) | Create a LINESTRING from a list of POINT geometries |
+| [`ST_MakePoint`](#st_makepoint) | Creates a GEOMETRY point from an pair of floating point numbers. |
 | [`ST_MakePolygon`](#st_makepolygon) | Create a POLYGON from a LINESTRING shell |
 | [`ST_MakeValid`](#st_makevalid) | Returns a valid representation of the geometry |
 | [`ST_MaximumInscribedCircle`](#st_maximuminscribedcircle) | Returns the maximum inscribed circle of the input geometry, optionally with a tolerance. |
@@ -1965,6 +1966,35 @@ Create a LINESTRING from a list of POINT geometries
 SELECT ST_MakeLine([ST_Point(0, 0), ST_Point(1, 1)]);
 ----
 LINESTRING(0 0, 1 1)
+```
+
+----
+
+### ST_MakePoint
+
+
+#### Signatures
+
+```sql
+POINT_2D ST_MakePoint (x DOUBLE, y DOUBLE)
+POINT_3D ST_MakePoint (x DOUBLE, y DOUBLE, z DOUBLE)
+POINT_4D ST_MakePoint (x DOUBLE, y DOUBLE, z DOUBLE, m DOUBLE)
+```
+
+#### Description
+
+Creates a GEOMETRY point from an pair of floating point numbers.
+
+For geodetic coordinate systems, x is typically the longitude value and y is the latitude value.
+
+Note that ST_Point is equivalent. ST_MakePoint is provided for PostGIS compatibility.
+
+#### Example
+
+```sql
+SELECT ST_AsText(ST_MakePoint(143.3, -24.2));
+----
+POINT (143.3 -24.2)
 ```
 
 ----
