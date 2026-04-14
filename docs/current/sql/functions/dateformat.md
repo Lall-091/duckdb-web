@@ -122,8 +122,8 @@ Below is a full list of all available format specifiers.
 | `%W` | Week number of the year. Week 01 starts on the first Monday of the year, so there can be week 00. Note that this is not compliant with the week date standard in ISO-8601. | 00, 01, ..., 53 |
 | `%x` | ISO date representation | 1992-03-02 |
 | `%X` | ISO time representation | 10:30:20 |
-| `%y` | Year without century as a zero-padded decimal number. | 00, 01, ..., 99 |
-| `%-y` | Year without century as a decimal number. | 0, 1, ..., 99 |
+| `%y` | Year without century as a zero-padded decimal number. Numbers 00 to 68 are turned into 2000 to 2068. Numbers 69 to 99 are turned into 1969 to 1999. | 00, 01, ..., 99 |
+| `%-y` | Year without century as a decimal number. Numbers 0 to 68 are turned into 2000 to 2068. Numbers 69 to 99 are turned into 1969 to 1999. | 0, 1, ..., 99 |
 | `%Y` | Year with century as a decimal number. | 2013, 2019 etc. |
 | `%z` | [Time offset from UTC](https://en.wikipedia.org/wiki/ISO_8601#Time_offsets_from_UTC) in the form ±HH:MM, ±HHMM, or ±HH. | -0700 |
 | `%Z` | Time zone name. | Europe/Amsterdam  |
