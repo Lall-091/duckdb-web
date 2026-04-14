@@ -85,6 +85,7 @@ title: Spatial Functions
 | [`ST_Length_Spheroid`](#st_length_spheroid) | Returns the length of the input geometry in meters, using an ellipsoidal model of the earth |
 | [`ST_LineInterpolatePoint`](#st_lineinterpolatepoint) | Returns a point interpolated along a line at a fraction of total 2D length. |
 | [`ST_LineInterpolatePoints`](#st_lineinterpolatepoints) | Returns a multi-point interpolated along a line at a fraction of total 2D length. |
+| [`ST_LineLocatePoint`](#st_linelocatepoint) | Returns the location on a line closest to a point as a fraction of the total 2D length of the line. |
 | [`ST_LineMerge`](#st_linemerge) | "Merges" the input line geometry, optionally taking direction into account. |
 | [`ST_LineString2DFromWKB`](#st_linestring2dfromwkb) | Deserialize a LINESTRING_2D from a WKB encoded blob |
 | [`ST_LineSubstring`](#st_linesubstring) | Returns a substring of a line between two fractions of total 2D length. |
@@ -1730,6 +1731,21 @@ Returns a multi-point interpolated along a line at a fraction of total 2D length
 
 if repeat is false, the result is a single point, (and equivalent to ST_LineInterpolatePoint),
 otherwise, the result is a multi-point with points repeated at the fraction interval.
+
+----
+
+### ST_LineLocatePoint
+
+
+#### Signature
+
+```sql
+DOUBLE ST_LineLocatePoint (line GEOMETRY, point GEOMETRY)
+```
+
+#### Description
+
+Returns the location on a line closest to a point as a fraction of the total 2D length of the line.
 
 ----
 
