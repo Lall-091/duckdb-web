@@ -94,6 +94,7 @@ title: Spatial Functions
 | [`ST_M`](#st_m) | Returns the M coordinate of a point geometry |
 | [`ST_MMax`](#st_mmax) | Returns the maximum M coordinate of a geometry |
 | [`ST_MMin`](#st_mmin) | Returns the minimum M coordinate of a geometry |
+| [`ST_MakeBox2D`](#st_makebox2d) | Create a BOX2D from two POINT geometries |
 | [`ST_MakeEnvelope`](#st_makeenvelope) | Create a rectangular polygon from min/max coordinates |
 | [`ST_MakeLine`](#st_makeline) | Create a LINESTRING from a list of POINT geometries |
 | [`ST_MakePolygon`](#st_makepolygon) | Create a POLYGON from a LINESTRING shell |
@@ -1902,6 +1903,29 @@ Returns the minimum M coordinate of a geometry
 
 ```sql
 SELECT ST_MMin(ST_Point(1, 2, 3, 4))
+```
+
+----
+
+### ST_MakeBox2D
+
+
+#### Signature
+
+```sql
+BOX_2D ST_MakeBox2D (point1 GEOMETRY, point2 GEOMETRY)
+```
+
+#### Description
+
+Create a BOX2D from two POINT geometries
+
+#### Example
+
+```sql
+SELECT ST_MakeBox2D(ST_Point(0, 0), ST_Point(1, 1));
+----
+BOX(0 0, 1 1)
 ```
 
 ----
