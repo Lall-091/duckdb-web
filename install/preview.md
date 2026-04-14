@@ -23,13 +23,13 @@ There are currently the following DuckDB versions under development:
 
 * v1.4: the LTS release.
 * v1.5: the current stable DuckDB release.
-* v1.6: the next DuckDB version, in a very early stage of the development.
+* v2.0: the next DuckDB version, in an early stage of the development.
 
 ## Command Line Interface (CLI), C and C++ Clients
 
 For the CLI, C and C++ clients, there are three preview builds available:
 
-| Platform | Architecture       | v1.4-dev                                                                        | v1.5-dev                                                                           | v1.6-dev                                                                   |
+| Platform | Architecture       | v1.4-dev                                                                        | v1.5-dev                                                                           | v2.0-dev                                                                   |
 | -------- | ------------------ | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
 | Linux    | `arm64`            | [zip](https://artifacts.duckdb.org/v1.4-andium/duckdb-binaries-linux-arm64.zip) | [zip](https://artifacts.duckdb.org/v1.5-variegata/duckdb-binaries-linux-arm64.zip) | [zip](https://artifacts.duckdb.org/latest/duckdb-binaries-linux-arm64.zip) |
 | Linux    | `x86_64`           | [zip](https://artifacts.duckdb.org/v1.4-andium/duckdb-binaries-linux-amd64.zip) | [zip](https://artifacts.duckdb.org/v1.5-variegata/duckdb-binaries-linux-amd64.zip) | [zip](https://artifacts.duckdb.org/latest/duckdb-binaries-linux-amd64.zip) |

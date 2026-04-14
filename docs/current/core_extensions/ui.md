@@ -157,4 +157,4 @@ USE my_db;
 
 ## Limitations
 
-* The UI currently does not support the ARM-based Windows platforms (`windows_arm64` and `windows_arm64_mingw`).
+* The UI currently does not support `windows_arm64`.
