@@ -89,6 +89,8 @@ title: Spatial Functions
 | [`ST_LineMerge`](#st_linemerge) | "Merges" the input line geometry, optionally taking direction into account. |
 | [`ST_LineString2DFromWKB`](#st_linestring2dfromwkb) | Deserialize a LINESTRING_2D from a WKB encoded blob |
 | [`ST_LineSubstring`](#st_linesubstring) | Returns a substring of a line between two fractions of total 2D length. |
+| [`ST_LocateAlong`](#st_locatealong) | Returns a point or multi-point, containing the point(s) at the geometry with the given measure |
+| [`ST_LocateBetween`](#st_locatebetween) | Returns a geometry or geometry collection created by filtering and interpolating vertices within a range of "M" values |
 | [`ST_M`](#st_m) | Returns the M coordinate of a point geometry |
 | [`ST_MMax`](#st_mmax) | Returns the maximum M coordinate of a geometry |
 | [`ST_MMin`](#st_mmin) | Returns the minimum M coordinate of a geometry |
@@ -1792,6 +1794,52 @@ GEOMETRY ST_LineSubstring (line GEOMETRY, start_fraction DOUBLE, end_fraction DO
 #### Description
 
 Returns a substring of a line between two fractions of total 2D length.
+
+----
+
+### ST_LocateAlong
+
+
+#### Signatures
+
+```sql
+GEOMETRY ST_LocateAlong (line GEOMETRY, measure DOUBLE, offset DOUBLE)
+GEOMETRY ST_LocateAlong (line GEOMETRY, measure DOUBLE)
+```
+
+#### Description
+
+Returns a point or multi-point, containing the point(s) at the geometry with the given measure
+
+For a LINESTRING, or MULTILINESTRING, the location is determined by interpolating between M values
+For a POINT and MULTIPOINT, the point is returned if the measure matches the M value of the vertex, otherwise an empty geometry is returned
+For a POLYGON, only the exterior ring is considered, and treated as a LINESTRING
+
+If offset is provided, the resulting point(s) is offset by the given amount perpendicular to the line direction.
+
+----
+
+### ST_LocateBetween
+
+
+#### Signatures
+
+```sql
+GEOMETRY ST_LocateBetween (line GEOMETRY, start_measure DOUBLE, end_measure DOUBLE, offset DOUBLE)
+GEOMETRY ST_LocateBetween (line GEOMETRY, start_measure DOUBLE, end_measure DOUBLE)
+```
+
+#### Description
+
+Returns a geometry or geometry collection created by filtering and interpolating vertices within a range of "M" values
+
+Creates a geometry or geometry collection, containing the parts formed by vertices that have an "M" value within the "start_measure" and "end_measure" range
+
+For LINESTRING or MULTILINESTRING, if a line segment would cross either the upper or lower bound, a vertex is added by interpolating the coordinates at the "intersection"
+For a POINT and MULTIPOINT, the point is added to the collection if its vertex has an "M" value within the range, otherwise it is skipped
+For a POLYGON, only the exterior ring is considered, and treated like a LINESTRING
+
+If offset is provided, the resulting vertices are offset by the given amount perpendicular to the line direction.
 
 ----
 
