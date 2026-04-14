@@ -11,8 +11,7 @@ redirect_from:
 - /didi
 ---
 
-A DuckDB-based course on the Design and Implementation of Database System Internals (“DiDi”).
-
+This is a DuckDB-based course explaining the Design and Implementation of Database System Internals (“DiDi”).
 The slides and auxiliary material are available in the [GitHub repository](https://github.com/DBatUTuebingen/DiDi).
 
 ## Overview
@@ -29,14 +28,16 @@ The course treads on a path through selected internals of the
 do not suffice to exhaustively discuss all interesting bits and pieces of the
 DuckDB kernel. As of March 2026, the chapter layout reads as follows:
 
-1. Welcome & Setup
-2. The Query Performance Spectrum
-3. Managing Memory + Grouped Aggregation
-4. Sorting Large Tables
-5. The ART of Indexing
-6. Query Execution Plans and Pipelining
-7. Vectorized Query Execution
-8. Query Rewriting and Optimization
+1. [Welcome & Setup](https://blobs.duckdb.org/slides/DiDi-01.pdf)
+2. [The Query Performance Spectrum](https://blobs.duckdb.org/slides/DiDi-02.pdf)
+3. [Managing Memory + Grouped Aggregation](https://blobs.duckdb.org/slides/DiDi-03.pdf)
+4. [Sorting Large Tables](https://blobs.duckdb.org/slides/DiDi-04.pdf)
+5. [The ART of Indexing](https://blobs.duckdb.org/slides/DiDi-05.pdf)
+6. [Query Execution Plans and Pipelining](https://blobs.duckdb.org/slides/DiDi-06.pdf)
+7. [Vectorized Query Execution](https://blobs.duckdb.org/slides/DiDi-07.pdf)
+8. [Query Rewriting and Optimization](https://blobs.duckdb.org/slides/DiDi-08.pdf)
+
+(You can also download the [DiDi slides concatenated into a single deck](https://blobs.duckdb.org/slides/DiDi.pdf))
 
 You will need basic SQL skills to follow the course's red thread and
 auxiliary material.  There are few queries that go beyond the core

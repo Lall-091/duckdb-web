@@ -47,14 +47,16 @@ of [Ted Codd's](https://en.wikipedia.org/wiki/Edgar_F._Codd) jungle.
 A future *TaDa* may see chapters added, merged, or removed but as of
 March 2026, the chapter layout reads as follows:
 
-1. Tabular Data and Database Systems
-2. Tabular Data in CSV Files
-3. Reading Data at the Speed of ~~Light~~Memory
-4. Columnar Table Storage
-5. Database-External Data in Parquet Files
-6. The Structured Query Language (SQL)
-7. More SQL (Subqueries + Embedded SQL)
-8. SQL: Grouping + Aggregation and Functional Dependencies
+1. [Tabular Data and Database Systems](https://blobs.duckdb.org/slides/TaDa-01.pdf)
+2. [Tabular Data in CSV Files](https://blobs.duckdb.org/slides/TaDa-02.pdf)
+3. [Reading Data at the Speed of ~~Light~~Memory](https://blobs.duckdb.org/slides/TaDa-03.pdf)
+4. [Columnar Table Storage](https://blobs.duckdb.org/slides/TaDa-04.pdf)
+5. [Database-External Data in Parquet Files](https://blobs.duckdb.org/slides/TaDa-05.pdf)
+6. [The Structured Query Language (SQL)](https://blobs.duckdb.org/slides/TaDa-06.pdf)
+7. [More SQL (Subqueries + Embedded SQL)](https://blobs.duckdb.org/slides/TaDa-07.pdf)
+8. [SQL: Grouping + Aggregation and Functional Dependencies](https://blobs.duckdb.org/slides/TaDa-08.pdf)
+
+(You can also download the [TaDa slides concatenated into a single deck](https://blobs.duckdb.org/slides/TaDa.pdf))
 
 We do not assume any prior SQL skills.  Chapters 03 and 07 will have you read
 and modify short pieces of C, Python, or awk code.  There will be only
