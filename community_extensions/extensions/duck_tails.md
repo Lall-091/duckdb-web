@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: duck_tails
   description: Smart Development Intelligence for DuckDB - Git-aware data analysis capabilities that allow querying git history, accessing files at any revision, and performing version-aware data analysis with SQL.
-  version: 1.3.1
+  version: 1.4.1
   language: C++
   build: cmake
   license: MIT
@@ -18,7 +18,7 @@ extension:
     - teaguesterling
 repo:
   github: teaguesterling/duck_tails
-  ref: 8bff511c120afb01137b6e79baa9964c572b20b7
+  ref: dca8ff3b3f5d423beb474c11349b547c88e99e70
 
 docs:
   hello_world: |
@@ -61,8 +61,8 @@ docs:
 
 extension_star_count: 15
 extension_star_count_pretty: 15
-extension_download_count: 824
-extension_download_count_pretty: 824
+extension_download_count: 910
+extension_download_count_pretty: 910
 image: '/images/community_extensions/social_preview/preview_community_extension_duck_tails.png'
 layout: community_extension_doc
 ---
@@ -88,30 +88,34 @@ LOAD {{ page.extension.name }};
 
 <div class="extension_functions_table"></div>
 
-|   function_name    | function_type | description | comment | examples |
-|--------------------|---------------|-------------|---------|----------|
-| diff_text          | scalar        | NULL        | NULL    |          |
-| git_branches       | table         | NULL        | NULL    |          |
-| git_branches_each  | table         | NULL        | NULL    |          |
-| git_diff_tree      | table         | NULL        | NULL    |          |
-| git_diff_tree_each | table         | NULL        | NULL    |          |
-| git_log            | table         | NULL        | NULL    |          |
-| git_log_each       | table         | NULL        | NULL    |          |
-| git_parents        | table         | NULL        | NULL    |          |
-| git_parents_each   | table         | NULL        | NULL    |          |
-| git_read           | table         | NULL        | NULL    |          |
-| git_read_each      | table         | NULL        | NULL    |          |
-| git_status         | table         | NULL        | NULL    |          |
-| git_status_each    | table         | NULL        | NULL    |          |
-| git_tags           | table         | NULL        | NULL    |          |
-| git_tags_each      | table         | NULL        | NULL    |          |
-| git_tree           | table         | NULL        | NULL    |          |
-| git_tree_each      | table         | NULL        | NULL    |          |
-| git_uri            | scalar        | NULL        | NULL    |          |
-| read_git_diff      | table         | NULL        | NULL    |          |
-| text_diff          | scalar        | NULL        | NULL    |          |
-| text_diff_lines    | table         | NULL        | NULL    |          |
-| text_diff_stats    | scalar        | NULL        | NULL    |          |
+|    function_name     | function_type | description | comment | examples |
+|----------------------|---------------|-------------|---------|----------|
+| diff_text            | scalar        | NULL        | NULL    |          |
+| git_blame            | table         | NULL        | NULL    |          |
+| git_blame_each       | table         | NULL        | NULL    |          |
+| git_blame_hunks      | table         | NULL        | NULL    |          |
+| git_blame_hunks_each | table         | NULL        | NULL    |          |
+| git_branches         | table         | NULL        | NULL    |          |
+| git_branches_each    | table         | NULL        | NULL    |          |
+| git_diff_tree        | table         | NULL        | NULL    |          |
+| git_diff_tree_each   | table         | NULL        | NULL    |          |
+| git_log              | table         | NULL        | NULL    |          |
+| git_log_each         | table         | NULL        | NULL    |          |
+| git_parents          | table         | NULL        | NULL    |          |
+| git_parents_each     | table         | NULL        | NULL    |          |
+| git_read             | table         | NULL        | NULL    |          |
+| git_read_each        | table         | NULL        | NULL    |          |
+| git_status           | table         | NULL        | NULL    |          |
+| git_status_each      | table         | NULL        | NULL    |          |
+| git_tags             | table         | NULL        | NULL    |          |
+| git_tags_each        | table         | NULL        | NULL    |          |
+| git_tree             | table         | NULL        | NULL    |          |
+| git_tree_each        | table         | NULL        | NULL    |          |
+| git_uri              | scalar        | NULL        | NULL    |          |
+| read_git_diff        | table         | NULL        | NULL    |          |
+| text_diff            | scalar        | NULL        | NULL    |          |
+| text_diff_lines      | table         | NULL        | NULL    |          |
+| text_diff_stats      | scalar        | NULL        | NULL    |          |
 
 ### Overloaded Functions
 

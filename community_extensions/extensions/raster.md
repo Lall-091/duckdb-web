@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: raster
   description: DuckDB Extension for reading and writing raster files using SQL.
-  version: 0.3.1
+  version: 0.4.0
   language: C++
   build: cmake
   excluded_platforms: "windows_amd64_mingw;wasm_mvp;wasm_eh;wasm_threads"
@@ -18,7 +18,7 @@ extension:
 
 repo:
   github: ahuarte47/duckdb-raster
-  ref: df2ce5b18eb791c4f5743b65a5ecda839ca33ed0
+  ref: 710884da7d20b73f4928d34df7dd882b97d59f60
 
 docs:
   hello_world: |
@@ -60,6 +60,8 @@ docs:
     │       │           │            │ }                              │                         │       │        │        │       │       │            │            │
     └───────┴───────────┴────────────┴────────────────────────────────┴─────────────────────────┴───────┴────────┴────────┴───────┴───────┴────────────┴────────────┘
 
+    -- Example transforming the BLOB data of the bands into arrays of integers, to allow analyzing the raster data:
+
     SELECT
         RT_Blob2ArrayInt32(databand_1, true) AS r,
         RT_Blob2ArrayInt32(databand_2, true) AS g,
@@ -67,6 +69,23 @@ docs:
     FROM
         RT_Read('path/to/raster/file.tif')
     ;
+
+    -- Example of using COPY to export the data table to a new raster file:
+
+    COPY (
+        SELECT geometry, databand_1, databand_2, databand_3 FROM RT_Read('./path/to/raster/file.tif')
+    )
+    TO './path/to/raster/newfile.tif'
+    WITH (
+        FORMAT RASTER,
+        DRIVER 'COG',
+        CREATION_OPTIONS ('COMPRESS=LZW','BIGTIFF=YES'),
+        RESAMPLING 'nearest',
+        ENVELOPE [545539.750, 4724420.250, 545699.750, 4724510.250],
+        SRS 'EPSG:25830',
+        GEOMETRY_COLUMN 'geometry',
+        DATABAND_COLUMNS ['databand_3', 'databand_2', 'databand_1']
+    );
 
   extended_description: |
     Extension for DuckDB for reading and writing raster files using SQL.
@@ -98,16 +117,27 @@ docs:
     `RT_Read` supports filter pushdown on the non-BLOB columns, which allows you to prefilter the tiles that are loaded based on their metadata or
     spatial location. For example, you can filter the tiles that intersect with a certain geometry or that have a certain value in the metadata.
 
+    `COPY TO` with `FORMAT RASTER` allows to export a table with the same structure as the one returned by `RT_Read` to a new raster file.
+    You can specify the driver and several creation options:
+
+    - `DRIVER`: The GDAL driver to use for writing the raster file. For example, `GTiff` or `COG`.
+    - `CREATION_OPTIONS`: A list of creation options to pass to the GDAL driver, specified as strings in the format `KEY=VALUE`.
+    - `RESAMPLING`: The resampling method to use when writing the raster file. For example, `nearest`, `bilinear`, `cubic`, etc.
+    - `ENVELOPE`: The spatial extent of the raster file, specified as a list of four values: `[xmin, ymin, xmax, ymax]`.
+    - `SRS`: The spatial reference system of the raster file, specified as an EPSG code (e.g. `EPSG:4326`) or a WKT string.
+    - `GEOMETRY_COLUMN`: The name of the column that contains the geometry of the tiles. This column will be used to determine the spatial location and the resolution of the tiles in the output raster file.
+    - `DATABAND_COLUMNS`: A list with the names of the columns that contain the data of the bands. The order of the columns in the list will determine the order of the bands in the output raster file.
+
     This extension is still in early development, and there are many features that I want to add in the future:
 
-    - `COPY` function to write raster files from the loaded tables.
+    - Add functions to convert from arrays of numeric values to BLOB databand columns.
     - Compression formats for the data band BLOBs (`GZip`, `ZSTD`?).
     - Integration with DuckDB File System.
 
-extension_star_count: 21
-extension_star_count_pretty: 21
-extension_download_count: 265
-extension_download_count_pretty: 265
+extension_star_count: 24
+extension_star_count_pretty: 24
+extension_download_count: 378
+extension_download_count_pretty: 378
 image: '/images/community_extensions/social_preview/preview_community_extension_raster.png'
 layout: community_extension_doc
 ---
