@@ -35,8 +35,8 @@ docs:
 
 extension_star_count: 1
 extension_star_count_pretty: 1
-extension_download_count: 777
-extension_download_count_pretty: 777
+extension_download_count: 780
+extension_download_count_pretty: 780
 image: '/images/community_extensions/social_preview/preview_community_extension_read_dbf.png'
 layout: community_extension_doc
 ---

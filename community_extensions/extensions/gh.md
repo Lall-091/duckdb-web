@@ -17,7 +17,7 @@ extension:
 
 repo:
   github: carlopi/duckdb-gh
-  ref: 61fe83aff23da586fd36c9f480f4dd0d966cb87c
+  ref: ef3309c931ba4530c8ab4258dce156453f922810
 
 docs:
   hello_world: |
@@ -40,8 +40,8 @@ docs:
 
 extension_star_count: 3
 extension_star_count_pretty: 3
-extension_download_count: 665
-extension_download_count_pretty: 665
+extension_download_count: 697
+extension_download_count_pretty: 697
 image: '/images/community_extensions/social_preview/preview_community_extension_gh.png'
 layout: community_extension_doc
 ---

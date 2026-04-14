@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: mpduck
   description: Read and write FIS Prophet files (.rpt, .prn, .fac)
-  version: 0.0.1
+  version: 0.0.2
   language: C++
   build: cmake
   license: MIT
@@ -17,7 +17,8 @@ extension:
 
 repo:
   github: MatthewMooreZA/mpduck
-  ref: 5ef84a7a00f77671772390cd84615d8aa34634de
+  andium: fca5bd23355a269e00d259607fb3f0d9505b7ca1
+  ref: b3952a8bd779940290e0e5aa70eb8961fbcfccee
 
 docs:
   hello_world: |
@@ -62,8 +63,8 @@ docs:
 
 extension_star_count: 0
 extension_star_count_pretty: 0
-extension_download_count: 378
-extension_download_count_pretty: 378
+extension_download_count: 391
+extension_download_count_pretty: 391
 image: '/images/community_extensions/social_preview/preview_community_extension_mpduck.png'
 layout: community_extension_doc
 ---
