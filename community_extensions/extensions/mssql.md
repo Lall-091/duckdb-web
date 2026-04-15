@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: mssql
   description: "Connect DuckDB to Microsoft SQL Server via native TDS protocol"
-  version: "0.1.17"
+  version: "0.1.18"
   language: "C++"
   build: "cmake"
   licence: "MIT"
@@ -19,7 +19,6 @@ extension:
 
 repo:
   github: "hugr-lab/mssql-extension"
-  andium: "v0.1.17"
   ref: "v0.1.18"
 
 docs:
@@ -31,7 +30,7 @@ docs:
 
   extended_description: |
     The mssql extension provides a DuckDB connector for Microsoft SQL Server using the native TDS protocol.
-    Support DuckDB version: 1.4.4 and later.
+    Support DuckDB version: 1.5.2 and later.
 
     The extension is experimental and may not cover all edge cases. Please report any issues on the [GitHub repository](https://github.com/hugr-lab/mssql-extension).
 
@@ -56,9 +55,9 @@ docs:
     - Named instances not supported
     - Windows Authentication not supported
 
-extension_star_count: 91
-extension_star_count_pretty: 91
-extension_download_count: 2508
+extension_star_count: 95
+extension_star_count_pretty: 95
+extension_download_count: 2540
 extension_download_count_pretty: 2.5k
 image: '/images/community_extensions/social_preview/preview_community_extension_mssql.png'
 layout: community_extension_doc
