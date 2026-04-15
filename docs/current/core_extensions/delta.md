@@ -90,13 +90,13 @@ FROM delta_scan('az://my-container/my-table-with-auth');
 
 ### Credential Chains in Delta
 
-DuckDB Delta uses delta-kernel-rs and object_store for some network operations.
+DuckDB Delta uses `delta-kernel-rs` and `object_store` for some network operations.
 These systems have a different ordering (and inclusion defaults) for credential
-chains. If your system has multiple credential sources available, e.g. both
-Service Principal via ENV and a CLI-based option, credential loading behavior
+chains. If your system has multiple credential sources available, e.g., both
+Service Principal via the environment and a CLI-based option, credential loading behavior
 may be inconsistent.
 
-To avoid ambiguities, we recommend that you configure exactly 1 available
+To avoid ambiguities, we recommend that you configure exactly one available
 credential type in your production chain secrets.
 
 ## Features
