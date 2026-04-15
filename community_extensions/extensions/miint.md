@@ -16,12 +16,12 @@ extension:
   maintainers:
     - wasade
   requires:
-    duckdb: "1.5.1"
+    duckdb: "1.5.2"
   requires_toolchains: rust
 
 repo:
   github: the-miint/duckdb-miint
-  ref: f247559c6db67501448605360e36d0372c6f069e
+  ref: 7a081072aa61f5d9db63ffc209b8dea66d9c2401
 
 docs:
   hello_world: |
@@ -76,8 +76,8 @@ docs:
 
 extension_star_count: 3
 extension_star_count_pretty: 3
-extension_download_count: 784
-extension_download_count_pretty: 784
+extension_download_count: 778
+extension_download_count_pretty: 778
 image: '/images/community_extensions/social_preview/preview_community_extension_miint.png'
 layout: community_extension_doc
 ---
