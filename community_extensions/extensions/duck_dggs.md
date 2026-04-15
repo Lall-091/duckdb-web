@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: duck_dggs
   description: DuckDB extension for discrete global grid systems (DGGS) powered by DGGRID v8, Built against DuckDB v1.5.1.
-  version: 0.1.4
+  version: 0.1.5
   language: C++
   build: cmake
   license: MIT
@@ -17,7 +17,7 @@ extension:
 
 repo:
   github: am2222/duckdb-dggs
-  ref: 76879e82509152bac193a1451c96f97561e36a21
+  ref: 30524bbe189604f8da0e1b7f1572ce16100df93c
 
 docs:
   hello_world: |
@@ -130,8 +130,8 @@ docs:
     - `seqnum_to_vertex2dd` / `vertex2dd_to_seqnum` — vertex-based 2D coordinates
 extension_star_count: 0
 extension_star_count_pretty: 0
-extension_download_count: 396
-extension_download_count_pretty: 396
+extension_download_count: 392
+extension_download_count_pretty: 392
 image: '/images/community_extensions/social_preview/preview_community_extension_duck_dggs.png'
 layout: community_extension_doc
 ---
