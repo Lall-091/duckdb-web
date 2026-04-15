@@ -132,7 +132,7 @@ Page URL: <https://duckdb.org{{ page.url }}>
 
 					{% endunless %}
 					{% endif %}
-					<button class="mode" data-mode="dark">
+					<button class="mode" data-mode="dark" aria-label="Toggle dark mode">
 						<svg class="icon icon-sun"><use href="#sun"></use></svg>
 						<svg class="icon icon-moon"><use href="#moon-01"></use></svg>
 					</button>
@@ -187,6 +187,7 @@ Page URL: <https://duckdb.org{{ page.url }}>
 					<div>
 						<a href="/code_of_conduct.html">Code of Conduct</a>
 						<a href="/trademark_guidelines.html">Trademark Use</a>
+						<a href="{% link news/index.html %}">Blog</a>
 					</div>
 				</div>
 				
