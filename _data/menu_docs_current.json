@@ -1371,6 +1371,10 @@
                 {
                   "page": "Fastly Object Storage Import",
                   "url": "fastly_object_storage_import"
+                },
+                {
+                  "page": "Tigris Import",
+                  "url": "tigris_import"
                 }
               ]
             },
