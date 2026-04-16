@@ -7,8 +7,10 @@ redirect_from:
 title: ODBC Extension
 ---
 
-The ODBC extension allows connecting to other databases (using their [ODBC drivers](https://en.wikipedia.org/wiki/Open_Database_Connectivity)) and run queries with the [`odbc_query`](functions#odbc_query) or copy data from DuckDB with the [`odbc_copy`](functions#odbc_copy) functions.
+The `odbc_scanner` extension allows connecting to other databases (using their [ODBC drivers](https://en.wikipedia.org/wiki/Open_Database_Connectivity)) and run queries with the [`odbc_query`]({% link docs/current/core_extensions/odbc/functions.md %}#odbc_query) or copy data from DuckDB with the [`odbc_copy`]({% link docs/current/core_extensions/odbc/functions.md %}#odbc_copy) functions.
+The extension is also available under the alias `odbc`.
 
+current_duckdb_version
 ## Installing and Loading
 
 > On Linux and macOS the extension requires [unixODBC](https://en.wikipedia.org/wiki/UnixODBC) driver manager to be installed.
@@ -54,7 +56,7 @@ ODBC extension is built using the version-independent DuckDB C API. The same bin
 Binaries with the most recent changes, that are published to the DuckDB nightly repository, can be installed the following way:
 
 ```sql
-INSTALL 'http://nightly-extensions.duckdb.org/v1.2.0/⟨platform⟩/odbc_scanner.duckdb_extension.gz';
+INSTALL 'http://nightly-extensions.duckdb.org/v{{ site.current_duckdb_version }}/⟨platform⟩/odbc_scanner.duckdb_extension.gz';
 ```
 
 > The URL with the version `1.2.0` in it should be used even if you are running later version of DuckDB.
@@ -73,7 +75,7 @@ Where the `⟨platform⟩`{:.language-sql .highlight} is one of:
 To update installed extension to the latest nightly version run:
 
 ```sql
-FORCE INSTALL 'http://nightly-extensions.duckdb.org/v1.2.0/⟨platform⟩/odbc_scanner.duckdb_extension.gz';
+FORCE INSTALL 'http://nightly-extensions.duckdb.org/v{{ site.current_duckdb_version }}/⟨platform⟩/odbc_scanner.duckdb_extension.gz';
 ```
 
 Installed version (commit ID) can be checked using the following query:
@@ -86,7 +88,7 @@ WHERE extension_name = 'odbc_scanner';
 To install a version built from a specific commit run:
 
 ```sql
-FORCE INSTALL 'http://nightly-extensions.duckdb.org/odbc_scanner/⟨7_character_commit_id⟩/v1.2.0/⟨platform⟩/odbc_scanner.duckdb_extension.gz';
+FORCE INSTALL 'http://nightly-extensions.duckdb.org/odbc_scanner/⟨7_character_commit_id⟩/{{ site.current_duckdb_version }}/⟨platform⟩/odbc_scanner.duckdb_extension.gz';
 ```
 
 ## Support Status of DBMS-Specific Types
@@ -150,7 +152,7 @@ arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebr
 
 ODBC connection can be established using a data source name in a form `DSN=data_source1_name` or without a configured data source in a form `Driver={Driver name};parameter1=values1;...`.
 
-[`odbc_list_drivers`](functions#odbc_list_drivers) and [`odbc_list_data_sources`](functions#odbc_list_data_sources) functions can be used to find out available drivers and data sources.
+[`odbc_list_drivers`]({% link docs/current/core_extensions/odbc/functions.md %}#odbc_list_drivers) and [`odbc_list_data_sources`]({% link docs/current/core_extensions/odbc/functions.md %}#odbc_list_data_sources) functions can be used to find out available drivers and data sources.
 
 Example of connection strings without a configured data source:
 
@@ -218,7 +220,7 @@ Driver={Dremio Flight SQL ODBC Driver};Host=127.0.0.1;Port=31337;UID=gizmosql_us
 
 When a DuckDB query is run using prepared statement, it is possible to pass input parameters from the client code. The extension allows to forward such input parameters over ODBC API to the queries to remote databases.
 
-2 methods of passing query parameters are supported, using either `params` or `params_handle` named argument to [`odbc_query`](functions#odbc_query) function.
+2 methods of passing query parameters are supported, using either `params` or `params_handle` named argument to [`odbc_query`]({% link docs/current/core_extensions/odbc/functions.md %}#odbc_query) function.
 
 `params` argument takes a `STRUCT` value as an input. Struct field names are ignored, so the `row()` function can be used to create a `STRUCT` value inline:
 
@@ -238,7 +240,7 @@ The problem with this approach, is that DuckDB is unable to resolve parameter ty
 
 This will result in re-preparing the inner query in remote DB every time `duckdb_execute_prepared()` is called.
 
-To avoid this problem is it possible to use 2-step parameter binding with `params_handle` named argument to [`odbc_query`](functions#odbc_query):
+To avoid this problem is it possible to use 2-step parameter binding with `params_handle` named argument to [`odbc_query`]({% link docs/current/core_extensions/odbc/functions.md %}#odbc_query):
 
 ```sql
 -- create parameters handle
@@ -297,16 +299,16 @@ As a general rule, transaction commands `BEGIN TRANSACTION`/`COMMIT`/`ROLLBACK` 
 
 This API is exposed in the following functions:
 
- - [`odbc_begin_transaction`](functions#odbc_begin_transaction)
- - [`odbc_commit`](functions#odbc_commit)
- - [`odbc_rollback`](functions#odbc_rollback)
+ - [`odbc_begin_transaction`]({% link docs/current/core_extensions/odbc/functions.md %}#odbc_begin_transaction)
+ - [`odbc_commit`]({% link docs/current/core_extensions/odbc/functions.md %}#odbc_commit)
+ - [`odbc_rollback`]({% link docs/current/core_extensions/odbc/functions.md %}#odbc_rollback)
 
-When [`odbc_begin_transaction`](functions#odbc_begin_transaction) is called on the connection, the auto-commit mode on this connection is disabled and an implicit transaction is started. There is currently no support for enabling auto-commit back on such connection.
+When [`odbc_begin_transaction`]({% link docs/current/core_extensions/odbc/functions.md %}#odbc_begin_transaction) is called on the connection, the auto-commit mode on this connection is disabled and an implicit transaction is started. There is currently no support for enabling auto-commit back on such connection.
 
-After the transaction is started, call [`odbc_commit`](functions#odbc_commit) or [`odbc_rollback`](functions#odbc_rollback) to complete this transaction. After the completion is performed, new implicit transaction is started on this connection automatically.
+After the transaction is started, call [`odbc_commit`]({% link docs/current/core_extensions/odbc/functions.md %}#odbc_commit) or [`odbc_rollback`]({% link docs/current/core_extensions/odbc/functions.md %}#odbc_rollback) to complete this transaction. After the completion is performed, new implicit transaction is started on this connection automatically.
 
 ## Performance
 
-ODBC is not a high-performance API, [`odbc_query`](functions#odbc_query) uses multiple API calls per-row and performs `UCS-2` to `UTF-8` conversion for every `VARCHAR` value. Besides that, query processing is strictly single-threaded.
+ODBC is not a high-performance API, [`odbc_query`]({% link docs/current/core_extensions/odbc/functions.md %}#odbc_query) uses multiple API calls per-row and performs `UCS-2` to `UTF-8` conversion for every `VARCHAR` value. Besides that, query processing is strictly single-threaded.
 
 When [submitting issues](https://github.com/duckdb/odbc-scanner/issues) related only to performance please check the performance in comparable scenarios, for example with [pyodbc](https://pypi.org/project/pyodbc/).
