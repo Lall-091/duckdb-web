@@ -21,12 +21,12 @@ extension:
 repo:
   andium: 4fef6d3d58068ce8ef6ed002441e0eca002cf372
   github: query-farm/shellfs
-  ref: 3e0dccba61aebd0c8401d11ebcc3f622d091cc28
+  ref: c8088a72beea4c6ef3bdb637bfc2799d8944dd90
 
 extension_star_count: 93
 extension_star_count_pretty: 93
-extension_download_count: 66855
-extension_download_count_pretty: 66.9k
+extension_download_count: 73343
+extension_download_count_pretty: 73.3k
 image: '/images/community_extensions/social_preview/preview_community_extension_shellfs.png'
 layout: community_extension_doc
 ---

@@ -52,8 +52,8 @@ docs:
 
 extension_star_count: 2
 extension_star_count_pretty: 2
-extension_download_count: 401
-extension_download_count_pretty: 401
+extension_download_count: 396
+extension_download_count_pretty: 396
 image: '/images/community_extensions/social_preview/preview_community_extension_zeek.png'
 layout: community_extension_doc
 ---

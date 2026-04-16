@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: decimal_arithmetic
   description: Extension that adds support special decimal arithmetic functions 
-  version: 0.0.1
+  version: 0.0.2
   language: C++
   build: cmake
   license: MIT
@@ -17,7 +17,7 @@ extension:
 
 repo:
   github: duckdb/duckdb-decimal-arithmetic
-  ref: 16dd3862eb982875b8b81910c5a377a8b2196258 
+  ref: f446d50383a7034cbe0f9bc106ecdb0ed68ec2f4 
 
 docs:
   hello_world: |
@@ -28,8 +28,8 @@ docs:
 
 extension_star_count: 0
 extension_star_count_pretty: 0
-extension_download_count: 81
-extension_download_count_pretty: 81
+extension_download_count: 260
+extension_download_count_pretty: 260
 image: '/images/community_extensions/social_preview/preview_community_extension_decimal_arithmetic.png'
 layout: community_extension_doc
 ---

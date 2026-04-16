@@ -21,7 +21,7 @@ extension:
 repo:
   andium: 0ace6af84ec2289c23944857fd9aded06e65ec9c
   github: query-farm/radio
-  ref: 4b3cec7b2bf09259566f3212c723549a2c4418bc
+  ref: ca2f4c3109e4f3afa115923862601a8b4cc3c619
 
 extension_star_count: 36
 extension_star_count_pretty: 36

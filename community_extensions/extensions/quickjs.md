@@ -49,12 +49,12 @@ extension:
 repo:
   andium: 2d31ccebd7f44babc901c84ba0fe8b560647e136
   github: quackscience/duckdb-quickjs
-  ref: 22d4f387ae971bc43a42aadd75c5da32a27b674f
+  ref: fa8ebe9a7be2ba40642208dc74d664dc7bb66659
 
 extension_star_count: 12
 extension_star_count_pretty: 12
-extension_download_count: 916
-extension_download_count_pretty: 916
+extension_download_count: 913
+extension_download_count_pretty: 913
 image: '/images/community_extensions/social_preview/preview_community_extension_quickjs.png'
 layout: community_extension_doc
 ---
