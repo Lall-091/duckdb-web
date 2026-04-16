@@ -10,6 +10,8 @@ title: Core Extensions
 
 ## List of Core Extensions
 
+<div class="sticky_header_table"></div>
+
 | Name                                                                     | Description                                                             | Maintainer       | Support&nbsp;tier | Aliases                 |
 | :----------------------------------------------------------------------- | :---------------------------------------------------------------------- | ---------------- | :---------------- | :---------------------- |
 | [autocomplete]({% link docs/current/core_extensions/autocomplete.md %})   | Adds support for autocomplete in the shell                              | DuckDB&nbsp;team | Secondary         |                         |
