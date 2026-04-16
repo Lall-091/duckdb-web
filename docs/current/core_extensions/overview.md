@@ -2,6 +2,7 @@
 layout: docu
 redirect_from:
 - /docs/core_extensions
+- /docs/current/core_extensions
 - /docs/extensions/official_extensions
 - /docs/preview/core_extensions/overview
 - /docs/stable/core_extensions/overview
