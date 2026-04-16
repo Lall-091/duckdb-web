@@ -24,7 +24,7 @@ CREATE TABLE exams (eid INTEGER, subject VARCHAR, sid INTEGER);
 INSERT INTO students VALUES ('Mark', 1), ('Joe', 2), ('Matthew', 3);
 INSERT INTO exams VALUES (10, 'Physics', 1), (20, 'Chemistry', 2), (30, 'Literature', 3);
 
-EXPLAIN ANALYZE
+EXPLAIN
     SELECT name
     FROM students
     JOIN exams USING (sid)
