@@ -72,12 +72,12 @@ extension:
 repo:
   andium: 040dbecd552e6b373fb1bb4582935d243693978e
   github: quackscience/duckdb-extension-cronjob
-  ref: 1892d5bb80e0d79968cd8aedd4f48f94347ce9d5
+  ref: 0571110d3d5f112e4fc92dff212c2f47096d773f
 
 extension_star_count: 48
 extension_star_count_pretty: 48
-extension_download_count: 837
-extension_download_count_pretty: 837
+extension_download_count: 828
+extension_download_count_pretty: 828
 image: '/images/community_extensions/social_preview/preview_community_extension_cronjob.png'
 layout: community_extension_doc
 ---

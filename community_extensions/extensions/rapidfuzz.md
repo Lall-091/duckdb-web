@@ -20,12 +20,12 @@ extension:
 repo:
   andium: eb2fe18d3f60205722521ff2ddd8eb3c932c7888
   github: query-farm/rapidfuzz
-  ref: 01f607b461ee74e1b523bc3668ac2fbf2a06288a
+  ref: 8977f62400513f7c59887c0bef751e0f488f76e4
 
 extension_star_count: 15
 extension_star_count_pretty: 15
-extension_download_count: 4158
-extension_download_count_pretty: 4.2k
+extension_download_count: 4276
+extension_download_count_pretty: 4.3k
 image: '/images/community_extensions/social_preview/preview_community_extension_rapidfuzz.png'
 layout: community_extension_doc
 ---

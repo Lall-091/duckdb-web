@@ -22,12 +22,12 @@ extension:
 repo:
   andium: 8feeb0b0157b7fad0694ee09c430bbabce54cbb7
   github: query-farm/marisa
-  ref: 13123f4de215118a4c005bfca9dde0b856e74247
+  ref: a064878c5b56d4d08aaf1a634d56b4db64438785
 
 extension_star_count: 11
 extension_star_count_pretty: 11
-extension_download_count: 778
-extension_download_count_pretty: 778
+extension_download_count: 783
+extension_download_count_pretty: 783
 image: '/images/community_extensions/social_preview/preview_community_extension_marisa.png'
 layout: community_extension_doc
 ---

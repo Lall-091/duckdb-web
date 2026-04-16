@@ -19,13 +19,13 @@ extension:
   requires_toolchains: rust
   version: '2025120401'
 repo:
-  andium: f6aae9315965ce5eeba233aa147ddc7f42b5dda5
+  andium: 888a4bc287db39ae1680269f963952696a28ccf1
   github: query-farm/inflector
-  ref: d504db6d637129b2139e5136c14f9c4a31f187ac
+  ref: 7f812dfdac6be765d32e19a001978606cbd47640
 
 extension_star_count: 7
 extension_star_count_pretty: 7
-extension_download_count: 1133
+extension_download_count: 1118
 extension_download_count_pretty: 1.1k
 image: '/images/community_extensions/social_preview/preview_community_extension_inflector.png'
 layout: community_extension_doc
