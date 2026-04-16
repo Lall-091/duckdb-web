@@ -71,4 +71,8 @@ curl https://install.duckdb.org | DUCKDB_VERSION=1.2.2 sh
 
 ## Windows
 
-The DuckDB install script is currently not available for Windows.
+On Windows, we provide a beta install script. To use it, run the following command:
+
+```bash
+powershell -NoExit iex (iwr "https://install.duckdb.org/install.ps1").Content
+```
