@@ -38,15 +38,21 @@ For the CLI, C and C++ clients, there are three preview builds available:
 
 ## Python
 
-For Python, we distribute two nightly builds.
+For Python, we distribute different nightly builds. Note that not all of them are available at all times and a few days can be skipped when nightly builds fail.
 
-* To install the nightly build for v1.4-dev, run:
+* v1.4-dev:
 
   ```batch
   pip install "duckdb<1.5.0"
   ```
 
-* To install the nightly build for v1.5-dev, run:
+* v1.5-dev:
+
+  ```batch
+  pip install "duckdb<1.6.0"
+  ```
+
+* v2.0-dev:
 
   ```batch
   pip install duckdb --pre --upgrade
