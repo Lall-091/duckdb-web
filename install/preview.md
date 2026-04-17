@@ -43,13 +43,13 @@ For Python, we distribute different nightly builds. Note that not all of them ar
 * v1.4-dev:
 
   ```batch
-  pip install "duckdb<1.5.0"
+  pip install "duckdb<1.5.0" --pre --upgrade
   ```
 
 * v1.5-dev:
 
   ```batch
-  pip install "duckdb<1.6.0"
+  pip install "duckdb<1.6.0" --pre --upgrade
   ```
 
 * v2.0-dev:
