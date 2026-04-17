@@ -14,7 +14,6 @@ pill: "EngageU 2024"
 </div>
 
 |-------|-------|
-| **Date** | {{ page.date | date: "%Y-%m-%d" }} |
 | **Event** | [EngageU 2024, Malmö](https://engageu.eu/) |
 | **Speaker** | [Marcel Moré](https://www.linkedin.com/in/marcel-more/) |
 | **Slide deck** | [Download](https://blog.marcel-more.de/wp-content/uploads/2024/11/EngageU%20-%20Marcel%20Moré%20-%20Integrating%20DuckDB.pdf) |

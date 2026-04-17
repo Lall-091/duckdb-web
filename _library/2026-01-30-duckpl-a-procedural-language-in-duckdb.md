@@ -14,7 +14,6 @@ pill: "DuckDB Developer Meeting #1"
 </div>
 
 |-------|-------|
-| **Date** | {{ page.date | date: "%Y-%m-%d" }} |
 | **Event** | [DuckDB Developer Meeting #1]({% link _events/2026-01-30-duckdb-developer-meeting-1.md %}) |
 | **Speaker** | [Denis Hirn](https://www.linkedin.com/in/denis-hirn-3a3a74370/) ([Database Systems Group at University of Tübingen](https://db.cs.uni-tuebingen.de/)) |
 | **Slide deck** | [Download PDF](https://blobs.duckdb.org/events/duckdb-developer-meeting-1/duckpl-a-procedural-language-in-duckdb-denis-hirn.pdf) |

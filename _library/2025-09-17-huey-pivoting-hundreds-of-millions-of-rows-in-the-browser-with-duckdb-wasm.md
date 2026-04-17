@@ -14,7 +14,6 @@ pill: "DuckDB Amsterdam Meetup"
 </div>
 
 |-------|-------|
-| **Date** | {{ page.date | date: "%Y-%m-%d" }} |
 | **Event** | [DuckDB Amsterdam Meetup #3]({% link _events/2025-09-17-duckdb-amsterdam-meetup-3.md %}) |
 | **Speaker** | Roland Bouman |
 | **Slide deck** | [Download](https://blobs.duckdb.org/events/duckdb-amsterdam-meetup3/roland-bouman-huey.pdf) |

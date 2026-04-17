@@ -14,7 +14,6 @@ pill: "NDC Oslo 2025"
 </div>
 
 |-------|-------|
-| **Date** | {{ page.date | date: "%Y-%m-%d" }} |
 | **Event** | [NDC Oslo 2025](https://ndcoslo.com/) |
 | **Speaker** | David Ostrovsky |
 | **YouTube** | [Analytics for Not-so-Big Data with DuckDB](https://www.youtube.com/watch?v=3iy9qaGopyw) |

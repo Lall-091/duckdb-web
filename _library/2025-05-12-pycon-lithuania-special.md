@@ -18,7 +18,6 @@ redirect_from:
 </div>
 
 |-------|-------|
-| **Date** | {{ page.date | date: "%Y-%m-%d" }} |
 | **Guest** | [Gábor Szárnyas](https://szarnyasg.org/) |
 | **Podcast site** | [Uncle Data](https://creators.spotify.com/pod/profile/duomenu-dede/episodes/) |
 | **Episode site** | [PyCon Lithuania Special with Keynote Speaker Gábor Szárnyas](https://creators.spotify.com/pod/profile/duomenu-dede/episodes/PyCon-Lithuania-Special---Gbor-Szrnyas-e329ro3) |

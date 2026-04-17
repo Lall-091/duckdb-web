@@ -17,7 +17,6 @@ redirect_from:
 </div>
 
 |-------|-------|
-| **Date** | {{ page.date | date: "%Y-%m-%d" }} |
 | **Event** | [Systems Distributed 2025](https://systemsdistributed.com/) |
 | **Speaker** | [Hannes Mühleisen (DuckDB Labs)](https://hannes.muehleisen.org/) |
 | **Slide deck** | [Download](https://blobs.duckdb.org/slides/hannes-muehleisen-ducklake-systems-distributed.pdf) |

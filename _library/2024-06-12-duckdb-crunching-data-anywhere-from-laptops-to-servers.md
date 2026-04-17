@@ -18,7 +18,6 @@ redirect_from:
 </div>
 
 |-------|-------|
-| **Date** | {{ page.date | date: "%Y-%m-%d" }} |
 | **Event** | [GOTO Amsterdam 2024](https://gotoams.nl/2024/) |
 | **Speaker** | [Gábor Szárnyas (DuckDB Labs)](https://szarnyasg.org/) |
 | **Slide deck** | [Download](https://blobs.duckdb.org/slides/goto-amsterdam-2024-duckdb-gabor-szarnyas.pdf) |

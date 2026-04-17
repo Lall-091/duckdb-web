@@ -13,6 +13,5 @@ length: "15 min"
 </div>
 
 |-------|-------|
-| **Date** | {{ page.date | date: "%Y-%m-%d" }} |
 | **Speaker** | Philip Moore (Founder & CEO, [GizmoData](https://gizmodata.com/)) |
 | **YouTube** | [Watch on YouTube](https://www.youtube.com/watch?v=NU8VuQtX0gw) |

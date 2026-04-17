@@ -18,7 +18,6 @@ pill: "AWS re:Invent 2025"
 The S3 Tables demo starts at 43:23.
 
 |-------|-------|
-| **Date** | {{ page.date | date: "%Y-%m-%d" }} |
 | **Event** | AWS re:Invent 2025 |
 | **Speaker** | Yuri Zarubin |
 | **YouTube** | [Amazon S3 Tables Architecture, Use Cases, and Best Practices](https://www.youtube.com/watch?v=Pi82g0YGklU) |

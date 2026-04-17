@@ -18,7 +18,6 @@ redirect_from:
 </div>
 
 |-------|-------|
-| **Date** | {{ page.date | date: "%Y-%m-%d" }} |
 | **Event** | [Joy of Coding](https://joyofcoding.org/) |
 | **Speaker** | [Hannes Mühleisen](https://hannes.muehleisen.org/) (DuckDB Labs) |
 | **YouTube** | [Why Databases are Worthy of Your Affection](https://www.youtube.com/watch?v=BnRlYKZExDc) |

@@ -14,7 +14,6 @@ pill: "Data Debug SF"
 </div>
 
 |-------|-------|
-| **Date** | {{ page.date | date: "%Y-%m-%d" }} |
 | **Event** | Data Debug SF |
 | **Speaker** | Zac Farrell |
 | **YouTube** | [DataFusion + DuckLake](https://www.youtube.com/watch?v=VtvjyMKYPEA) |

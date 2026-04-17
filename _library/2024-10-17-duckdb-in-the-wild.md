@@ -16,7 +16,6 @@ redirect_from:
 </div>
 
 |-------|-------|
-| **Date** | {{ page.date | date: "%Y-%m-%d" }} |
 | **Event** | [DuckDB Amsterdam Meetup #1]({% link _events/2024-10-17-duckdb-amsterdam-meetup-1.md %}) |
 | **Speaker** | Hannes Mühleisen (DuckDB Labs) |
 | **Slide deck** | [Download](https://blobs.duckdb.org/slides/hannes-muehleisen-duckdb-in-the-wild-duckdb-amsterdam-meetup.pdf) |

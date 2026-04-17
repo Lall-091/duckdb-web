@@ -22,7 +22,6 @@ pill: "DuckDB Developer Meeting #1"
 </div>
 
 |-------|-------|
-| **Date** | {{ page.date | date: "%Y-%m-%d" }} |
 | **Event** | [DuckDB Developer Meeting #1]({% link _events/2026-01-30-duckdb-developer-meeting-1.md %}) |
 | **Speaker** | [Rusty Conover](https://rustyconover.work/) ([Query.Farm](https://query.farm/)) |
 | **Slide deck** | [View](https://query-farm.github.io/duckdb-developer-day-1-extension-workshop/1) |

@@ -16,7 +16,6 @@ redirect_from:
 </div>
 
 |-------|-------|
-| **Date** | {{ page.date | date: "%Y-%m-%d" }} |
 | **Podcast series** | [The Data Engineering Show](https://www.dataengineeringshow.com/) |
 | **Guest** | [Hannes Mühleisen (DuckDB Labs)](https://hannes.muehleisen.org/) |
 | **Podcast site** | [Listen on the podcast site](https://www.dataengineeringshow.com/e/18pv9vz8-beyond-database-optimization-with-ai) |

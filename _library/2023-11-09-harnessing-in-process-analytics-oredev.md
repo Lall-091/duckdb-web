@@ -18,7 +18,6 @@ redirect_from:
 </div>
 
 |-------|-------|
-| **Date** | {{ page.date | date: "%Y-%m-%d" }} |
 | **Event** | [Øredev 2023](https://archive.oredev.org/2023/index.html) |
 | **Speaker** | [Gábor Szárnyas (DuckDB Labs)](https://szarnyasg.org/) |
 | **Slide deck** | [Download](https://blobs.duckdb.org/slides/oredev-duckdb-231109.pdf) |

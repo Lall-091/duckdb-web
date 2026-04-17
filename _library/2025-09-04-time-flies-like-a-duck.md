@@ -16,7 +16,6 @@ pill: "DuckDB in Science"
 </div>
 
 |-------|-------|
-| **Date** | {{ page.date | date: "%Y-%m-%d" }} |
 | **Event** | [DuckDB in Science meetup (London)]({% link _events/2025-09-04-duckdb-science-and-education-london-meetup.md %}) |
 | **Speaker** | Richard Wesley (DuckDB Labs) |
 | **Slide deck** | [Download](https://blobs.duckdb.org/events/duckdb-in-science-london-meetup/richard-wesley-time-flies-like-a-duck.pdf) |

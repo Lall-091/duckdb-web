@@ -14,7 +14,6 @@ redirect_from:
 ---
 
 |-------|-------|
-| **Date** | {{ page.date | date: "%Y-%m-%d" }} |
 | **Event** | [Compass AI & Data Summit](https://aidata.compasstechsummit.com/) |
 | **Speaker** | [Gábor Szárnyas (DuckDB Labs)](https://szarnyasg.org/) |
 | **Slide deck** | [Download](https://blobs.duckdb.org/slides/compass-ai-data-summit-duckdb-unplugged-gabor-szarnyas.pdf) |

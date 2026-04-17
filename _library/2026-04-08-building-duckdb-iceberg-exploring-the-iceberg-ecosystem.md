@@ -10,7 +10,6 @@ pill: "Iceberg Summit 2026"
 ---
 
 |-------|-------|
-| **Date** | {{ page.date | date: "%Y-%m-%d" }} |
 | **Event** | [Iceberg Summit 2026](https://events.bizzabo.com/796372) |
 | **Speaker** | Tom Ebergen (DuckDB Labs) |
 | **Slide deck** | [Download](http://blobs.duckdb.org/slides/tom-ebergen-exploring-the-iceberg-ecosystem-with-duckdb-iceberg-iceberg-summit.pdf) |
