@@ -106,3 +106,9 @@ GEN=ninja \
 ```
 
 For more reference information on DuckDB RISC-V cross-compiling, see the [mocusez/duckdb-riscv-ci](https://github.com/mocusez/duckdb-riscv-ci) and [DuckDB Pull Request #16549](https://github.com/duckdb/duckdb/pull/16549).
+
+## Known Issues
+
+### Platform Reported Incorrectly
+
+As of version 1.5.2, DuckDB [incorrectly reports the platform](https://github.com/duckdb/duckdb/pull/21802) as `amd64` for unsupported platforms such as RISC-V. This causes is to download an incorrect extension binary. Currently, extensions are only available for officially supported platforms, so to use an extension, you need to [build it e.g. using the `BUILD_EXTENSIONS` flag]({% link docs/current/dev/building/building_extensions.md %}).
