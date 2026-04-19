@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "DuckDB User Survey Analysis"
-author: "Gabor Szarnyas"
+author: "Gábor Szárnyas"
 thumb: "/images/blog/thumbs/survey.svg"
 image: "/images/blog/thumbs/survey.png"
 excerpt: "We share the findings from a survey of 500+ DuckDB users."
@@ -42,8 +42,8 @@ This is in line with the vision that originally drove the creation of DuckDB: cr
 
 ### Clients
 
-[Unsurprisingly](https://www.tiobe.com/tiobe-index/python/), DuckDB is most often used from Python (73%), followed by the [standalone command-line application]({% link docs/stable/clients/cli/overview.md %}) (47%).
-The third spot is hotly contested with R, WebAssembly (!) and Java all achieving around 14%, followed by Node.js (Javascript) at 9%
+[Unsurprisingly](https://www.tiobe.com/tiobe-index/python/), DuckDB is most often used from Python (73%), followed by the [standalone command-line application]({% link docs/lts/clients/cli/overview.md %}) (47%).
+The third spot is hotly contested with R, WebAssembly (!) and Java all achieving around 14%, followed by Node.js (Javascript) at 9%.
 
 ![DuckDB clients]({% link images/blog/survey/clients.svg %})
 
@@ -117,7 +117,7 @@ We were curious: what do users like most about DuckDB? The plot shows the most f
 The most liked feature is **high performance**.
 Users also enjoy **file format support** (CSV, Parquet, JSON, etc.),
 **ease of use**,
-**extensive SQL support** (including [friendly SQL]({% link docs/stable/sql/dialect/friendly_sql.md %}))
+**extensive SQL support** (including [friendly SQL]({% link docs/lts/sql/dialect/friendly_sql.md %}))
 and **in-memory integrations** such as support for Pandas, Arrow and NumPy.
 Finally, users mentioned low memory usage, protocol support (e.g., HTTPS, S3), database integrations, and portability.
 
@@ -126,15 +126,15 @@ Finally, users mentioned low memory usage, protocol support (e.g., HTTPS, S3), d
 We asked users about the features that they'd most like to see in future DuckDB versions. The most popular requests are listed in the table below:
 
 | Feature                                                                 | Percentage |
-|:------------------------------------------------------------------------|-----------:|
-| Improved partitioning and optimizations related to partitioning         | 39%        |
-| Improved support for time series and optimizations for pre-sorted data  | 35%        |
-| Support for materialized views                                          | 28%        |
-| Support for vector search                                               | 24%        |
-| Support for attaching to database systems via ODBC                      | 24%        |
-| Support for time travel queries (query the database as of a given time) | 23%        |
-| Support for the Delta Lake format                                       | 22%        |
-| Improved support for Iceberg (including writes)                         | 17%        |
+| :---------------------------------------------------------------------- | ---------: |
+| Improved partitioning and optimizations related to partitioning         |        39% |
+| Improved support for time series and optimizations for pre-sorted data  |        35% |
+| Support for materialized views                                          |        28% |
+| Support for vector search                                               |        24% |
+| Support for attaching to database systems via ODBC                      |        24% |
+| Support for time travel queries (query the database as of a given time) |        23% |
+| Support for the Delta Lake format                                       |        22% |
+| Improved support for Iceberg (including writes)                         |        17% |
 
 We are happy to report that, since the survey was conducted pre-v1.0.0 and DuckDB is now at version 1.1.1, some of these requests are already a reality:
 

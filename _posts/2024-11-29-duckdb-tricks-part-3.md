@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "DuckDB Tricks – Part 3"
-author: "Andra Ionescu and Gabor Szarnyas"
+author: "Andra Ionescu, Gábor Szárnyas"
 thumb: "/images/blog/thumbs/duckdb-tricks.svg"
 image: "/images/blog/thumbs/duckdb-tricks.png"
 excerpt: "In this new installment of the DuckDB Tricks series, we present features for convenient handling of tables and performance optimization tips for Parquet and CSV files."
@@ -11,15 +11,15 @@ tags: ["using DuckDB"]
 ## Overview
 
 We continue our DuckDB [Tricks]({% post_url 2024-08-19-duckdb-tricks-part-1 %}) [series]({% post_url 2024-10-11-duckdb-tricks-part-2 %}) with a third part,
-where we showcase [friendly SQL features]({% link docs/stable/sql/dialect/friendly_sql.md %}) and performance optimizations.
+where we showcase [friendly SQL features]({% link docs/lts/sql/dialect/friendly_sql.md %}) and performance optimizations.
 
-| Operation | SQL instructions |
-|-----------|------------------|
-| [Excluding columns from a table](#excluding-columns-from-a-table) | `EXCLUDE`{:.language-sql .highlight}/`COLUMNS(...)`{:.language-sql .highlight}, `NOT SIMILAR TO`{:.language-sql .highlight} |
-| [Renaming columns with pattern matching](#renaming-columns-with-pattern-matching) | `COLUMNS(...) AS ...`{:.language-sql .highlight} |
-| [Loading with globbing](#loading-with-globbing) | `FROM '*.csv'`{:.language-sql .highlight} |
-| [Reordering Parquet files](#reordering-parquet-files) | `COPY (FROM ... ORDER BY ...) TO ...`{:.language-sql .highlight} |
-| [Hive partitioning](#hive-partitioning) | `hive_partitioning = true`{:.language-sql .highlight}  |
+| Operation                                                                         | SQL instructions                                                                                                            |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| [Excluding columns from a table](#excluding-columns-from-a-table)                 | `EXCLUDE`{:.language-sql .highlight}/`COLUMNS(...)`{:.language-sql .highlight}, `NOT SIMILAR TO`{:.language-sql .highlight} |
+| [Renaming columns with pattern matching](#renaming-columns-with-pattern-matching) | `COLUMNS(...) AS ...`{:.language-sql .highlight}                                                                            |
+| [Loading with globbing](#loading-with-globbing)                                   | `FROM '*.csv'`{:.language-sql .highlight}                                                                                   |
+| [Reordering Parquet files](#reordering-parquet-files)                             | `COPY (FROM ... ORDER BY ...) TO ...`{:.language-sql .highlight}                                                            |
+| [Hive partitioning](#hive-partitioning)                                           | `hive_partitioning = true`{:.language-sql .highlight}                                                                       |
 
 ## Dataset
 
@@ -30,7 +30,7 @@ If you would like to follow the examples, download and decompress the data set b
 ## Excluding Columns from a Table
 
 First, let's look at the data in the CSV files.
-We pick the CSV file for August and inspect it with the [`DESCRIBE` statement]({% link docs/stable/guides/meta/describe.md %}).
+We pick the CSV file for August and inspect it with the [`DESCRIBE` statement]({% link docs/lts/guides/meta/describe.md %}).
 
 ```sql
 DESCRIBE FROM 'services-2024-08.csv';
@@ -38,23 +38,25 @@ DESCRIBE FROM 'services-2024-08.csv';
 
 The result is a table with the column names and the column types.
 
-|         column_name          | column_type | null | key  | default | extra |
-|------------------------------|-------------|------|------|---------|-------|
-| Service:RDT-ID               | BIGINT      | YES  | NULL | NULL    | NULL  |
-| Service:Date                 | DATE        | YES  | NULL | NULL    | NULL  |
-| Service:Type                 | VARCHAR     | YES  | NULL | NULL    | NULL  |
-| Service:Company              | VARCHAR     | YES  | NULL | NULL    | NULL  |
-| Service:Train number         | BIGINT      | YES  | NULL | NULL    | NULL  |
-| ...                          | ...         | ...  | ...  | ...     | ...   |
+<div class="monospace_table"></div>
 
-Now, let's use [`SUMMARIZE`]({% link docs/stable/guides/meta/summarize.md %}) to inspect some statistics about the columns.
+| column_name          | column_type | null | key  | default | extra |
+| -------------------- | ----------- | ---- | ---- | ------- | ----- |
+| Service:RDT-ID       | BIGINT      | YES  | NULL | NULL    | NULL  |
+| Service:Date         | DATE        | YES  | NULL | NULL    | NULL  |
+| Service:Type         | VARCHAR     | YES  | NULL | NULL    | NULL  |
+| Service:Company      | VARCHAR     | YES  | NULL | NULL    | NULL  |
+| Service:Train number | BIGINT      | YES  | NULL | NULL    | NULL  |
+| ...                  | ...         | ...  | ...  | ...     | ...   |
+
+Now, let's use [`SUMMARIZE`]({% link docs/lts/guides/meta/summarize.md %}) to inspect some statistics about the columns.
 
 ```sql
 SUMMARIZE FROM 'services-2024-08.csv';
 ```
 
 With `SUMMARIZE`, we get 10 statistics about our data (`min`, `max`, `approx_unique`, etc.).
-If we want to remove a few of them the result, we can use the [`EXCLUDE` modifier]({% link docs/stable/sql/expressions/star.md %}#exclude-modifier).
+If we want to remove a few of them the result, we can use the [`EXCLUDE` modifier]({% link docs/lts/sql/expressions/star.md %}#exclude-modifier).
 For example, to exclude `min`, `max` and the quantiles `q25`, `q50`, `q75`, we can use issue the following command:
 
 ```sql
@@ -62,24 +64,24 @@ SELECT * EXCLUDE(min, max, q25, q50, q75)
 FROM (SUMMARIZE FROM 'services-2024-08.csv');
 ```
 
-Alternatively, we can use the [`COLUMNS`]({% link docs/stable/sql/expressions/star.md %}#columns) expression with the [`NOT SIMILAR TO` operator]({% link docs/stable/sql/functions/pattern_matching.md %}#similar-to).
+Alternatively, we can use the [`COLUMNS`]({% link docs/lts/sql/expressions/star.md %}#columns) expression with the [`NOT SIMILAR TO` operator]({% link docs/lts/sql/functions/pattern_matching.md %}#similar-to).
 This works with a regular expression:
 
 ```sql
-SELECT COLUMNS(c -> c NOT SIMILAR TO 'min|max|q.*') 
+SELECT COLUMNS(lambda c: c NOT SIMILAR TO 'min|max|q.*') 
 FROM (SUMMARIZE FROM 'services-2024-08.csv');
 ```
 
 In both cases, the resulting table will contain the 5 remaining statistical columns:
 
-|         column_name          | column_type | approx_unique |         avg         |        std         |  count  | null_percentage |
-|------------------------------|-------------|--------------:|---------------------|--------------------|--------:|----------------:|
-| Service:RDT-ID               | BIGINT      | 259022        | 14200071.03736433   | 59022.836209662266 | 1846574 | 0.00            |
-| Service:Date                 | DATE        | 32            | NULL                | NULL               | 1846574 | 0.00            |
-| Service:Type                 | VARCHAR     | 20            | NULL                | NULL               | 1846574 | 0.00            |
-| Service:Company              | VARCHAR     | 12            | NULL                | NULL               | 1846574 | 0.00            |
-| Service:Train number         | BIGINT      | 17264         | 57781.81688196628   | 186353.76365744913 | 1846574 | 0.00            |
-| ...                          | ...         | ...           | ...                 | ...                | ...     | ...             |
+| column_name          | column_type | approx_unique | avg               | std                |   count | null_percentage |
+| -------------------- | ----------- | ------------: | ----------------- | ------------------ | ------: | --------------: |
+| Service:RDT-ID       | BIGINT      |        259022 | 14200071.03736433 | 59022.836209662266 | 1846574 |            0.00 |
+| Service:Date         | DATE        |            32 | NULL              | NULL               | 1846574 |            0.00 |
+| Service:Type         | VARCHAR     |            20 | NULL              | NULL               | 1846574 |            0.00 |
+| Service:Company      | VARCHAR     |            12 | NULL              | NULL               | 1846574 |            0.00 |
+| Service:Train number | BIGINT      |         17264 | 57781.81688196628 | 186353.76365744913 | 1846574 |            0.00 |
+| ...                  | ...         |           ... | ...               | ...                |     ... |             ... |
 
 ## Renaming Columns with Pattern Matching
 
@@ -106,14 +108,14 @@ FROM (
 
 Add `DESCRIBE` at the beginning of the query and we can see the renamed columns:
 
-|         column_name          | column_type | null | key  | default | extra |
-|------------------------------|-------------|------|------|---------|-------|
-| Service_RDT_ID               | BIGINT      | YES  | NULL | NULL    | NULL  |
-| Service_Date                 | DATE        | YES  | NULL | NULL    | NULL  |
-| Service_Type                 | VARCHAR     | YES  | NULL | NULL    | NULL  |
-| Service_Company              | VARCHAR     | YES  | NULL | NULL    | NULL  |
-| Service_Train_number         | BIGINT      | YES  | NULL | NULL    | NULL  |
-| ...                          | ...         | ...  | ...  | ...     | ...   |
+| column_name          | column_type | null | key  | default | extra |
+| -------------------- | ----------- | ---- | ---- | ------- | ----- |
+| Service_RDT_ID       | BIGINT      | YES  | NULL | NULL    | NULL  |
+| Service_Date         | DATE        | YES  | NULL | NULL    | NULL  |
+| Service_Type         | VARCHAR     | YES  | NULL | NULL    | NULL  |
+| Service_Company      | VARCHAR     | YES  | NULL | NULL    | NULL  |
+| Service_Train_number | BIGINT      | YES  | NULL | NULL    | NULL  |
+| ...                  | ...         | ...  | ...  | ...     | ...   |
 
 Let's break down the query starting with the first `COLUMNS` expression:
 
@@ -134,7 +136,7 @@ SELECT COLUMNS('(.*?)_*$') AS "\1"
 
 Here, we capture the group of characters without the trailing underscore(s) and rename the columns to `\1`, which removes the trailing underscores.
 
-To make writing queries even more convenient, we can rely on the [case-insensitivity of identifiers]({% link docs/stable/sql/dialect/keywords_and_identifiers.md %}#case-sensitivity-of-identifiers) to query the column names in lowercase:
+To make writing queries even more convenient, we can rely on the [case-insensitivity of identifiers]({% link docs/lts/sql/dialect/keywords_and_identifiers.md %}#case-sensitivity-of-identifiers) to query the column names in lowercase:
 
 ```sql
 SELECT DISTINCT service_company
@@ -149,7 +151,7 @@ ORDER BY service_company;
 ```
 
 | Service_Company |
-|-----------------|
+| --------------- |
 | Arriva          |
 | Blauwnet        |
 | Breng           |
@@ -172,7 +174,7 @@ CREATE OR REPLACE TABLE services AS
     );
 ```
 
-In the inner `FROM` clause, we use the [`*` glob syntax]({% link docs/stable/sql/functions/pattern_matching.md %}#globbing) to match all files.
+In the inner `FROM` clause, we use the [`*` glob syntax]({% link docs/lts/sql/functions/pattern_matching.md %}#globbing) to match all files.
 DuckDB automatically detects that all files have the same schema and unions them together.
 We have now a table with all the data from January to October, amounting to almost 20 million rows.
 
@@ -180,7 +182,7 @@ We have now a table with all the data from January to October, amounting to almo
 
 Suppose we want to analyze the average delay of the [Intercity Direct trains](https://en.wikipedia.org/wiki/Intercity_Direct) operated by the [Nederlandse Spoorwegen (NS)](https://en.wikipedia.org/wiki/Nederlandse_Spoorwegen), measured at the final destination of the train service.
 While we can run this analysis directly on the `.csv` files, the lack of metadata (such as schema and min-max indexes) will limit the performance.
-Let's measure this in the CLI client by turning on the [timer]({% link docs/stable/clients/cli/dot_commands.md %}):
+Let's measure this in the CLI client by turning on the [timer]({% link docs/lts/clients/cli/dot_commands.md %}):
 
 ```plsql
 .timer on
@@ -233,12 +235,12 @@ TO 'railway/services.parquet';
 ```
 
 If we run the query again, it's noticeably faster, taking only 35 milliseconds.
-This is thanks to [partial reading]({% link docs/stable/data/parquet/overview.md %}#partial-reading), which uses the zonemaps (min-max indexes) to limit the amount of data that has to be scanned.
+This is thanks to [partial reading]({% link docs/lts/data/parquet/overview.md %}#partial-reading), which uses the zonemaps (min-max indexes) to limit the amount of data that has to be scanned.
 Reordering the file allows DuckDB to skip more data, leading to faster query times.
 
 ## Hive Partitioning
 
-To speed up queries even further, we can use [Hive partitioning]({% link docs/stable/data/partitioning/hive_partitioning.md %}) to create a directory layout on disk that matches the filtering used in the queries.
+To speed up queries even further, we can use [Hive partitioning]({% link docs/lts/data/partitioning/hive_partitioning.md %}) to create a directory layout on disk that matches the filtering used in the queries.
 
 ```sql
 COPY services
@@ -246,7 +248,7 @@ TO 'services-parquet-hive'
 (FORMAT parquet, PARTITION_BY (Service_Company, Service_Type));
 ```
 
-Let's peek into the directory from DuckDB's CLI using the [`.sh` dot command]({% link docs/stable/clients/cli/dot_commands.md %}):
+Let's peek into the directory from DuckDB's CLI using the [`.sh` dot command]({% link docs/lts/clients/cli/dot_commands.md %}):
 
 ```plsql
 .sh tree services-parquet-hive
@@ -310,7 +312,7 @@ If all these formats and results got your head spinning, no worries.
 We got your covered with this summary table:
 
 | Format                     | Query runtime (ms) |
-|----------------------------|-------------------:|
+| -------------------------- | -----------------: |
 | DuckDB file format         |                 35 |
 | CSV (vanilla)              |               1800 |
 | CSV (Hive-partitioned)     |                150 |

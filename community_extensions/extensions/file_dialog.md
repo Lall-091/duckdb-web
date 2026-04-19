@@ -19,7 +19,7 @@ extension:
 
 repo:
   github: yutannihilation/duckdb-ext-file-dialog
-  ref: 351d27b1cbfdaf1d4277a6090b895e66c601b70c
+  ref: c1e448f1ca7212fd7c9461ebf29edf1807f24651
 
 docs:
   hello_world: |
@@ -31,10 +31,10 @@ docs:
   extended_description: |
     This extension is a tiny utility to choose a file interactively.
 
-extension_star_count: 14
-extension_star_count_pretty: 14
-extension_download_count: 365
-extension_download_count_pretty: 365
+extension_star_count: 15
+extension_star_count_pretty: 15
+extension_download_count: 800
+extension_download_count_pretty: 800
 image: '/images/community_extensions/social_preview/preview_community_extension_file_dialog.png'
 layout: community_extension_doc
 ---
@@ -63,5 +63,23 @@ LOAD {{ page.extension.name }};
 | function_name | function_type |             description              | comment |            examples             |
 |---------------|---------------|--------------------------------------|---------|---------------------------------|
 | choose_file   | scalar        | Choose a file via native file dialog | NULL    | [FROM read_csv(choose_file());] |
+
+### Overloaded Functions
+
+<div class="extension_functions_table"></div>
+
+This extension does not add any function overloads.
+
+### Added Types
+
+<div class="extension_types_table"></div>
+
+This extension does not add any types.
+
+### Added Settings
+
+<div class="extension_settings_table"></div>
+
+This extension does not add any settings.
 
 

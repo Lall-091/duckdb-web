@@ -21,10 +21,13 @@ extension:
   vcpkg_commit: "ce613c41372b23b1f51333815feb3edd87ef8a8b"
   # (Optional) this extension requires additional custom toolchain setup
   custom_toolchain_script: true
+  # (Optional) ';' separated list of additional platforms
+  opt_in_platforms: "windows_arm64;"
 
 repo:
   github: duckdb/extension-template
-  ref: e52f46eeca9157124cbc910f52ea8637c95084a1
+  andium: 8148b0e4d1c0f4891ff357e0339224e779cd62bd
+  ref: 16fb110f74b233c9b4a4441534da2b65a8abf562
 
 docs:
   hello_world: |
@@ -32,10 +35,10 @@ docs:
   extended_description: |
     The quack extension is based on DuckDB's [Extension Template](https://github.com/duckdb/extension-template/), and it's a great starting point to get started building more advanced extensions.
 
-extension_star_count: 231
-extension_star_count_pretty: 231
-extension_download_count: 576
-extension_download_count_pretty: 576
+extension_star_count: 270
+extension_star_count_pretty: 270
+extension_download_count: 866
+extension_download_count_pretty: 866
 image: '/images/community_extensions/social_preview/preview_community_extension_quack.png'
 layout: community_extension_doc
 ---
@@ -65,5 +68,23 @@ LOAD {{ page.extension.name }};
 |-----------------------|---------------|-------------|---------|----------|
 | quack                 | scalar        | NULL        | NULL    |          |
 | quack_openssl_version | scalar        | NULL        | NULL    |          |
+
+### Overloaded Functions
+
+<div class="extension_functions_table"></div>
+
+This extension does not add any function overloads.
+
+### Added Types
+
+<div class="extension_types_table"></div>
+
+This extension does not add any types.
+
+### Added Settings
+
+<div class="extension_settings_table"></div>
+
+This extension does not add any settings.
 
 

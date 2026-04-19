@@ -25,7 +25,7 @@ A typical repository looks like this:
 
 ## Read Using `hf://` Paths
 
-You often need to read files in various formats (such as CSV, JSONL, and Parquet) when working with data. As of version v0.10.3, DuckDB has native support for `hf://` paths as part of the [`httpfs` extension]({% link docs/stable/core_extensions/httpfs/overview.md %}), allowing easy access to all these formats.
+You often need to read files in various formats (such as CSV, JSONL, and Parquet) when working with data. As of version v0.10.3, DuckDB has native support for `hf://` paths as part of the [`httpfs` extension]({% link docs/lts/core_extensions/httpfs/overview.md %}), allowing easy access to all these formats.
 
 Now, it is possible to query them using the URL pattern below:
 
@@ -48,8 +48,8 @@ Where:
 
 The result of the query is:
 
-|  kind   | sound |
-|---------|-------|
+| kind    | sound |
+| ------- | ----- |
 | dog     | woof  |
 | cat     | meow  |
 | pokemon | pika  |
@@ -73,7 +73,7 @@ Each of these commands reads the data from the specified file format and display
 
 ## Creating a Local Table
 
-To avoid accessing the remote endpoint for every query, you can save the data in a DuckDB table by running a [`CREATE TABLE ... AS` command]({% link docs/stable/sql/statements/create_table.md %}#create-table--as-select-ctas). For example:
+To avoid accessing the remote endpoint for every query, you can save the data in a DuckDB table by running a [`CREATE TABLE ... AS` command]({% link docs/lts/sql/statements/create_table.md %}#create-table--as-select-ctas). For example:
 
 ```sql
 CREATE TABLE data AS
@@ -100,8 +100,8 @@ FROM 'hf://datasets/cais/mmlu/astronomy/dev-00000-of-00001.parquet';
 ```
 
 | count |
-|------:|
-| 5     |
+| ----: |
+|     5 |
 
 Similarly, for another file (`test-00000-of-00001.parquet`) in the same dataset, we can run:
 
@@ -111,10 +111,10 @@ FROM 'hf://datasets/cais/mmlu/astronomy/test-00000-of-00001.parquet';
 ```
 
 | count |
-|------:|
-| 152   |
+| ----: |
+|   152 |
 
-To query all files under a specific format, you can use a [glob pattern]({% link docs/stable/data/multiple_files/overview.md %}#multi-file-reads-and-globs). Here’s how you can count the rows in all files that match the pattern `*.parquet`:
+To query all files under a specific format, you can use a [glob pattern]({% link docs/lts/data/multiple_files/overview.md %}#multi-file-reads-and-globs). Here’s how you can count the rows in all files that match the pattern `*.parquet`:
 
 ```sql
 SELECT count(*) AS count
@@ -122,8 +122,8 @@ FROM 'hf://datasets/cais/mmlu/astronomy/*.parquet';
 ```
 
 | count |
-|------:|
-| 173   |
+| ----: |
+|   173 |
 
 By using glob patterns, you can efficiently handle large datasets and perform comprehensive queries across multiple files, simplifying your data inspections and processing tasks.
 Here, you can see how you can look for questions that contain the word “planet” in astronomy:
@@ -135,8 +135,8 @@ WHERE question LIKE '%planet%';
 ```
 
 | count |
-|------:|
-| 21    |
+| ----: |
+|    21 |
 
 And see some examples:
 
@@ -147,8 +147,8 @@ WHERE question LIKE '%planet%'
 LIMIT 3;
 ```
 
-|                               question                               |
-|----------------------------------------------------------------------|
+| question                                                             |
+| -------------------------------------------------------------------- |
 | Why isn't there a planet where the asteroid belt is located?         |
 | On which planet in our solar system can you find the Great Red Spot? |
 | The lithosphere of a planet is the layer that consists of            |
@@ -170,8 +170,8 @@ SELECT *
 FROM 'hf://datasets/datasets-examples/doc-formats-csv-1@~parquet/**/*.parquet';
 ```
 
-|  kind   | sound |
-|---------|-------|
+| kind    | sound |
+| ------- | ----- |
 | dog     | woof  |
 | cat     | meow  |
 | pokemon | pika  |
@@ -183,7 +183,7 @@ The previous query will read all Parquet files under the `~parquet` revision. Th
 
 Configure your Hugging Face Token in the DuckDB Secrets Manager to access private or gated datasets.
 First, visit [Hugging Face Settings – Tokens](https://huggingface.co/settings/tokens) to obtain your access token.
-Second, set it in your DuckDB session using DuckDB’s [Secrets Manager]({% link docs/stable/configuration/secrets_manager.md %}). DuckDB supports two providers for managing secrets:
+Second, set it in your DuckDB session using DuckDB’s [Secrets Manager]({% link docs/lts/configuration/secrets_manager.md %}). DuckDB supports two providers for managing secrets:
 
 * `CONFIG`: The user must pass all configuration information into the `CREATE SECRET` statement. To create a secret using the `CONFIG` provider, use the following command:
 

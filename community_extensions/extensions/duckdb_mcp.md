@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: duckdb_mcp
   description: Model Context Protocol (MCP) extension for DuckDB that enables seamless integration between SQL databases and MCP servers. Provides both client capabilities for accessing remote MCP resources via SQL and server capabilities for exposing database content as MCP resources.
-  version: 1.1.0
+  version: 2.1.0
   language: C++
   build: cmake
   license: MIT
@@ -17,7 +17,7 @@ extension:
     - teaguesterling
 repo:
   github: teaguesterling/duckdb_mcp
-  ref: 440ef9e852a806def5783c7ca4f7fdb3d1021881
+  ref: b1eb63dc8c333ae58380f2967da08eebcd2c0cc2
 
 docs:
   hello_world: |
@@ -43,6 +43,7 @@ docs:
     
     -- Server mode: Start an MCP server to expose database content
     SELECT mcp_server_start('stdio', 'localhost', 0, '{}');
+    -- or mcp_server_start('stdio')
     
     -- Publish database tables as MCP resources
     CREATE TABLE products AS SELECT 'Widget' as name, 10.99 as price;
@@ -50,6 +51,8 @@ docs:
 
   extended_description: |
     DuckDB MCP Extension bridges SQL databases with the Model Context Protocol (MCP), enabling bidirectional integration between DuckDB and MCP servers. The extension operates in dual modes: as an MCP client for accessing remote resources and as an MCP server for exposing database content.
+
+    See the [README.md](https://github.com/teaguesterling/duckdb_mcp/blob/main/README.md) for more details.
     
     **MCP Client Capabilities**: Connect to MCP servers using multiple transport protocols (stdio, TCP, WebSocket) and access remote resources directly in SQL queries. Use the `mcp://` URI scheme with standard DuckDB functions like `read_csv()`, `read_parquet()`, and `read_json()` to seamlessly query remote data sources. Execute remote tools with `mcp_call_tool()` and discover available resources with `mcp_list_resources()`.
     
@@ -71,13 +74,29 @@ docs:
     - `mcp_server_status()` - Check server status
     - `mcp_publish_table(table, uri, format)` - Publish table as resource
     - `mcp_publish_query(sql, uri, format, interval)` - Publish query results
+    - `mcp_publish_execution_tool(name, desc, sql, props, required, bindings)` - Publish execution tools with prepared parameter binding
+
+    **State Introspection** (v2.1):
+    - `mcp_tools()` - Query all published tools as a table
+    - `mcp_resources()` - Query all published resources as a table
+    - `mcp_server_config()` - Server configuration as key-value pairs
+    - `mcp_list_tools()` - No-arg tool listing (works before and after server start)
+
+    **v2.0 Highlights**:
+    - **Execution tools** with multi-statement SQL and per-statement typed parameter binding
+    - **Typed JSON output** preserving DuckDB types (numbers, booleans) instead of stringifying
+    - **Prompt/template support** for MCP prompts list and get
+    - **JSONL and text output formats** alongside JSON and CSV
+    - **Read-only enforcement** in query, export, and describe tools
+    - **Per-instance state** replacing global singletons for safe multi-database usage
+    - Extensive security hardening and bug fixes
     
     The extension implements the complete JSON-RPC 2.0 MCP protocol with support for multiple transport mechanisms. It enables powerful use cases including database federation, remote data access, tool orchestration, and exposing database insights to external MCP-compatible systems. Perfect for integration with AI agents, data pipelines, and distributed analytical workflows.
 
-extension_star_count: 7
-extension_star_count_pretty: 7
-extension_download_count: null
-extension_download_count_pretty: n/a
+extension_star_count: 45
+extension_star_count_pretty: 45
+extension_download_count: 833
+extension_download_count_pretty: 833
 image: '/images/community_extensions/social_preview/preview_community_extension_duckdb_mcp.png'
 layout: community_extension_doc
 ---
@@ -106,6 +125,8 @@ LOAD {{ page.extension.name }};
 |        function_name         | function_type | description | comment | examples |
 |------------------------------|---------------|-------------|---------|----------|
 | mcp_call_tool                | scalar        | NULL        | NULL    |          |
+| mcp_config_begin             | pragma        | NULL        | NULL    |          |
+| mcp_config_end               | pragma        | NULL        | NULL    |          |
 | mcp_get_diagnostics          | scalar        | NULL        | NULL    |          |
 | mcp_get_prompt               | scalar        | NULL        | NULL    |          |
 | mcp_get_resource             | scalar        | NULL        | NULL    |          |
@@ -113,15 +134,44 @@ LOAD {{ page.extension.name }};
 | mcp_list_prompts             | scalar        | NULL        | NULL    |          |
 | mcp_list_resources           | scalar        | NULL        | NULL    |          |
 | mcp_list_tools               | scalar        | NULL        | NULL    |          |
+| mcp_list_tools               | table         | NULL        | NULL    |          |
+| mcp_publish_execution_tool   | pragma        | NULL        | NULL    |          |
+| mcp_publish_execution_tool   | scalar        | NULL        | NULL    |          |
+| mcp_publish_query            | pragma        | NULL        | NULL    |          |
 | mcp_publish_query            | scalar        | NULL        | NULL    |          |
+| mcp_publish_resource         | pragma        | NULL        | NULL    |          |
+| mcp_publish_resource         | scalar        | NULL        | NULL    |          |
+| mcp_publish_table            | pragma        | NULL        | NULL    |          |
 | mcp_publish_table            | scalar        | NULL        | NULL    |          |
+| mcp_publish_tool             | pragma        | NULL        | NULL    |          |
+| mcp_publish_tool             | scalar        | NULL        | NULL    |          |
 | mcp_reconnect_server         | scalar        | NULL        | NULL    |          |
+| mcp_register_prompt_template | pragma        | NULL        | NULL    |          |
 | mcp_register_prompt_template | scalar        | NULL        | NULL    |          |
 | mcp_render_prompt_template   | scalar        | NULL        | NULL    |          |
+| mcp_resources                | table         | NULL        | NULL    |          |
+| mcp_server_config            | table         | NULL        | NULL    |          |
 | mcp_server_health            | scalar        | NULL        | NULL    |          |
+| mcp_server_send_request      | scalar        | NULL        | NULL    |          |
+| mcp_server_start             | pragma        | NULL        | NULL    |          |
 | mcp_server_start             | scalar        | NULL        | NULL    |          |
 | mcp_server_status            | scalar        | NULL        | NULL    |          |
+| mcp_server_stop              | pragma        | NULL        | NULL    |          |
 | mcp_server_stop              | scalar        | NULL        | NULL    |          |
+| mcp_server_test              | scalar        | NULL        | NULL    |          |
+| mcp_tools                    | table         | NULL        | NULL    |          |
+
+### Overloaded Functions
+
+<div class="extension_functions_table"></div>
+
+This extension does not add any function overloads.
+
+### Added Types
+
+<div class="extension_types_table"></div>
+
+This extension does not add any types.
 
 ### Added Settings
 

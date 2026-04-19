@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Preview: Amazon S3 Tables in DuckDB"
-author: "Sam Ansmink, Tom Ebergen, Gabor Szarnyas"
+author: "Sam Ansmink, Tom Ebergen, Gábor Szárnyas"
 thumb: "/images/blog/thumbs/amazon-s3-tables.svg"
 image: "/images/blog/thumbs/amazon-s3-tables.png"
 excerpt: "We are happy to announce a new preview feature that adds support for Apache Iceberg REST Catalogs, enabling DuckDB users to connect to Amazon S3 Tables and Amazon SageMaker Lakehouse with ease."
@@ -20,7 +20,7 @@ and
 [AWS](https://aws.amazon.com/blogs/big-data/read-and-write-s3-iceberg-table-using-aws-glue-iceberg-rest-catalog-from-open-source-apache-spark/)
 have all announced or already implemented support for Iceberg tables. These platforms also support Iceberg [catalogs](https://iceberg.apache.org/terms/#catalog), which are responsible for tracking current metadata for a collection of Iceberg tables grouped by namespaces.
 
-DuckDB has supported reading Iceberg tables [since September 2023]({% post_url 2023-09-26-announcing-duckdb-090 %}) via the [`iceberg` extension]({% link docs/stable/core_extensions/iceberg/overview.md %}). Today, we are happy to introduce a new preview feature in this extension, which allows attaching to [Iceberg REST catalogs](https://www.tabular.io/apache-iceberg-cookbook/getting-started-catalog-background/). This preview release coincides with two AWS announcements yesterday: [support for Iceberg tables in Amazon S3 Tables](https://aws.amazon.com/about-aws/whats-new/2025/03/amazon-s3-tables-apache-iceberg-rest-catalog-apis/) and the [GA release of the integration between S3 Tables and SageMaker Lakehouse (AWS Glue Data Catalog)](https://aws.amazon.com/about-aws/whats-new/2025/03/amazon-sagemaker-lakehouse-integration-s3-tables-generally-available/). In practice, these developments mean that DuckDB now provides an end-to-end solution for reading Iceberg tables in [S3 Tables]({% link docs/stable/core_extensions/iceberg/amazon_s3_tables.md %}) and [SageMaker Lakehouse]({% link docs/stable/core_extensions/iceberg/amazon_sagemaker_lakehouse.md %}).
+DuckDB has supported reading Iceberg tables [since September 2023]({% post_url 2023-09-26-announcing-duckdb-090 %}) via the [`iceberg` extension]({% link docs/lts/core_extensions/iceberg/overview.md %}). Today, we are happy to introduce a new preview feature in this extension, which allows attaching to [Iceberg REST catalogs](https://www.tabular.io/apache-iceberg-cookbook/getting-started-catalog-background/). This preview release coincides with two AWS announcements yesterday: [support for Iceberg tables in Amazon S3 Tables](https://aws.amazon.com/about-aws/whats-new/2025/03/amazon-s3-tables-apache-iceberg-rest-catalog-apis/) and the [GA release of the integration between S3 Tables and SageMaker Lakehouse (AWS Glue Data Catalog)](https://aws.amazon.com/about-aws/whats-new/2025/03/amazon-sagemaker-lakehouse-integration-s3-tables-generally-available/). In practice, these developments mean that DuckDB now provides an end-to-end solution for reading Iceberg tables in [S3 Tables]({% link docs/lts/core_extensions/iceberg/amazon_s3_tables.md %}) and [SageMaker Lakehouse]({% link docs/lts/core_extensions/iceberg/amazon_sagemaker_lakehouse.md %}).
 
 > DuckDB's support for Iceberg REST Catalog endpoints in Amazon S3 Tables is the result of a collaboration between AWS and DuckDB Labs.
 
@@ -30,14 +30,14 @@ DuckDB has supported reading Iceberg tables [since September 2023]({% post_url 2
 
 To connect to Apache Iceberg REST Catalogs in DuckDB,
 make sure you are running the **latest stable** DuckDB release (version 1.2.1).
-For our example steps, we'll use the DuckDB [CLI client]({% link docs/stable/clients/overview.md %}).
+For our example steps, we'll use the DuckDB [CLI client]({% link docs/lts/clients/overview.md %}).
 You can obtain this client from the [installation page]({% link install/index.html %}) and start it with:
 
 ```batch
 duckdb
 ```
 
-Next, we need to install the “bleeding edge” versions of the required extensions from the [`core_nightly` repository]({% link docs/stable/extensions/installing_extensions.md %}#extension-repositories).
+Next, we need to install the “bleeding edge” versions of the required extensions from the [`core_nightly` repository]({% link docs/lts/extensions/installing_extensions.md %}#extension-repositories).
 
 ```sql
 FORCE INSTALL aws FROM core_nightly;
@@ -85,7 +85,7 @@ INSERT INTO duck_species VALUES
 Querying S3 Tables with DuckDB is really easy.
 The first step is to get your AWS credentials into DuckDB.
 You can achieve this in two ways.
-First, you can let DuckDB detect your AWS credentials and configuration based on the default profile in your `~/.aws` directory by creating the following secret using the [Secrets Manager]({% link docs/stable/configuration/secrets_manager.md %}):
+First, you can let DuckDB detect your AWS credentials and configuration based on the default profile in your `~/.aws` directory by creating the following secret using the [Secrets Manager]({% link docs/lts/configuration/secrets_manager.md %}):
 
 ```sql
 CREATE SECRET (
@@ -112,7 +112,7 @@ You can do so by copy-pasting the S3 Tables ARN value directly from the AWS Mana
 
 ```sql
 ATTACH 'arn:aws:s3tables:⟨us-east-1⟩:⟨111122223333⟩:bucket/⟨bucket-name⟩'
-    AS s3_tables_db (
+    AS my_s3_tables_catalog (
         TYPE iceberg,
         ENDPOINT_TYPE s3_tables
     );
@@ -126,18 +126,18 @@ SHOW ALL TABLES;
 ```
 
 ```text
-┌──────────────┬─────────┬───────────────┬──────────────┬──────────────┬───────────┐
-│   database   │ schema  │     name      │ column_names │ column_types │ temporary │
-│   varchar    │ varchar │    varchar    │  varchar[]   │  varchar[]   │  boolean  │
-├──────────────┼─────────┼───────────────┼──────────────┼──────────────┼───────────┤
-│ s3_tables_db │ ducks   │ duck_species  │ [__]         │ [INTEGER]    │ false     │
-└──────────────┴─────────┴───────────────┴──────────────┴──────────────┴───────────┘
+┌──────────────────────┬─────────┬───────────────┬──────────────┬──────────────┬───────────┐
+│       database       │ schema  │     name      │ column_names │ column_types │ temporary │
+│       varchar        │ varchar │    varchar    │  varchar[]   │  varchar[]   │  boolean  │
+├──────────────────────┼─────────┼───────────────┼──────────────┼──────────────┼───────────┤
+│ my_s3_tables_catalog │ ducks   │ duck_species  │ [__]         │ [INTEGER]    │ false     │
+└──────────────────────┴─────────┴───────────────┴──────────────┴──────────────┴───────────┘
 ```
 
 You can query tables as if they were ordinary DuckDB tables:
 
 ```sql
-FROM s3_tables_db.ducks.duck_species;
+FROM my_s3_tables_catalog.ducks.duck_species;
 ```
 
 ```text
@@ -185,7 +185,7 @@ INSERT INTO duck_species VALUES
 Let's run the query again from DuckDB:
 
 ```sql
-FROM s3_tables_db.ducks.duck_species;
+FROM my_s3_tables_catalog.ducks.duck_species;
 ```
 
 The query now returns a table with the additional fourth column, which has a `NULL` value in the row inserted before the change in the schema
@@ -218,6 +218,6 @@ don't forget to clean up by [deleting your S3 table bucket](https://docs.aws.ama
 
 ### Using the `core_nightly` Repository
 
-The extensions used in this blog post are currently experimental, and hence they are distributed through the [`core_nightly` repository]({% link docs/stable/extensions/installing_extensions.md %}#extension-repositories). If you want to switch back to using extensions from the `core` repository, follow the [extension documentation]({% link docs/stable/extensions/installing_extensions.md %}#force-installing-to-upgrade-extensions).
+The extensions used in this blog post are currently experimental, and hence they are distributed through the [`core_nightly` repository]({% link docs/lts/extensions/installing_extensions.md %}#extension-repositories). If you want to switch back to using extensions from the `core` repository, follow the [extension documentation]({% link docs/lts/extensions/installing_extensions.md %}#force-installing-to-upgrade-extensions).
 
 Note that DuckDB does not support reloading extensions. Therefore, if you experience any issues, try restarting DuckDB after updating the extensions.

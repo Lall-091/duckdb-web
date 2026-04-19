@@ -16,7 +16,7 @@ Similarly to other package management systems, DuckDB's Community Extensions rep
 therefore, there are no guarantees regarding the content of extensions.
 The DuckDB Foundation and DuckDB Labs do not vet the code within community extensions and, therefore, cannot guarantee that DuckDB community extensions are safe to use.
 
-For details on securing your DuckDB setup, please refer to the [Securing Extensions page]({% link docs/stable/operations_manual/securing_duckdb/securing_extensions.md %}).
+For details on securing your DuckDB setup, please refer to the [Securing Extensions page]({% link docs/lts/operations_manual/securing_duckdb/securing_extensions.md %}).
 </div>
 
 </div>
@@ -35,7 +35,7 @@ The loading of community extensions can be explicitly disabled with the followin
 SET allow_community_extensions = false;
 ```
 
-For details on securing your DuckDB setup, please refer to the [Securing Extensions page]({% link docs/stable/operations_manual/securing_duckdb/securing_extensions.md %}).
+For details on securing your DuckDB setup, please refer to the [Securing Extensions page]({% link docs/lts/operations_manual/securing_duckdb/securing_extensions.md %}).
 </div>
 
 </div>
@@ -116,9 +116,10 @@ Additionally, a new [C Extension API](https://github.com/duckdb/duckdb/pull/1268
 Currently, DuckDB extensions must have a unique name. For this reason, PRs that introduce naming collisions will not be accepted and will require
 a rename. To resolve this, manual namespacing would be the solution, for example by prefixing your vendor name to the extension name: `⟨vendor_name⟩_⟨extension_name⟩`{:.language-sql .highlight}.
 
-Note that in general the DuckDB team reserves the right to refuse extension names, or force an extension rename.
-For example, when an extension is no longer actively maintained, the DuckDB team may decide to rename or even remove the extension to make the name available for another extension.
-Don't worry though, we will always contact the extension maintainers before taking such drastic actions.
+Note that in general the DuckDB Foundation may refuse certain extension names or to force an existing community extension to be renamed.
+For example, if a core DuckDB extension of the same name exists or is created, the community extension of the same name has to be renamed to avoid confusion (“am I loading the community extension or the core extension?”).
+The multi-faceted nature of extension names requires us to also consider historical extension names, trademarks, etc.
+Hence, the DuckDB Foundation reserves the rights to make the decision on extension names on a case-by-case basis.
 
 </div>
 

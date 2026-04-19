@@ -17,15 +17,16 @@ extension:
   maintainers:
   - rustyconover
   name: bitfilters
-  version: '2025101201'
+  version: '2025120401'
 repo:
+  andium: 3783eb8570af2be1326348126b15951707d50bde
   github: query-farm/bitfilters
-  ref: feb75dd1f5fe7837422a03c6cddde70988b7cad1
+  ref: 8117459530db778478e52b262a127e196c3d6218
 
-extension_star_count: 2
-extension_star_count_pretty: 2
-extension_download_count: 390
-extension_download_count_pretty: 390
+extension_star_count: 6
+extension_star_count_pretty: 6
+extension_download_count: 1947
+extension_download_count_pretty: 1.9k
 image: '/images/community_extensions/social_preview/preview_community_extension_bitfilters.png'
 layout: community_extension_doc
 ---
@@ -51,50 +52,38 @@ LOAD {{ page.extension.name }};
 
 <div class="extension_functions_table"></div>
 
-|         function_name         | function_type | description | comment | examples |
-|-------------------------------|---------------|-------------|---------|----------|
-| binary_fuse16_filter          | aggregate     | NULL        | NULL    | NULL     |
-| binary_fuse16_filter_contains | scalar        | NULL        | NULL    | NULL     |
-| binary_fuse8_filter           | aggregate     | NULL        | NULL    | NULL     |
-| binary_fuse8_filter_contains  | scalar        | NULL        | NULL    | NULL     |
-| quotient_filter               | aggregate     | NULL        | NULL    | NULL     |
-| quotient_filter_contains      | scalar        | NULL        | NULL    | NULL     |
-| xor16_filter                  | aggregate     | NULL        | NULL    | NULL     |
-| xor16_filter_contains         | scalar        | NULL        | NULL    | NULL     |
-| xor8_filter                   | aggregate     | NULL        | NULL    | NULL     |
-| xor8_filter_contains          | scalar        | NULL        | NULL    | NULL     |
+|             function_name             | function_type |                                                                                                                                    description                                                                                                                                     | comment |                                                                                    examples                                                                                     |
+|---------------------------------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| binary_fuse16_filter                  | aggregate     | Creates a Binary Fuse 16-bit filter with ~0.0015% false positive rate.                                                                                                                                                                                                             | NULL    | [SELECT binary_fuse16_filter(hash(column)) FROM table]                                                                                                                          |
+| binary_fuse16_filter_contains         | scalar        | Tests if a BinaryFuse16 filter may contain a value. Returns true if the value might be in the set (with possible false positives), or false if the value is definitely not in the set (no false negatives).                                                                        | NULL    | [SELECT binary_fuse16_filter_contains(filter, 42) FROM table]                                                                                                                   |
+| binary_fuse8_filter                   | aggregate     | Creates a Binary Fuse 8-bit filter with ~0.4% false positive rate.                                                                                                                                                                                                                 | NULL    | [SELECT binary_fuse8_filter(hash(column)) FROM table]                                                                                                                           |
+| binary_fuse8_filter_contains          | scalar        | Tests if a BinaryFuse8 filter may contain a value. Returns true if the value might be in the set (with possible false positives), or false if the value is definitely not in the set (no false negatives).                                                                         | NULL    | [SELECT binary_fuse8_filter_contains(filter, 42) FROM table]                                                                                                                    |
+| bitfilters_duckdb_bloom_filter_create | aggregate     | Creates a DuckDB-compatible bloom filter by aggregating pre-hashed UBIGINT values. Use bitfilters_duckdb_hash() to hash values first. The version and num_sectors (power of 2) are constants. Returns a BLOB that can be probed with bitfilters_duckdb_bloom_filter_probe.         | NULL    | [SELECT bitfilters_duckdb_bloom_filter_create('v1.5.1', 16384, bitfilters_duckdb_hash('v1.5.1', key)) FROM tbl]                                                                 |
+| bitfilters_duckdb_bloom_filter_probe  | scalar        | Probes a DuckDB-internal bloom filter (serialized as BLOB) for a value. The version parameter specifies which DuckDB hash algorithm to use. The filter blob and version are constant-folded at bind time. Multiple value arguments are combined for multi-key bloom filter probes. | NULL    | [SELECT bitfilters_duckdb_bloom_filter_probe('v1.5.1', filter_blob, key_col) FROM tbl, SELECT bitfilters_duckdb_bloom_filter_probe('v1.5.1', filter_blob, col1, col2) FROM tbl] |
+| bitfilters_duckdb_hash                | scalar        | Computes the DuckDB-internal hash value for the given DuckDB version. The hash matches DuckDB's built-in hash() function for that version. Multiple values are combined using the version's CombineHash algorithm.                                                                 | NULL    | [SELECT bitfilters_duckdb_hash('v1.5.1', 42), SELECT bitfilters_duckdb_hash('v1.5.1', col1, col2) FROM tbl]                                                                     |
+| quotient_filter                       | aggregate     | Creates a Quotient filter by aggregating values or by merging other Quotient filters. Takes q and r as number of bits.                                                                                                                                                             | NULL    | [SELECT quotient_filter(16, 8, column) FROM table]                                                                                                                              |
+| quotient_filter_contains              | scalar        | Tests if a Quotient filter may contain a value. Returns true if the value might be in the set (with possible false positives), or false if the value is definitely not in the set (no false negatives).                                                                            | NULL    | [SELECT quotient_filter_contains(filter, 42) FROM table]                                                                                                                        |
+| xor16_filter                          | aggregate     | Creates a Xor16 filter with ~0.0015% false positive rate.                                                                                                                                                                                                                          | NULL    | [SELECT xor16_filter(hash(column)) FROM table]                                                                                                                                  |
+| xor16_filter_contains                 | scalar        | Tests if a Xor16 filter may contain a value. Returns true if the value might be in the set (with possible false positives), or false if the value is definitely not in the set (no false negatives).                                                                               | NULL    | [SELECT xor16_filter_contains(filter, 42) FROM table]                                                                                                                           |
+| xor8_filter                           | aggregate     | Creates a Xor8 filter with ~0.4% false positive rate.                                                                                                                                                                                                                              | NULL    | [SELECT xor8_filter(hash(column)) FROM table]                                                                                                                                   |
+| xor8_filter_contains                  | scalar        | Tests if a Xor8 filter may contain a value. Returns true if the value might be in the set (with possible false positives), or false if the value is definitely not in the set (no false negatives).                                                                                | NULL    | [SELECT xor8_filter_contains(filter, 42) FROM table]                                                                                                                            |
+
+### Overloaded Functions
+
+<div class="extension_functions_table"></div>
+
+This extension does not add any function overloads.
+
+### Added Types
+
+<div class="extension_types_table"></div>
+
+This extension does not add any types.
 
 ### Added Settings
 
 <div class="extension_settings_table"></div>
 
-|                 name                 |                                         description                                          | input_type | scope  | aliases |
-|--------------------------------------|----------------------------------------------------------------------------------------------|------------|--------|---------|
-| auto_fallback_to_full_download       | Allows automatically falling back to full file downloads when possible.                      | BOOLEAN    | GLOBAL | []      |
-| ca_cert_file                         | Path to a custom certificate file for self-signed certificates.                              | VARCHAR    | GLOBAL | []      |
-| enable_curl_server_cert_verification | Enable server side certificate verification for CURL backend.                                | BOOLEAN    | GLOBAL | []      |
-| enable_server_cert_verification      | Enable server side certificate verification.                                                 | BOOLEAN    | GLOBAL | []      |
-| force_download                       | Forces upfront download of file                                                              | BOOLEAN    | GLOBAL | []      |
-| hf_max_per_page                      | Debug option to limit number of items returned in list requests                              | UBIGINT    | GLOBAL | []      |
-| http_keep_alive                      | Keep alive connections. Setting this to false can help when running into connection failures | BOOLEAN    | GLOBAL | []      |
-| http_retries                         | HTTP retries on I/O error                                                                    | UBIGINT    | GLOBAL | []      |
-| http_retry_backoff                   | Backoff factor for exponentially increasing retry wait time                                  | FLOAT      | GLOBAL | []      |
-| http_retry_wait_ms                   | Time between retries                                                                         | UBIGINT    | GLOBAL | []      |
-| http_timeout                         | HTTP timeout read/write/connection/retry (in seconds)                                        | UBIGINT    | GLOBAL | []      |
-| httpfs_client_implementation         | Select which is the HTTPUtil implementation to be used                                       | VARCHAR    | GLOBAL | []      |
-| s3_access_key_id                     | S3 Access Key ID                                                                             | VARCHAR    | GLOBAL | []      |
-| s3_endpoint                          | S3 Endpoint                                                                                  | VARCHAR    | GLOBAL | []      |
-| s3_kms_key_id                        | S3 KMS Key ID                                                                                | VARCHAR    | GLOBAL | []      |
-| s3_region                            | S3 Region                                                                                    | VARCHAR    | GLOBAL | []      |
-| s3_requester_pays                    | S3 use requester pays mode                                                                   | BOOLEAN    | GLOBAL | []      |
-| s3_secret_access_key                 | S3 Access Key                                                                                | VARCHAR    | GLOBAL | []      |
-| s3_session_token                     | S3 Session Token                                                                             | VARCHAR    | GLOBAL | []      |
-| s3_uploader_max_filesize             | S3 Uploader max filesize (between 50GB and 5TB)                                              | VARCHAR    | GLOBAL | []      |
-| s3_uploader_max_parts_per_file       | S3 Uploader max parts per file (between 1 and 10000)                                         | UBIGINT    | GLOBAL | []      |
-| s3_uploader_thread_limit             | S3 Uploader global thread limit                                                              | UBIGINT    | GLOBAL | []      |
-| s3_url_compatibility_mode            | Disable Globs and Query Parameters on S3 URLs                                                | BOOLEAN    | GLOBAL | []      |
-| s3_url_style                         | S3 URL style                                                                                 | VARCHAR    | GLOBAL | []      |
-| s3_use_ssl                           | S3 use SSL                                                                                   | BOOLEAN    | GLOBAL | []      |
-| unsafe_disable_etag_checks           | Disable checks on ETag consistency                                                           | BOOLEAN    | GLOBAL | []      |
+This extension does not add any settings.
 
 

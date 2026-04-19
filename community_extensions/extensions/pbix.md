@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: pbix
   description: Extension that allows parsing the data model embedded in PowerBI (pbix) files
-  version: 0.5.1
+  version: 0.5.3
   language: C++
   build: cmake
   excluded_platforms: "linux_amd64_musl"
@@ -17,7 +17,7 @@ extension:
     - Hugoberry
 repo:
   github: Hugoberry/duckdb-pbix-extension
-  ref: 3747686cc2a2175f70c9d3c3b451aa7dbf542110
+  ref: 3d863fc006d22e9a6dcfae59fbf4a46edca8fd13
 docs:
   hello_world: |
     -- Get metadata tables from a PowerBI file
@@ -52,10 +52,10 @@ docs:
     
     *Note:* Current limitations include the inability of the WASM version to parse `https` hosted files, and that pbix_read() will decompress the entire model in memory. 
 
-extension_star_count: 29
-extension_star_count_pretty: 29
-extension_download_count: 484
-extension_download_count_pretty: 484
+extension_star_count: 34
+extension_star_count_pretty: 34
+extension_download_count: 162
+extension_download_count_pretty: 162
 image: '/images/community_extensions/social_preview/preview_community_extension_pbix.png'
 layout: community_extension_doc
 ---
@@ -86,6 +86,18 @@ LOAD {{ page.extension.name }};
 | pbix2vpax     | scalar        | NULL        | NULL    |          |
 | pbix_meta     | table         | NULL        | NULL    |          |
 | pbix_read     | table         | NULL        | NULL    |          |
+
+### Overloaded Functions
+
+<div class="extension_functions_table"></div>
+
+This extension does not add any function overloads.
+
+### Added Types
+
+<div class="extension_types_table"></div>
+
+This extension does not add any types.
 
 ### Added Settings
 

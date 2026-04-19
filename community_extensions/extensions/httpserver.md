@@ -5,82 +5,69 @@ excerpt: |
   DuckDB Community Extensions
   DuckDB HTTP API Server Extension
 
+docs:
+  extended_description: "<img src=\"https://github.com/user-attachments/assets/46a5c546-7e9b-42c7-87f4-bc8defe674e0\"\
+    \ width=250 />\n\n# DuckDB HTTP Server Extension\nThis extension transforms **DuckDB**\
+    \ instances into tiny multi-player **HTTP OLAP API** services.<br>\nSupports Authentication\
+    \ _(Basic Auth or X-Token)_ and includes the _play_ SQL user interface.\n\n###\
+    \ Features\n\n- Turn any [DuckDB](https://duckdb.org) instance into an **HTTP\
+    \ OLAP API** Server\n- Use the embedded **Web User Interface** to query and visualize\
+    \ data\n- Work with local and remote datasets including [MotherDuck](https://motherduck.com)\
+    \ \U0001F424\n- _100% Opensource, ready to use and extend by the Community!_\n\
+    \n> This extension is experimental and potentially unstable. Use at your own risk.\n\
+    \n> This DuckDB extension was created by Query.Farm, where we develop and maintain\
+    \ many extensions that expand DuckDB\u2019s capabilities by connecting it to new\
+    \ data sources, formats, and features."
+  hello_world: "-- Start a DuckDB HTTP API Server with parameters\nD SELECT httpserve_start('0.0.0.0',\
+    \ 9999, 'user:pass');\n\u250C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\
+    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\
+    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\
+    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\
+    \n\u2502 httpserve_start('0.0.0.0', 9999, 'user:pass') \u2502\n\u2502        \
+    \            varchar                    \u2502\n\u251C\u2500\u2500\u2500\u2500\
+    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\
+    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\
+    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\
+    \u2500\u2500\u2500\u2500\u2524\n\u2502 HTTP server started on 0.0.0.0:9999   \
+    \        \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\
+    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\
+    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\
+    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n\n--\
+    \ Browse to your DuckDB HTTP API endpoint to Query using the embedded interface\n\
+    \n-- Query your DuckDB HTTP API Server using curl or any other client w/ HTTP\
+    \ Basic Auth\ncurl -X POST -d \"LOAD chsql; SELECT *, uuid() FROM numbers(10)\"\
+    \ \"http://user:pass@localhost:9999/\"\n\n-- Query your DuckDB HTTP API Server\
+    \ using curl or any other client w/ X-API-Key header\ncurl -X POST --header \"\
+    X-API-Key: secretkey\" -d \"LOAD chsql; SELECT *, uuid() FROM numbers(10)\" \"\
+    http://localhost:9999/\"\n\n-- Query your DuckDB HTTP API Server using DuckDB\
+    \ HTTPFS extension w/ Header Authentication\nD CREATE SECRET extra_http_headers\
+    \ (\n  TYPE HTTP,\n  EXTRA_HTTP_HEADERS MAP{\n      'X-API-Key': 'secretkey'\n\
+    \  }\n);\n\n-- DuckDB API Server settings\n* If you want no authentication, just\
+    \ pass an empty string as parameter.\n* If you want the API run in foreground\
+    \ set `DUCKDB_HTTPSERVER_FOREGROUND=1`\n* If you want logs set `DUCKDB_HTTPSERVER_DEBUG=1`\
+    \ or `DUCKDB_HTTPSERVER_SYSLOG=1`\n\n![image info](https://private-user-images.githubusercontent.com/1423657/376339324-e930a8d2-b3e4-454e-ba12-e5e91b30bfbe.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzMzNDI2MTksIm5iZiI6MTczMzM0MjMxOSwicGF0aCI6Ii8xNDIzNjU3LzM3NjMzOTMyNC1lOTMwYThkMi1iM2U0LTQ1NGUtYmExMi1lNWU5MWIzMGJmYmUucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI0MTIwNCUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNDEyMDRUMTk1ODM5WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9ZjI5OTEwZGNhM2NhZGI4NDJiYTE5ZmM1ZWIzZDE4OTBkZDY3ODBkMTkxM2E1ZWNiMjRmZDAzNzlkOWEyMjVmMiZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QifQ.iCK1p26RFbEjMWPyG5i8XmhPyzUn8J9cCsm1N1T8y5E)\n"
 extension:
-  name: httpserver
-  description: DuckDB HTTP API Server Extension
-  version: 0.1.9
-  language: SQL & C++
   build: cmake
+  description: DuckDB HTTP API Server Extension
+  excluded_platforms: wasm_mvp;wasm_eh;wasm_threads
+  language: SQL & C++
   license: MIT
-  excluded_platforms: "wasm_mvp;wasm_eh;wasm_threads"
   maintainers:
-    - lmangani
-    - akvlad
-    - niclashaderer
-    - gropaul
-    - rustyconover
-
+  - lmangani
+  - akvlad
+  - niclashaderer
+  - gropaul
+  - rustyconover
+  name: httpserver
+  version: '2025120401'
 repo:
   github: Query-farm/httpserver
-  ref: ffd891900fecb97dfb36a1fc23fafcbfef0ebca5
+  ref: 8a53d8b7f4290608e0eb0d4dbfbafefaf04209e9
 
-docs:
-  hello_world: |
-    -- Start a DuckDB HTTP API Server with parameters
-    D SELECT httpserve_start('0.0.0.0', 9999, 'user:pass');
-    ┌───────────────────────────────────────────────┐
-    │ httpserve_start('0.0.0.0', 9999, 'user:pass') │
-    │                    varchar                    │
-    ├───────────────────────────────────────────────┤
-    │ HTTP server started on 0.0.0.0:9999           │
-    └───────────────────────────────────────────────┘
-
-    -- Browse to your DuckDB HTTP API endpoint to Query using the embedded interface
-
-    -- Query your DuckDB HTTP API Server using curl or any other client w/ HTTP Basic Auth
-    curl -X POST -d "LOAD chsql; SELECT *, uuid() FROM numbers(10)" "http://user:pass@localhost:9999/"
-
-    -- Query your DuckDB HTTP API Server using curl or any other client w/ X-API-Key header
-    curl -X POST --header "X-API-Key: secretkey" -d "LOAD chsql; SELECT *, uuid() FROM numbers(10)" "http://localhost:9999/"
-
-    -- Query your DuckDB HTTP API Server using DuckDB HTTPFS extension w/ Header Authentication
-    D CREATE SECRET extra_http_headers (
-      TYPE HTTP,
-      EXTRA_HTTP_HEADERS MAP{
-          'X-API-Key': 'secretkey'
-      }
-    );
-
-    -- DuckDB API Server settings
-    * If you want no authentication, just pass an empty string as parameter.
-    * If you want the API run in foreground set `DUCKDB_HTTPSERVER_FOREGROUND=1`
-    * If you want logs set `DUCKDB_HTTPSERVER_DEBUG=1` or `DUCKDB_HTTPSERVER_SYSLOG=1`
-
-    ![image info](https://private-user-images.githubusercontent.com/1423657/376339324-e930a8d2-b3e4-454e-ba12-e5e91b30bfbe.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzMzNDI2MTksIm5iZiI6MTczMzM0MjMxOSwicGF0aCI6Ii8xNDIzNjU3LzM3NjMzOTMyNC1lOTMwYThkMi1iM2U0LTQ1NGUtYmExMi1lNWU5MWIzMGJmYmUucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI0MTIwNCUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNDEyMDRUMTk1ODM5WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9ZjI5OTEwZGNhM2NhZGI4NDJiYTE5ZmM1ZWIzZDE4OTBkZDY3ODBkMTkxM2E1ZWNiMjRmZDAzNzlkOWEyMjVmMiZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QifQ.iCK1p26RFbEjMWPyG5i8XmhPyzUn8J9cCsm1N1T8y5E)
-
-
-  extended_description: |
-    <img src="https://github.com/user-attachments/assets/46a5c546-7e9b-42c7-87f4-bc8defe674e0" width=250 />
-
-    # DuckDB HTTP Server Extension
-    This extension transforms **DuckDB** instances into tiny multi-player **HTTP OLAP API** services.<br>
-    Supports Authentication _(Basic Auth or X-Token)_ and includes the _play_ SQL user interface.
-
-    ### Features
-
-    - Turn any [DuckDB](https://duckdb.org) instance into an **HTTP OLAP API** Server
-    - Use the embedded **Web User Interface** to query and visualize data
-    - Work with local and remote datasets including [MotherDuck](https://motherduck.com) 🐤
-    - _100% Opensource, ready to use and extend by the Community!_
-
-    > This extension is experimental and potentially unstable. Use at your own risk.
-
-    > This DuckDB extension was created by Query.Farm, where we develop and maintain many extensions that expand DuckDB’s capabilities by connecting it to new data sources, formats, and features.
-
-extension_star_count: 237
-extension_star_count_pretty: 237
-extension_download_count: null
-extension_download_count_pretty: n/a
+extension_star_count: 273
+extension_star_count_pretty: 273
+extension_download_count: 2801
+extension_download_count_pretty: 2.8k
 image: '/images/community_extensions/social_preview/preview_community_extension_httpserver.png'
 layout: community_extension_doc
 ---
@@ -110,38 +97,5 @@ LOAD {{ page.extension.name }};
 |-----------------|---------------|-------------|---------|----------|
 | httpserve_start | scalar        | NULL        | NULL    |          |
 | httpserve_stop  | scalar        | NULL        | NULL    |          |
-
-### Added Settings
-
-<div class="extension_settings_table"></div>
-
-|                 name                 |                                         description                                          | input_type | scope  | aliases |
-|--------------------------------------|----------------------------------------------------------------------------------------------|------------|--------|---------|
-| auto_fallback_to_full_download       | Allows automatically falling back to full file downloads when possible.                      | BOOLEAN    | GLOBAL | []      |
-| ca_cert_file                         | Path to a custom certificate file for self-signed certificates.                              | VARCHAR    | GLOBAL | []      |
-| enable_curl_server_cert_verification | Enable server side certificate verification for CURL backend.                                | BOOLEAN    | GLOBAL | []      |
-| enable_server_cert_verification      | Enable server side certificate verification.                                                 | BOOLEAN    | GLOBAL | []      |
-| force_download                       | Forces upfront download of file                                                              | BOOLEAN    | GLOBAL | []      |
-| hf_max_per_page                      | Debug option to limit number of items returned in list requests                              | UBIGINT    | GLOBAL | []      |
-| http_keep_alive                      | Keep alive connections. Setting this to false can help when running into connection failures | BOOLEAN    | GLOBAL | []      |
-| http_retries                         | HTTP retries on I/O error                                                                    | UBIGINT    | GLOBAL | []      |
-| http_retry_backoff                   | Backoff factor for exponentially increasing retry wait time                                  | FLOAT      | GLOBAL | []      |
-| http_retry_wait_ms                   | Time between retries                                                                         | UBIGINT    | GLOBAL | []      |
-| http_timeout                         | HTTP timeout read/write/connection/retry (in seconds)                                        | UBIGINT    | GLOBAL | []      |
-| httpfs_client_implementation         | Select which is the HTTPUtil implementation to be used                                       | VARCHAR    | GLOBAL | []      |
-| s3_access_key_id                     | S3 Access Key ID                                                                             | VARCHAR    | GLOBAL | []      |
-| s3_endpoint                          | S3 Endpoint                                                                                  | VARCHAR    | GLOBAL | []      |
-| s3_kms_key_id                        | S3 KMS Key ID                                                                                | VARCHAR    | GLOBAL | []      |
-| s3_region                            | S3 Region                                                                                    | VARCHAR    | GLOBAL | []      |
-| s3_requester_pays                    | S3 use requester pays mode                                                                   | BOOLEAN    | GLOBAL | []      |
-| s3_secret_access_key                 | S3 Access Key                                                                                | VARCHAR    | GLOBAL | []      |
-| s3_session_token                     | S3 Session Token                                                                             | VARCHAR    | GLOBAL | []      |
-| s3_uploader_max_filesize             | S3 Uploader max filesize (between 50GB and 5TB)                                              | VARCHAR    | GLOBAL | []      |
-| s3_uploader_max_parts_per_file       | S3 Uploader max parts per file (between 1 and 10000)                                         | UBIGINT    | GLOBAL | []      |
-| s3_uploader_thread_limit             | S3 Uploader global thread limit                                                              | UBIGINT    | GLOBAL | []      |
-| s3_url_compatibility_mode            | Disable Globs and Query Parameters on S3 URLs                                                | BOOLEAN    | GLOBAL | []      |
-| s3_url_style                         | S3 URL style                                                                                 | VARCHAR    | GLOBAL | []      |
-| s3_use_ssl                           | S3 use SSL                                                                                   | BOOLEAN    | GLOBAL | []      |
-| unsafe_disable_etag_checks           | Disable checks on ETag consistency                                                           | BOOLEAN    | GLOBAL | []      |
 
 

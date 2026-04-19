@@ -17,15 +17,16 @@ extension:
   maintainers:
   - rustyconover
   name: textplot
-  version: '2025101201'
+  version: '2025120401'
 repo:
+  andium: d3b90faa3372d4204915343546fa0556601bf243
   github: query-farm/textplot
-  ref: d8ab4d5dfa52f70cf059a9e23cb3b90228f647ad
+  ref: 7a5c68be969d91a5d49a59e4b5a3117e7be5e42a
 
-extension_star_count: 10
-extension_star_count_pretty: 10
-extension_download_count: 673
-extension_download_count_pretty: 673
+extension_star_count: 23
+extension_star_count_pretty: 23
+extension_download_count: 844
+extension_download_count_pretty: 844
 image: '/images/community_extensions/social_preview/preview_community_extension_textplot.png'
 layout: community_extension_doc
 ---
@@ -51,44 +52,29 @@ LOAD {{ page.extension.name }};
 
 <div class="extension_functions_table"></div>
 
-| function_name | function_type | description | comment | examples |
-|---------------|---------------|-------------|---------|----------|
-| tp_bar        | scalar        | NULL        | NULL    | NULL     |
-| tp_density    | scalar        | NULL        | NULL    | NULL     |
-| tp_qr         | scalar        | NULL        | NULL    | NULL     |
-| tp_sparkline  | scalar        | NULL        | NULL    | NULL     |
+| function_name | function_type |                                                                                                            description                                                                                                            | comment |                                                                                                                                   examples                                                                                                                                   |
+|---------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| tp_bar        | scalar        | Creates a horizontal bar chart visualization from a numeric value. Supports customizable width, colors, shapes (square/circle/heart), and color thresholds.                                                                       | NULL    | [tp_bar(0.75), tp_bar(score, min := 0, max := 100, width := 20), tp_bar(value, on := '#', off := '-', width := 10), tp_bar(pct, shape := 'heart', on_color := 'red'), tp_bar(temp, thresholds := [{'threshold': 80, 'color': 'red'}, {'threshold': 50, 'color': 'yellow'}])] |
+| tp_density    | scalar        | Creates a density plot (histogram) visualization from an array of numeric values. Supports multiple styles: shaded, dots, ascii, height, circles, safety, rainbow_circle, rainbow_square, moon, sparse, and white.                | NULL    | [tp_density(list(value)), tp_density(array_agg(score), width := 40), tp_density(data, style := 'height'), tp_density(temps, style := 'rainbow_square', width := 30)]                                                                                                         |
+| tp_qr         | scalar        | Generates a text-based QR code from a string or blob. Supports configurable error correction levels and custom on/off characters.                                                                                                 | NULL    | [tp_qr('https://duckdb.org'), tp_qr(url, ecc := 'high'), tp_qr(message, on := '##', off := '  ')]                                                                                                                                                                            |
+| tp_sparkline  | scalar        | Creates a sparkline visualization from an array of numeric values. Supports three modes: 'absolute' (height-based), 'delta' (up/down/same direction), and 'trend' (direction with magnitude). Multiple themes available per mode. | NULL    | [tp_sparkline(list(value)), tp_sparkline(array_agg(price), width := 20), tp_sparkline(data, mode := 'delta', theme := 'arrows'), tp_sparkline(temps, mode := 'absolute', theme := 'utf8_blocks'), tp_sparkline(stocks, mode := 'trend', theme := 'faces')]                   |
+
+### Overloaded Functions
+
+<div class="extension_functions_table"></div>
+
+This extension does not add any function overloads.
+
+### Added Types
+
+<div class="extension_types_table"></div>
+
+This extension does not add any types.
 
 ### Added Settings
 
 <div class="extension_settings_table"></div>
 
-|                 name                 |                                         description                                          | input_type | scope  | aliases |
-|--------------------------------------|----------------------------------------------------------------------------------------------|------------|--------|---------|
-| auto_fallback_to_full_download       | Allows automatically falling back to full file downloads when possible.                      | BOOLEAN    | GLOBAL | []      |
-| ca_cert_file                         | Path to a custom certificate file for self-signed certificates.                              | VARCHAR    | GLOBAL | []      |
-| enable_curl_server_cert_verification | Enable server side certificate verification for CURL backend.                                | BOOLEAN    | GLOBAL | []      |
-| enable_server_cert_verification      | Enable server side certificate verification.                                                 | BOOLEAN    | GLOBAL | []      |
-| force_download                       | Forces upfront download of file                                                              | BOOLEAN    | GLOBAL | []      |
-| hf_max_per_page                      | Debug option to limit number of items returned in list requests                              | UBIGINT    | GLOBAL | []      |
-| http_keep_alive                      | Keep alive connections. Setting this to false can help when running into connection failures | BOOLEAN    | GLOBAL | []      |
-| http_retries                         | HTTP retries on I/O error                                                                    | UBIGINT    | GLOBAL | []      |
-| http_retry_backoff                   | Backoff factor for exponentially increasing retry wait time                                  | FLOAT      | GLOBAL | []      |
-| http_retry_wait_ms                   | Time between retries                                                                         | UBIGINT    | GLOBAL | []      |
-| http_timeout                         | HTTP timeout read/write/connection/retry (in seconds)                                        | UBIGINT    | GLOBAL | []      |
-| httpfs_client_implementation         | Select which is the HTTPUtil implementation to be used                                       | VARCHAR    | GLOBAL | []      |
-| s3_access_key_id                     | S3 Access Key ID                                                                             | VARCHAR    | GLOBAL | []      |
-| s3_endpoint                          | S3 Endpoint                                                                                  | VARCHAR    | GLOBAL | []      |
-| s3_kms_key_id                        | S3 KMS Key ID                                                                                | VARCHAR    | GLOBAL | []      |
-| s3_region                            | S3 Region                                                                                    | VARCHAR    | GLOBAL | []      |
-| s3_requester_pays                    | S3 use requester pays mode                                                                   | BOOLEAN    | GLOBAL | []      |
-| s3_secret_access_key                 | S3 Access Key                                                                                | VARCHAR    | GLOBAL | []      |
-| s3_session_token                     | S3 Session Token                                                                             | VARCHAR    | GLOBAL | []      |
-| s3_uploader_max_filesize             | S3 Uploader max filesize (between 50GB and 5TB)                                              | VARCHAR    | GLOBAL | []      |
-| s3_uploader_max_parts_per_file       | S3 Uploader max parts per file (between 1 and 10000)                                         | UBIGINT    | GLOBAL | []      |
-| s3_uploader_thread_limit             | S3 Uploader global thread limit                                                              | UBIGINT    | GLOBAL | []      |
-| s3_url_compatibility_mode            | Disable Globs and Query Parameters on S3 URLs                                                | BOOLEAN    | GLOBAL | []      |
-| s3_url_style                         | S3 URL style                                                                                 | VARCHAR    | GLOBAL | []      |
-| s3_use_ssl                           | S3 use SSL                                                                                   | BOOLEAN    | GLOBAL | []      |
-| unsafe_disable_etag_checks           | Disable checks on ETag consistency                                                           | BOOLEAN    | GLOBAL | []      |
+This extension does not add any settings.
 
 

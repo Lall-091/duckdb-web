@@ -1,45 +1,83 @@
-let searchDataLoaded = false; // Flag to prevent multiple loads
+let searchDataLoaded = false;
+
+const tokenize = (string) => string.split(/[\s-.]+/);
+
+const searchOptions = {
+	fields: ['title', 'text', 'category', 'blurb'],
+	storeFields: ['title', 'category', 'url', 'blurb', 'type'],
+	tokenize,
+	searchOptions: { tokenize }
+};
+
+const CACHE_KEY = 'duckdb_search_index';
+const CACHE_VERSION_KEY = 'duckdb_search_version';
+
+function loadFromCache() {
+	try {
+		var version = localStorage.getItem(CACHE_VERSION_KEY);
+		var data = localStorage.getItem(CACHE_KEY);
+		if (version && data) {
+			return { version: version, index: JSON.parse(data) };
+		}
+	} catch (e) { /* localStorage unavailable or corrupted */ }
+	return null;
+}
+
+function saveToCache(version, indexObj) {
+	try {
+		localStorage.setItem(CACHE_VERSION_KEY, version);
+		localStorage.setItem(CACHE_KEY, JSON.stringify(indexObj));
+	} catch (e) { /* quota exceeded, ignore */ }
+}
+
+function applyIndex(indexObj) {
+	miniSearch = MiniSearch.loadJS(indexObj, searchOptions);
+	searchDataLoaded = true;
+	if (text_div.value.length > 0) {
+		perform_search(text_div.value);
+	}
+}
 
 function loadSearchData() {
-	if (searchDataLoaded) return; // Skip if already loaded
+	if (searchDataLoaded) return;
+	searchDataLoaded = true; // prevent concurrent loads
 
-	const xhr = new XMLHttpRequest();
-	xhr.open('GET', '/data/search_data.json');
-	xhr.setRequestHeader('Accept-Encoding', 'gzip, deflate');
-	xhr.onreadystatechange = function(event) {
-		if (this.readyState === 4) {
-			const { data } = JSON.parse(this.responseText);
-			let documents = data.map((item, id) => ({id, ...item}));
+	var cached = loadFromCache();
+	if (cached) {
+		applyIndex(cached.index);
 
-			// Add documents to the index
-			miniSearch.addAll(documents);
-			miniPredictor.addAll(documents);
+		// Revalidate in background
+		fetch('/data/search_index.json')
+			.then(function (r) { return r.json(); })
+			.then(function (json) {
+				if (json.version !== cached.version) {
+					applyIndex(json.index);
+					saveToCache(json.version, json.index);
+				}
+			})
+			.catch(function () { /* offline / fetch failed, cached index is fine */ });
+		return;
+	}
 
-			searchDataLoaded = true; // Mark data as loaded
-			
-			console.log("search_data.json successfully loaded and indexed.");
-		}
-	};
-	xhr.send();
+	// No cache — fetch and load
+	fetch('/data/search_index.json')
+		.then(function (r) { return r.json(); })
+		.then(function (json) {
+			applyIndex(json.index);
+			saveToCache(json.version, json.index);
+		})
+		.catch(function (err) {
+			searchDataLoaded = false;
+			console.error('Failed to load search index:', err);
+		});
 }
 
 // Event listeners to load search data only on interaction
 const text_div = document.getElementById("q");
 text_div.addEventListener('focus', loadSearchData);
 text_div.addEventListener('input', loadSearchData);
-text_div.addEventListener('keydown', loadSearchData);
 
-const tokenize = (string) => string.split(/[\s-.]+/); // search query tokenizer
-
-// Create a search engine that indexes the 'title' and 'text' fields for
-// full-text search. Search results will include 'title' and 'category' (plus the
-// id field, that is always stored and returned)
-const miniSearch = new MiniSearch({
-	fields: ['title', 'text', 'category', 'blurb'],
-	storeFields: ['title', 'text', 'category', 'url', 'blurb', 'type'],
-	tokenize,
-	searchOptions: { tokenize }
-})
+let miniSearch = new MiniSearch(searchOptions);
 
 // read GET parameters (https://stackoverflow.com/questions/12049620/how-to-get-get-variables-value-in-javascript)
 // lord knows why this needs a regex and hasn't been part of the JS standard since day 1
@@ -149,12 +187,6 @@ text_div.addEventListener('input', on_update);
 // autocomplete
 // see https://www.w3schools.com/howto/howto_js_autocomplete.asp
 inp = document.getElementById("q")
-const miniPredictor = new MiniSearch({
-	fields: ['title', 'category', 'blurb'],
-	storeFields: ['title', 'category', 'blurb', 'type'],
-	tokenize,
-	searchOptions: { tokenize }
-})
 /*the autocomplete function takes two arguments,
 the text field element and an array of possible autocompleted values:*/
 var currentFocus;

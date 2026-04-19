@@ -12,12 +12,11 @@ from sphinx.locale import __
 
 from generate_python_relational_docs import generate_python_relational_api_md
 
-DUCKDB_DOC_VERSION = os.getenv("DUCKDB_DOC_VERSION", "stable")
+DUCKDB_DOC_VERSION = os.getenv("DUCKDB_DOC_VERSION", "lts")
 
 redirect_from_text = """\
 redirect_from:
 - /docs/api/python/reference/index
-- /docs/api/python/reference/index/
 - /docs/clients/python/reference/index
 """
 
@@ -25,7 +24,7 @@ FRONTMATTER = f"""\
 ---
 # this file is GENERATED, regenerate it with scripts/generate_python_docs.py
 layout: docu
-{redirect_from_text if DUCKDB_DOC_VERSION == 'stable' else ''}
+{redirect_from_text if DUCKDB_DOC_VERSION == 'lts' else ''}
 title: Python Client API
 ---
 """
@@ -70,7 +69,15 @@ def create_index_rst():
     classes = [
         {
             "name": name,
-            "rst_type": 'automethod' if not inspect.isclass(obj) else 'autoclass',
+            "rst_type": (
+                "autoclass"
+                if inspect.isclass(obj)
+                else (
+                    "autofunction"
+                    if inspect.isbuiltin(duckdb.CaseExpression)
+                    else "automethod"
+                )
+            ),
         }
         for name, obj in inspect.getmembers(duckdb)
         if inspect.isclass(obj) or inspect.isroutine(obj)
@@ -88,7 +95,7 @@ def create_index_rst():
             if cls['name'] == "DuckDBPyRelation":
                 f.write(".. include:: relation.rst\n")
             else:
-                f.write(f".. {cls['rst_type']}:: duckdb.{cls['name']}\n")
+                f.write(f".. {cls['rst_type']}:: {cls['name']}\n")
                 if cls['rst_type'] == 'autoclass':
                     f.write("   :members:\n")
                     f.write("   :show-inheritance:\n")
@@ -161,7 +168,7 @@ def main():
             "html_use_index": False,
             "intersphinx_mapping": {
                 "pandas": (
-                    "https://pandas.pydata.org/pandas-docs/version/1.5.1/",
+                    "https://pandas.pydata.org/pandas-docs/version/3.0/",
                     None,
                 ),
                 "pyarrow": ("https://arrow.apache.org/docs/9.0/", None),
@@ -179,7 +186,7 @@ def main():
         filename.unlink()
 
     # test objects.inv
-    # python -m sphinx.ext.intersphinx http://localhost:4000/docs/stable/clients/python/reference/objects.inv
+    # python -m sphinx.ext.intersphinx http://localhost:4000/docs/lts/clients/python/reference/objects.inv
 
 
 if __name__ == "__main__":

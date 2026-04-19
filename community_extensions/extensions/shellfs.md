@@ -17,15 +17,16 @@ extension:
   - rustyconover
   name: shellfs
   requires_toolchains: python3
-  version: '2025101201'
+  version: '2025120401'
 repo:
+  andium: 4fef6d3d58068ce8ef6ed002441e0eca002cf372
   github: query-farm/shellfs
-  ref: f0bcfb8035b2f2d62b3dbfa202bbe61a125b51ee
+  ref: c8088a72beea4c6ef3bdb637bfc2799d8944dd90
 
-extension_star_count: 82
-extension_star_count_pretty: 82
-extension_download_count: 27263
-extension_download_count_pretty: 27.3k
+extension_star_count: 93
+extension_star_count_pretty: 93
+extension_download_count: 73343
+extension_download_count_pretty: 73.3k
 image: '/images/community_extensions/social_preview/preview_community_extension_shellfs.png'
 layout: community_extension_doc
 ---
@@ -47,38 +48,30 @@ LOAD {{ page.extension.name }};
 {{ page.docs.extended_description }}
 {% endif %}
 
+### Added Functions
+
+<div class="extension_functions_table"></div>
+
+This extension does not add any functions.
+
+### Overloaded Functions
+
+<div class="extension_functions_table"></div>
+
+This extension does not add any function overloads.
+
+### Added Types
+
+<div class="extension_types_table"></div>
+
+This extension does not add any types.
+
 ### Added Settings
 
 <div class="extension_settings_table"></div>
 
-|                 name                 |                                         description                                          | input_type | scope  | aliases |
-|--------------------------------------|----------------------------------------------------------------------------------------------|------------|--------|---------|
-| auto_fallback_to_full_download       | Allows automatically falling back to full file downloads when possible.                      | BOOLEAN    | GLOBAL | []      |
-| ca_cert_file                         | Path to a custom certificate file for self-signed certificates.                              | VARCHAR    | GLOBAL | []      |
-| enable_curl_server_cert_verification | Enable server side certificate verification for CURL backend.                                | BOOLEAN    | GLOBAL | []      |
-| enable_server_cert_verification      | Enable server side certificate verification.                                                 | BOOLEAN    | GLOBAL | []      |
-| force_download                       | Forces upfront download of file                                                              | BOOLEAN    | GLOBAL | []      |
-| hf_max_per_page                      | Debug option to limit number of items returned in list requests                              | UBIGINT    | GLOBAL | []      |
-| http_keep_alive                      | Keep alive connections. Setting this to false can help when running into connection failures | BOOLEAN    | GLOBAL | []      |
-| http_retries                         | HTTP retries on I/O error                                                                    | UBIGINT    | GLOBAL | []      |
-| http_retry_backoff                   | Backoff factor for exponentially increasing retry wait time                                  | FLOAT      | GLOBAL | []      |
-| http_retry_wait_ms                   | Time between retries                                                                         | UBIGINT    | GLOBAL | []      |
-| http_timeout                         | HTTP timeout read/write/connection/retry (in seconds)                                        | UBIGINT    | GLOBAL | []      |
-| httpfs_client_implementation         | Select which is the HTTPUtil implementation to be used                                       | VARCHAR    | GLOBAL | []      |
-| ignore_sigpipe                       | Ignore SIGPIPE                                                                               | BOOLEAN    | GLOBAL | []      |
-| s3_access_key_id                     | S3 Access Key ID                                                                             | VARCHAR    | GLOBAL | []      |
-| s3_endpoint                          | S3 Endpoint                                                                                  | VARCHAR    | GLOBAL | []      |
-| s3_kms_key_id                        | S3 KMS Key ID                                                                                | VARCHAR    | GLOBAL | []      |
-| s3_region                            | S3 Region                                                                                    | VARCHAR    | GLOBAL | []      |
-| s3_requester_pays                    | S3 use requester pays mode                                                                   | BOOLEAN    | GLOBAL | []      |
-| s3_secret_access_key                 | S3 Access Key                                                                                | VARCHAR    | GLOBAL | []      |
-| s3_session_token                     | S3 Session Token                                                                             | VARCHAR    | GLOBAL | []      |
-| s3_uploader_max_filesize             | S3 Uploader max filesize (between 50GB and 5TB)                                              | VARCHAR    | GLOBAL | []      |
-| s3_uploader_max_parts_per_file       | S3 Uploader max parts per file (between 1 and 10000)                                         | UBIGINT    | GLOBAL | []      |
-| s3_uploader_thread_limit             | S3 Uploader global thread limit                                                              | UBIGINT    | GLOBAL | []      |
-| s3_url_compatibility_mode            | Disable Globs and Query Parameters on S3 URLs                                                | BOOLEAN    | GLOBAL | []      |
-| s3_url_style                         | S3 URL style                                                                                 | VARCHAR    | GLOBAL | []      |
-| s3_use_ssl                           | S3 use SSL                                                                                   | BOOLEAN    | GLOBAL | []      |
-| unsafe_disable_etag_checks           | Disable checks on ETag consistency                                                           | BOOLEAN    | GLOBAL | []      |
+|      name      |  description   | input_type | scope  | aliases |
+|----------------|----------------|------------|--------|---------|
+| ignore_sigpipe | Ignore SIGPIPE | BOOLEAN    | GLOBAL | []      |
 
 

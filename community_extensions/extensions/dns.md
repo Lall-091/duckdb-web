@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: dns
   description: The DNS Extension enables DNS lookups and reverse DNS lookups from within DuckDB
-  version: 0.4.0
+  version: 0.4.1
   language: Rust
   build: cargo
   license: MIT
@@ -19,7 +19,7 @@ extension:
 
 repo:
   github: tobilg/duckdb-dns
-  ref: b95577b43190fb67d0a723a0acf25cac5b769ff6
+  ref: c59f5b0fc208b2f8a5b65ced3dfaf8d3a5deefa8
 
 docs:
   hello_world: |
@@ -296,10 +296,10 @@ docs:
 
     > This extension is experimental and potentially unstable. See README for full examples.
 
-extension_star_count: 10
-extension_star_count_pretty: 10
-extension_download_count: null
-extension_download_count_pretty: n/a
+extension_star_count: 16
+extension_star_count_pretty: 16
+extension_download_count: 775
+extension_download_count_pretty: 775
 image: '/images/community_extensions/social_preview/preview_community_extension_dns.png'
 layout: community_extension_doc
 ---
@@ -334,5 +334,23 @@ LOAD {{ page.extension.name }};
 | set_dns_concurrency_limit | scalar        | Updates the concurrency limit for DNS lookup operations to prevent TCP connection exhaustion.                                                             | NULL    | [SELECT set_dns_concurrency_limit(100);]    |
 | set_dns_cache_size        | scalar        | Updates the DNS cache size for the resolver.                                                                                                              | NULL    | [SELECT set_dns_cache_size(8192);]          |
 | corey                     | table         | Queries all TXT records for a hostname and returns them as a table with one row per TXT record.                                                           | NULL    | [SELECT * FROM corey('lastweekinaws.com');] |
+
+### Overloaded Functions
+
+<div class="extension_functions_table"></div>
+
+This extension does not add any function overloads.
+
+### Added Types
+
+<div class="extension_types_table"></div>
+
+This extension does not add any types.
+
+### Added Settings
+
+<div class="extension_settings_table"></div>
+
+This extension does not add any settings.
 
 

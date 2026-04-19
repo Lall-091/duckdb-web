@@ -1,11 +1,10 @@
-{% if version_viewed == "stable" %}
+{% if version_viewed == "current" %}
 	<!-- this is the default and recommended version - do not show any extra warning -->
-{% elsif version_viewed == "preview" %}
-	<!-- show nightly banner -->
-	<div class="banner nightly">
+{% elsif version_viewed == "lts" %}
+	<div class="banner lts">
 		<div class="content">
-			<span class="icon_nightly"></span>
-			<span title="The page is for the preview version of DuckDB, available in the nightly builds. The features shown in the documentation may not yet be available in the stable version.">Preview version</span>
+			<svg class="icon"><use href="#clock"></use></svg>
+			<span title="The page is for the LTS build of DuckDB.">LTS version</span>
 		</div>
 	</div>
 {% else %}
@@ -29,13 +28,13 @@
 	{% endfor %}
 	<div class="banner outdated">
 		<div class="content">
-			<span class="icon_outdated"></span>
+			<svg class="icon"><use href="#alert-octagon"></use></svg>
 			{% assign new_filename = new_url | replace: ".html", ".md" %}
 			{% capture url_exists %}{% file_exists {{ new_filename }} %}{% endcapture %}
 			{% if url_exists == "true" %}
-				<span title="Outdated documentation. Please select the stable version.">Outdated documentation</span>
+				<span title="Outdated documentation. Please select the current version.">Outdated documentation</span>
 			{% else %}
-				<span title="This page is not available in the stable version of the documentation.">Outdated documentation</span>
+				<span title="This page is not available in the current version of the documentation.">Outdated documentation</span>
 			{% endif %}
 		</div>
 	</div>

@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: splink_udfs
   description: Phonetic, text normalization and address matching functions for record linkage.
-  version: 0.0.10
+  version: 0.0.11
   language: C++
   build: cmake
   license: MIT
@@ -17,7 +17,7 @@ extension:
 
 repo:
   github: moj-analytical-services/splink_udfs
-  ref: 86f88013fd7c89d48da63289a5ccf62de8aac472
+  ref: cf00056f887486d0aee0a853a764f9775aa40438
 
 docs:
   hello_world: |
@@ -30,10 +30,10 @@ docs:
     `ngrams(list,n)`, `double_metaphone(str)`
     and faster versions of `levenshtein` and `damerau_levenshtein`.
 
-extension_star_count: 13
-extension_star_count_pretty: 13
-extension_download_count: 507
-extension_download_count_pretty: 507
+extension_star_count: 17
+extension_star_count_pretty: 17
+extension_download_count: 3526
+extension_download_count_pretty: 3.5k
 image: '/images/community_extensions/social_preview/preview_community_extension_splink_udfs.png'
 layout: community_extension_doc
 ---
@@ -77,5 +77,17 @@ LOAD {{ page.extension.name }};
 |---------------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|-------------------------------------------|
 | damerau_levenshtein | scalar        | Extension of Levenshtein distance to also include transposition of adjacent characters as an allowed edit operation. In other words, the minimum number of edit operations (insertions, deletions, substitutions or transpositions) required to change one string to another. Characters of different cases (e.g., `a` and `A`) are considered different. | NULL    | [damerau_levenshtein('duckdb', 'udckbd')] |
 | levenshtein         | scalar        | The minimum number of single-character edits (insertions, deletions or substitutions) required to change one string to the other. Characters of different cases (e.g., `a` and `A`) are considered different.                                                                                                                                             | NULL    | [levenshtein('duck', 'db')]               |
+
+### Added Types
+
+<div class="extension_types_table"></div>
+
+This extension does not add any types.
+
+### Added Settings
+
+<div class="extension_settings_table"></div>
+
+This extension does not add any settings.
 
 

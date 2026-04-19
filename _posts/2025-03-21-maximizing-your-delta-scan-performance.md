@@ -4,7 +4,7 @@ title: "Maximizing Your Delta Scan Performance in DuckDB"
 author: "Sam Ansmink"
 thumb: "/images/blog/thumbs/delta-lake-part-2.png"
 image: "/images/blog/thumbs/delta-lake-part-2.png"
-excerpt: "We released a new version of the [`delta` extension](/docs/stable/core_extensions/delta), which includes several new features and performance improvements. In this blog post, we’ll put the `delta` extension through its paces with some benchmarks and take a deep dive into some of the new performance-related features."
+excerpt: "We released a new version of the [`delta` extension](/docs/lts/core_extensions/delta), which includes several new features and performance improvements. In this blog post, we’ll put the `delta` extension through its paces with some benchmarks and take a deep dive into some of the new performance-related features."
 tags: ["extensions"]
 ---
 
@@ -18,7 +18,7 @@ Let’s start off with a small recap of Delta to get back up to speed. [Delta La
 
 ## The `delta` Extension
 
-DuckDB natively supports reading Delta Tables through the [`delta` extension]({% link docs/stable/core_extensions/delta.md %}). This extension is one of the [core DuckDB extensions]({% link docs/stable/core_extensions/overview.md %}) with >70k weekly downloads. Using this extension to read from a Delta Table is really simple. Since DuckDB v1.2.0, the `delta` extension will be automatically installed upon first use and loaded when invoking the `delta_scan` function.
+DuckDB natively supports reading Delta Tables through the [`delta` extension]({% link docs/lts/core_extensions/delta.md %}). This extension is one of the [core DuckDB extensions]({% link docs/lts/core_extensions/overview.md %}) with >70k weekly downloads. Using this extension to read from a Delta Table is really simple. Since DuckDB v1.2.0, the `delta` extension will be automatically installed upon first use and loaded when invoking the `delta_scan` function.
 
 So for example, to read a local Delta table, simply open any DuckDB client and run:
 
@@ -33,21 +33,21 @@ CREATE SECRET (TYPE s3, PROVIDER credential_chain);
 SELECT * FROM delta_scan('s3://⟨your-bucket⟩/⟨your_delta_table⟩');
 ```
 
-For other cloud providers such as Azure or Google Cloud, check the [extension’s documentation page]({% link docs/stable/core_extensions/delta.md %}#usage).
+For other cloud providers such as Azure or Google Cloud, check the [extension’s documentation page]({% link docs/lts/core_extensions/delta.md %}#usage).
 
 ## Performance Improvements between `delta` v0.1.0 and 0.3.0
 
-While the first release (v0.1.0) of the `delta` extension already came with various performance-related features such as projection pushdown and constant filter pushdown, the features added since then have massively improved the performance of `delta_scan`. To illustrate this, our first benchmark will use the industry standard [TPC-DS]({% link docs/stable/core_extensions/tpcds.md %}) benchmark with the scale factor 1 data set (SF1).
+While the first release (v0.1.0) of the `delta` extension already came with various performance-related features such as projection pushdown and constant filter pushdown, the features added since then have massively improved the performance of `delta_scan`. To illustrate this, our first benchmark will use the industry standard [TPC-DS]({% link docs/lts/core_extensions/tpcds.md %}) benchmark with the scale factor 1 data set (SF1).
 
 ### Benchmark Setup
 
 For this benchmark, we started up an [AWS c6id.4xlarge instance](https://instances.vantage.sh/aws/ec2/c6id.4xlarge) (16 vCPUs, 32 GB RAM) and wrote the TPC-DS SF1 dataset to an S3 bucket in the same region (eu-west-1) using [PySpark](https://github.com/duckdb/duckdb-delta/blob/026345b9cf9092e3dd5ae42cc501ec8ed45ca09b/scripts/data_generator/generate_test_data.py).
 Each benchmark is run a total of 6 times with the result being the median runtime of the last 5 runs with the first being considered a cold run. The aggregated results are shown in the following table.
 
-|                Result              | Total runtime | Min runtime | Max runtime | Median runtime | Queries timed out |
-|------------------------------------|--------------:|------------:|------------:|---------------:|------------------:|
-| `delta`&nbsp;extension&nbsp;v0.1.0 | 444.76        | 0.48        | 21.31       | 3.63           | 4                 |
-| `delta`&nbsp;extension&nbsp;v0.3.0 | 151.06        | 0.46        | 6.15        | 1.22           | 0                 |
+| Result                             | Total runtime | Min runtime | Max runtime | Median runtime | Queries timed out |
+| ---------------------------------- | ------------: | ----------: | ----------: | -------------: | ----------------: |
+| `delta`&nbsp;extension&nbsp;v0.1.0 |        444.76 |        0.48 |       21.31 |           3.63 |                 4 |
+| `delta`&nbsp;extension&nbsp;v0.3.0 |        151.06 |        0.46 |        6.15 |           1.22 |                 0 |
 
 The detailed results of the benchmark are shown in the foldout:
 <details markdown='1'>
@@ -110,11 +110,11 @@ SELECT * FROM t2;
 
 Metadata caching can have a significant performance impact, especially in situations where the data is relatively small and the latency high. To illustrate this, we will rerun our TPC-DS experiment to compare three different ways of scanning the Delta table: using `delta_scan`, using `ATTACH`, and using `ATTACH ... (PIN_SNAPSHOT)`. The rest of the benchmark setup is identical to the one in the previous section.
 
-|        result             | total runtime | min runtime | max runtime | median runtime |
-|---------------------------|--------------:|------------:|------------:|---------------:|
-| `delta_scan`              | 151.06        | 0.46        | 6.15        | 1.22           |
-| `ATTACH`                  | 134.26        | 0.43        | 4.28        | 1.19           |
-| `ATTACH` (`PIN_SNAPSHOT`) | 102.80        | 0.36        | 4.04        | 0.87           |
+| result                    | total runtime | min runtime | max runtime | median runtime |
+| ------------------------- | ------------: | ----------: | ----------: | -------------: |
+| `delta_scan`              |        151.06 |        0.46 |        6.15 |           1.22 |
+| `ATTACH`                  |        134.26 |        0.43 |        4.28 |           1.19 |
+| `ATTACH` (`PIN_SNAPSHOT`) |        102.80 |        0.36 |        4.04 |           0.87 |
 
 The detailed results of the benchmark are shown in the foldout:
 <details markdown='1'>
@@ -179,7 +179,7 @@ FROM delta_scan('s3://⟨your-bucket⟩/⟨your_delta_table⟩');
 
 Now, let’s say we are only interested in a specific range of `id`s: maybe we only want `id`s below 100. We will now construct two queries.
 
-For the first query, we will directly read all the Parquet files stored in the table using a [glob pattern]({% link docs/stable/data/multiple_files/overview.md %}#multi-file-reads-and-globs):
+For the first query, we will directly read all the Parquet files stored in the table using a [glob pattern]({% link docs/lts/data/multiple_files/overview.md %}#multi-file-reads-and-globs):
 
 ```sql
 FROM parquet_scan('s3://⟨your-bucket⟩/⟨your_delta_table⟩/*.parquet')
@@ -266,7 +266,7 @@ For the `delta_scan` function’s `EXPLAIN ANALYZE` output, we can see two new f
 ### Partition Information Pushdown
 
 The final DuckDB Delta performance feature is partition information pushdown. Partition information pushdown and the partition-aware aggregation operator are relatively [new](https://github.com/duckdb/duckdb/pull/14329) features introduced in DuckDB v1.2.0. In the v0.3.0 release of the `delta` extension this feature was also added, which means that DuckDB can now use the partitioning information to create query plans that can utilize the fact that the data scanned is already partitioned.
-To show the performance benefit of partition information, we will, _surprise,_ run another benchmark! This time, we chose the [TPC-H dataset]({% link docs/stable/core_extensions/tpch.md %}) at scale factor 10 and ran the experiment on a 32 GB MacBook Pro M1 Max. We partitioned the `lineitem` table by the `l_returnflag` and `l_linestatus` columns. We then run [Q1](https://github.com/duckdb/duckdb/blob/v1.2.1/extension/tpch/dbgen/queries/q01.sql) which looks roughly like this:
+To show the performance benefit of partition information, we will, _surprise,_ run another benchmark! This time, we chose the [TPC-H dataset]({% link docs/lts/core_extensions/tpch.md %}) at scale factor 10 and ran the experiment on a 32 GB MacBook Pro M1 Max. We partitioned the `lineitem` table by the `l_returnflag` and `l_linestatus` columns. We then run [Q1](https://github.com/duckdb/duckdb/blob/v1.2.1/extension/tpch/dbgen/queries/q01.sql) which looks roughly like this:
 
 ```sql
 SELECT

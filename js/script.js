@@ -1,8 +1,13 @@
 $(document).ready(function(){
-	
 	if (window.location.hash) {
 		var hash = window.location.hash;
-		if ($(hash).length) {
+		var has_hash = true;
+		try {
+			$(hash);
+		} catch {
+			has_hash = false;
+		}
+		if (has_hash) if ($(hash).length) {
 			$('html, body').animate({
 				scrollTop: $(hash).offset().top-90
 			}, 300, 'swing');
@@ -36,15 +41,31 @@ $(document).ready(function(){
 	});
 
 	
-	
-	// Simple detect OS 
-	var OSName="Unknown OS";
-	var OSdatid="Unknown OS";
-	if (navigator.appVersion.indexOf("Win")!=-1) { OSName="Windows"; OSdatid="win" };
-	if (navigator.appVersion.indexOf("Mac")!=-1) { OSName="macOS"; OSdatid="macos" };
-	if (navigator.appVersion.indexOf("X11")!=-1) { OSName="UNIX"; OSdatid="linux" };
-	if (navigator.appVersion.indexOf("Linux")!=-1) { OSName="Linux"; OSdatid="linux"};
+	// Detect OS (using UAParser)
+	function detectPlatform() {
+		if (window.UAParser) {
+			try {
+				var result = new UAParser().getResult();
+				var osName = (result && result.os && result.os.name) ? String(result.os.name).toLowerCase() : '';
+				if (osName) {
+					if (/mac\s?os|macos|os\s?x/.test(osName)) return 'macos';
+					if (/windows/.test(osName)) return 'windows';
+					if (/linux|ubuntu|debian|fedora|arch|gentoo|suse|centos/.test(osName)) return 'linux';
+				}
+			} catch (e) {}
+		}
+
+		var fallback = (navigator.platform || '') + ' ' + (navigator.userAgent || '');
+		if (/Mac/i.test(fallback)) return 'macos';
+		if (/Win/i.test(fallback)) return 'windows';
+		if (/Linux|X11/i.test(fallback)) return 'linux';
+		return 'macos';
+	}
+
+	var OSdatid = detectPlatform();
+	var OSName = OSdatid === 'macos' ? 'macOS' : OSdatid === 'windows' ? 'Windows' : OSdatid === 'linux' ? 'Linux' : 'Unknown OS';
 	$('.systemdetected').html('System detected: '+OSName);
+	
 	
 	// Get URL Parameter
 	var getUrlParameter = function getUrlParameter(sParam) {
@@ -66,60 +87,228 @@ $(document).ready(function(){
 	
 	/** FILTER LINE  */
 	if ($('.filterbar').length !== 0) {
-		
+
 		/* CUSTOM FITROWS FUNCTION FOR ISOTOPE TO GET EQUAL HEIGHT TILES */
 		!function(t){"use strict";function i(t){var i=t.create("fitRows");return i.prototype._resetLayout=function(){if(this.x=0,this.y=0,this.maxY=0,this.row=0,this.rows=[],this._getMeasurement("gutter","outerWidth"),this.options.equalheight)for(var t=0;t<this.isotope.items.length;t++)this.isotope.items[t].css({height:"auto"})},i.prototype._getItemLayoutPosition=function(t){t.getSize();var i=this.gutter||0,s=t.size.outerWidth,o=Math.ceil(this.isotope.size.innerWidth+i);0!==this.x&&s+this.x+i>o&&(this.x=0,this.y=this.maxY+i),0===this.x&&0!==this.y&&this.row++;var e={x:this.x,y:this.y};return this.maxY=Math.max(this.maxY,this.y+t.size.outerHeight),this.x+=s+i,void 0===this.rows[this.row]?(this.rows[this.row]=[],this.rows[this.row].start=this.y,this.rows[this.row].end=this.maxY):this.rows[this.row].end=Math.max(this.rows[this.row].end,this.maxY),t.row=this.row,e},i.prototype._equalHeight=function(){for(var t=0;t<this.isotope.items.length;t++){var i=this.isotope.items[t].row,s=this.rows[i];if(s){var o=s.end-s.start;o-=this.isotope.items[t].size.borderTopWidth+this.isotope.items[t].size.borderBottomWidth,o-=this.isotope.items[t].size.marginTop+this.isotope.items[t].size.marginBottom,o-=this.gutter.height||0,!1==this.isotope.items[t].size.isBorderBox&&(o-=this.isotope.items[t].size.paddingTop+this.isotope.items[t].size.paddingBottom),this.isotope.items[t].size.height=o,this.isotope.items[t].css({height:o.toString()+"px"})}}},i.prototype._getContainerSize=function(){return this.options.equalheight&&this._equalHeight(),{height:this.maxY}},i}"function"==typeof define&&define.amd?define(["../layout-mode"],i):"object"==typeof exports?module.exports=i(require("../layout-mode")):i(t.Isotope.LayoutMode)}(window);
-		
+
+		var isLibraryOrEverywhere = $('.library-tiles, .everywhere-tiles').length > 0;
+		var gutterSize = (isLibraryOrEverywhere && window.innerWidth <= 660) ? 8 : 20;
+
 		var $grid = $('.newstiles').isotope({
 			itemSelector: '.postpreview',
 			layoutMode: 'fitRows',
 			fitRows: {
-				gutter: 20,
+				gutter: gutterSize,
 				equalheight: true
 			},
 			getSortData: {
 				title: '[data-title]'
 			}
 		});
-	
+
+		// --- Filter highlight ---
 		function updateFilterHighlight($button) {
-			var $highlight = $('.filter-highlight');
-			if ($highlight.length) {
+			var $filtertags = $button.closest('.filtertags');
+			var $highlight = $filtertags.find('.filter-highlight');
+			if ($highlight.length && $button.is(':visible')) {
 				$highlight.css({
 					left: $button.position().left,
 					width: $button.outerWidth()
 				});
 			}
 		}
-	
-		var $activeBtn = $('.filter-btn.active');
-		updateFilterHighlight($activeBtn);
-	
-		$('.filterbar').on('click', 'button.filter-btn', function() {
-			var filterValue = $(this).attr('data-filter');
-			$grid.isotope({ filter: filterValue });
-			$('.filter-btn').removeClass('active');
-			$(this).addClass('active');
-			updateFilterHighlight($(this));
+
+		// Initialize highlights for all visible filter groups
+		$('.filtertags').each(function() {
+			var $activeBtn = $(this).find('.filter-btn.active');
+			if ($activeBtn.length) {
+				updateFilterHighlight($activeBtn);
+			}
 		});
-	
-		$('#search-input').on('input', function() {
-			var searchValue = $(this).val().toLowerCase();
-	
-			$grid.isotope({ filter: '*' });
-			$('.filter-btn').removeClass('active');
-			var $allButton = $('.filter-btn[data-filter="*"]');
-			$allButton.addClass('active');
-	
-			updateFilterHighlight($allButton);
-	
-			$grid.isotope({
-				filter: function() {
-					var title = $(this).attr('data-title').toLowerCase();
-					return title.includes(searchValue);
+
+		// --- Filter state per group ---
+		// Each filter-group stores its active filter value keyed by data-filter-key.
+		// Groups with data-attribute on .filtertags filter by data attribute, others by CSS class.
+		var filterState = {};
+
+		$('.filter-group').each(function() {
+			var key = $(this).attr('data-filter-key');
+			if (key) {
+				filterState[key] = '*';
+			}
+		});
+
+		// --- URL parameter support ---
+		function readFiltersFromURL() {
+			var params = new URLSearchParams(window.location.search);
+			params.forEach(function(value, key) {
+				if (key === 'q') {
+					$('#search-input').val(value);
+				} else if (filterState.hasOwnProperty(key)) {
+					// Try matching a filter button directly, then with a leading dot
+					var matchedValue = null;
+					var $sampleGroup = $('.filter-group[data-filter-key="' + key + '"]').not('.filter-group-mobile-only').first();
+					var $sampleBtn = $sampleGroup.find('.filter-btn[data-filter="' + value + '"]');
+					if ($sampleBtn.length) {
+						matchedValue = value;
+					} else {
+						$sampleBtn = $sampleGroup.find('.filter-btn[data-filter=".' + value + '"]');
+						if ($sampleBtn.length) {
+							matchedValue = '.' + value;
+						}
+					}
+					if (matchedValue) {
+						filterState[key] = matchedValue;
+						$('.filter-group[data-filter-key="' + key + '"]').each(function() {
+							var $filtertags = $(this).find('.filtertags');
+							$filtertags.find('.filter-btn').removeClass('active');
+							var $matchingBtn = $filtertags.find('.filter-btn[data-filter="' + matchedValue + '"]');
+							if ($matchingBtn.length) {
+								$matchingBtn.addClass('active');
+								if ($matchingBtn.is(':visible')) {
+									updateFilterHighlight($matchingBtn);
+								}
+							}
+						});
+					}
 				}
 			});
+		}
+
+		function writeFiltersToURL() {
+			var params = new URLSearchParams();
+			for (var key in filterState) {
+				if (filterState[key] !== '*') {
+					// Strip leading dot from class-based selectors for cleaner URLs
+					params.set(key, filterState[key].replace(/^\./, ''));
+				}
+			}
+			var searchValue = $('#search-input').val();
+			if (searchValue) {
+				params.set('q', searchValue);
+			}
+			var newURL = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+			history.replaceState(null, '', newURL);
+		}
+
+		function applyFilters() {
+			var searchValue = $('#search-input').val().toLowerCase();
+
+			$grid.isotope({
+				filter: function() {
+					var $item = $(this);
+					// Search filter
+					if (searchValue) {
+						var title = $item.attr('data-title').toLowerCase();
+						if (!title.includes(searchValue)) return false;
+					}
+					// Apply each filter group
+					for (var key in filterState) {
+						var value = filterState[key];
+						if (value === '*') continue;
+
+						// Find the filtertags that belong to this key
+						var $group = $('.filter-group[data-filter-key="' + key + '"]').not('.filter-group-mobile-only').first();
+						var $filtertags = $group.find('.filtertags');
+						var attribute = $filtertags.attr('data-attribute');
+
+						if (attribute) {
+							// Attribute-based filter (e.g., data-source)
+							var itemValue = $item.attr(attribute);
+							if (itemValue !== value) return false;
+						} else {
+							// Class-based filter (e.g., .book, .paper)
+							if (!$item.is(value)) return false;
+						}
+					}
+					return true;
+				}
+			});
+		}
+
+		// Sync duplicate filter groups (desktop ↔ mobile-only) by filter-key
+		function syncFilterGroups($clickedBtn) {
+			var $group = $clickedBtn.closest('.filter-group');
+			var key = $group.attr('data-filter-key');
+			var filterValue = $clickedBtn.attr('data-filter');
+
+			// Find all groups with the same key and sync active state
+			$('.filter-group[data-filter-key="' + key + '"]').each(function() {
+				var $otherFiltertags = $(this).find('.filtertags');
+				$otherFiltertags.find('.filter-btn').removeClass('active');
+				var $matchingBtn = $otherFiltertags.find('.filter-btn[data-filter="' + filterValue + '"]');
+				$matchingBtn.addClass('active');
+				if ($matchingBtn.is(':visible')) {
+					updateFilterHighlight($matchingBtn);
+				}
+			});
+		}
+
+		// --- Click handler for filter buttons ---
+		$('.filterbar').on('click', 'button.filter-btn', function() {
+			var $btn = $(this);
+			var $group = $btn.closest('.filter-group');
+			var key = $group.attr('data-filter-key');
+			var filterValue = $btn.attr('data-filter');
+
+			// Update state
+			if (key) {
+				filterState[key] = filterValue;
+			}
+
+			// Sync all groups with the same key
+			syncFilterGroups($btn);
+
+			applyFilters();
+			writeFiltersToURL();
 		});
+
+		// --- Search input ---
+		$('#search-input').on('input', function() {
+			applyFilters();
+			writeFiltersToURL();
+		});
+
+		// --- Mobile filter modal ---
+		var $filterToggle = $('.filter-toggle');
+		var $filterModal = $('.filter-modal');
+		var $filterOverlay = $('.filter-overlay');
+		var filterModalOpen = false;
+
+		function openFilterModal() {
+			filterModalOpen = true;
+			$filterToggle.addClass('is-open');
+			$filterOverlay.addClass('is-open');
+			$filterModal.addClass('is-open');
+			// Update highlights for modal buttons that are now visible
+			$filterModal.find('.filtertags').each(function() {
+				var $activeBtn = $(this).find('.filter-btn.active');
+				if ($activeBtn.length) {
+					updateFilterHighlight($activeBtn);
+				}
+			});
+		}
+
+		function closeFilterModal() {
+			filterModalOpen = false;
+			$filterToggle.removeClass('is-open');
+			$filterModal.removeClass('is-open');
+			$filterOverlay.removeClass('is-open');
+		}
+
+		function toggleFilterModal() {
+			if (filterModalOpen) {
+				closeFilterModal();
+			} else {
+				openFilterModal();
+			}
+		}
+
+		$filterToggle.on('click', toggleFilterModal);
+		$filterOverlay.on('click', closeFilterModal);
+
+		readFiltersFromURL();
+		applyFilters();
 	}
 	
 
@@ -282,6 +471,7 @@ $(document).ready(function(){
 		const selector = `li.opened a[href="${pathname}"]`;
 		const clonedUL = $(selector).parent().parent().clone();
 		clonedUL.find(selector).parent().remove();
+		clonedUL.find('svg').remove();
 		clonedUL.find('ul').show();
 		$('#main_content_wrap .index').append(clonedUL);
 	}
@@ -295,12 +485,34 @@ $(document).ready(function(){
 	
 // Add class-name to external Links
 $('a').filter(function() {
-	return this.hostname && this.hostname !== location.hostname && $(this).find('img').length === 0;
+	return this.hostname && this.hostname !== location.hostname && $(this).find('img').length === 0 && !$(this).hasClass('button');
 }).addClass("externallink").attr('target','_blank');
 
-$('.headercontent a, .mainlinks a, .box-link a, .footercontent a, .highlight a').removeClass('externallink'); 
+$('.headercontent a, .mainlinks a, .box-link a, .footercontent a, .highlight a, .button, .ecosystem-diagram a').removeClass('externallink');
 $('table a.externallink:contains(GitHub)').removeClass('externallink').addClass('nobg'); 
 $('.supporterboard a.externallink').removeClass('externallink').addClass('nobg'); 
+
+// Add download icon to links pointing to downloadable files
+$('a').filter(function() {
+	var href = $(this).attr('href');
+	if (!href) return false;
+	return /\.(pdf|zip|tar\.gz|csv|parquet|mp3)(\?.*)?$/i.test(href) && $(this).find('img').length === 0 && !$(this).hasClass('button');
+}).addClass("downloadlink").removeClass("externallink");
+
+$('.headercontent a, .mainlinks a, .box-link a, .footercontent a, .highlight a, .button, .ecosystem-diagram a').removeClass('downloadlink');
+$('table a.downloadlink:contains(GitHub)').removeClass('downloadlink').addClass('nobg');
+$('.supporterboard a.downloadlink').removeClass('downloadlink').addClass('nobg');
+
+// Add play icon to links pointing to YouTube or Vimeo
+$('a').filter(function() {
+	var href = $(this).attr('href');
+	if (!href) return false;
+	return /^(https?:)?\/\/(www\.|m\.)?(youtube\.com|youtu\.be|vimeo\.com)\//i.test(href) && $(this).find('img').length === 0 && !$(this).hasClass('button');
+}).addClass("videolink").removeClass("externallink downloadlink");
+
+$('.headercontent a, .mainlinks a, .box-link a, .footercontent a, .highlight a, .button, .ecosystem-diagram a').removeClass('videolink');
+$('table a.videolink:contains(GitHub)').removeClass('videolink').addClass('nobg');
+$('.supporterboard a.videolink').removeClass('videolink').addClass('nobg');
 
 // Wrap external links followed by a "." in a nobreak span
 $('body.documentation #main_content_wrap a.externallink').each(function () {
@@ -324,7 +536,7 @@ $('body.documentation #main_content_wrap a.externallink').each(function () {
 	if($('body').hasClass('foundation') && $('section.form').length){
 		var hash = window.location.hash.replace('#', '');
 		if( hash.length ){
-			$('div.select .select-text').val(hash);
+			$('.custom-select .select-text').val(hash);
 		}
 		
 		// AJAX FORM SEND
@@ -555,11 +767,11 @@ $('body.documentation #main_content_wrap a.externallink').each(function () {
 			$('.window .content.haslines').each(function(){
 				var height = $(this).find('pre').height()
 				var fontSize = $(this).find('pre').css('font-size');
-				var lineHeight = 18;//Math.floor(parseInt(fontSize.replace('px','')) * 1.2);
-				var lines = Math.ceil(height / lineHeight) + 1
+				var lineHeight = 20;
+				var lines = Math.ceil(height / lineHeight)
 				var linenumbers = '';
-				for (i = 1; i < lines; i++) {
-					linenumbers += i + '<br>'
+				for (i = 1; i <= lines; i++) {
+					linenumbers += '<span>' + i + '</span><br>';
 				}
 				$(this).find('.lines').html(linenumbers);
 			})
@@ -643,15 +855,22 @@ $('body.documentation #main_content_wrap a.externallink').each(function () {
 		function updateInstallation($item) {
 			updateHighlight($envTopbar, $item);
 			const activeClient = $item.attr("data-client");
-			let installation = $(
+			let $installDiv = $(
 				`#quick-installation div[data-install='${activeClient} ${OSdatid}']`
-			).html();
-			if (!installation) {
-				installation = $(
+			);
+			if (!$installDiv.length) {
+				$installDiv = $(
 					`#quick-installation div[data-install='${activeClient}']`
-				).html();
+				);
 			}
-			$(".result").html(installation);
+			$(".result").html($installDiv.html());
+			const version = $installDiv.attr("data-version");
+			const $versionSpan = $(".bottombar .version");
+			if (version) {
+				$versionSpan.text("Latest version: " + version).show();
+			} else {
+				$versionSpan.hide();
+			}
 		}
 		
 		updateInstallation($activeEnvItem);
@@ -835,8 +1054,23 @@ $('body.documentation #main_content_wrap a.externallink').each(function () {
 		} 
 	});
 	// setWithExpiry('homeBanner', '', -1); // deletes content
-	
-	
+
+	/** BANNER ROTATOR **/
+	(function() {
+		var $rotator = $('.banner-rotator');
+		var $items = $rotator.find('.banner-item');
+		if ($items.length > 1) {
+			var interval = ($rotator.data('interval') || 7) * 1000;
+			var current = 0;
+			setInterval(function() {
+				$items.eq(current).removeClass('active');
+				current = (current + 1) % $items.length;
+				$items.eq(current).addClass('active');
+			}, interval);
+		}
+	})();
+
+
 	/** ADD WORD-BOXES TO CODE TABLES */
 	$('.monospace_table + table tbody td').each(function() {
 		$(this).wrapInner('<code class="language-plaintext"></code>');
@@ -855,5 +1089,49 @@ $('body.documentation #main_content_wrap a.externallink').each(function () {
 			updateHighlight($(this), $activeItem);
 		});
 	});
-	
+
+	// DUCKCON7 EVENT PAGE
+	const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1Ijoiam9uYXRoYW4tYXVjaCIsImEiOiJjbDllMHhxNHowbG50M29vZ3Y0NnZhdHY1In0.XQxUUmkkSGKUkNThK1p9Yg';
+	const MAPBOX_STYLES_URL = 'mapbox://styles/jonathan-auch/cmhz38wfd001801sbe3c06ece'
+	const $duckcon7Map = $('.js-duckcon7-map');
+	const duckcon7SliderClass = '.js-duckcon7-slider';
+	const $duckcon7Slider = $(duckcon7SliderClass);
+
+	const duckcon7SliderOptions = {
+		slidesPerView: "auto",
+		spaceBetween: 30,
+		centeredSlides: true,
+		loop: true,
+		navigation: {
+			nextEl: ".swiper-button-next",
+			prevEl: ".swiper-button-prev",
+		},
+	}
+
+	// Initialize the map if present on page
+	if ($duckcon7Map.length) {
+		const mapEl = $duckcon7Map[0];
+		const lng = parseFloat(mapEl.dataset.lng);
+		const lat = parseFloat(mapEl.dataset.lat);
+		const label = mapEl.dataset.label;
+
+		mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
+
+		const map = new mapboxgl.Map({
+			container: 'duckcon7-map',
+			style: MAPBOX_STYLES_URL,
+			center: [lng, lat],
+			zoom: 15,
+		});
+
+		const marker = document.createElement('div');
+		marker.className = 'js-marker map-marker';
+		marker.dataset.label = label;
+		new mapboxgl.Marker(marker).setLngLat([lng, lat]).addTo(map);
+	}
+
+	// Initialize the slider if present on page
+	if ($duckcon7Slider.length) {
+		const slider = new Swiper(duckcon7SliderClass, duckcon7SliderOptions);
+	}
 });

@@ -1,7 +1,7 @@
 ---
 layout: post  
 title: "Parallel Grouped Aggregation in DuckDB"
-author: Hannes Mühleisen and Mark Raasveldt
+author: Hannes Mühleisen, Mark Raasveldt
 excerpt: DuckDB has a fully parallelized aggregate hash table that can efficiently aggregate over millions of groups.
 tags: ["deep dive"]
 ---
@@ -30,13 +30,13 @@ GROUP BY
 `GROUP BY` is followed by two column names, `l_returnflag` and `l_linestatus`. Those are the columns to compute the groups on, and the resulting table will contain all combinations of the same column that occur in the data. We refer to the columns in the `GROUP BY` clause as the “grouping columns” and all occurring combinations of values therein as “groups”. The `SELECT` clause contains four (not five) expressions: References to the grouping columns, and two aggregates: the `sum` over `l_extendedprice` and the `avg` over `l_quantity`. We refer to those as the “aggregates”.  If executed, the result of this query looks something like this:
 
 | l_returnflag | l_linestatus | sum(l_extendedprice) | avg(l_quantity) |
-|--------------|--------------|----------------------|----------------:|
-| N            | O            |  114935210409.19     |           25.5  |
-| R            | F            |  56568041380.9       |           25.51 |
-| A            | F            |  56586554400.73      |           25.52 |
-| N            | F            |  1487504710.38       |           25.52 |
+| ------------ | ------------ | -------------------- | --------------: |
+| N            | O            | 114935210409.19      |            25.5 |
+| R            | F            | 56568041380.9        |           25.51 |
+| A            | F            | 56586554400.73       |           25.52 |
+| N            | F            | 1487504710.38        |           25.52 |
 
-In general, SQL allows only columns that are mentioned in the `GROUP BY` clause to be part of the `SELECT` expressions directly, all other columns need to be subject to one of the aggregate functions like `sum`, `avg` etc. There are [many more aggregate functions]({% link docs/stable/sql/functions/aggregates.md %}) depending on which SQL system you use.
+In general, SQL allows only columns that are mentioned in the `GROUP BY` clause to be part of the `SELECT` expressions directly, all other columns need to be subject to one of the aggregate functions like `sum`, `avg` etc. There are [many more aggregate functions]({% link docs/lts/sql/functions/aggregates.md %}) depending on which SQL system you use.
 
 How should a query processing engine compute such an aggregation? There are many design decisions involved, and we will discuss those below and in particular the decisions made by DuckDB. The main issue when computing grouping results is that the groups can occur in the input table in any order. Were the input already sorted on the grouping columns, computing the aggregation would be trivial, as we could just compare the current values for the grouping columns with the previous ones. If a change occurs, the next group begins and a new aggregation result needs to be computed. Since the sorted case is easy, one straightforward way of computing grouped aggregates is to sort the input table on the grouping columns first, and then use the trivial approach. But sorting the input is unfortunately still a computationally expensive operation [despite our best efforts]({% post_url 2021-08-27-external-sorting %}). In general, sorting has a computational complexity of `O(nlogn)` with n being the number of rows sorted.
 

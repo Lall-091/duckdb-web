@@ -1,6 +1,7 @@
 name: Link Checker
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "0 4 * * *"  # run every day at 4AM
 
@@ -10,7 +11,7 @@ jobs:
     runs-on: ubuntu-24.04
     if: github.ref == 'refs/heads/main' && github.repository == 'duckdb/duckdb-web'
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 

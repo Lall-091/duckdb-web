@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "From Waddle to Flying: Quickly Expanding DuckDB's Functionality with Scalar Python UDFs"
-author: Pedro Holanda, Thijs Bruineman and Phillip Cloud
+author: Pedro Holanda, Thijs Bruineman, Phillip Cloud
 excerpt: DuckDB now supports vectorized Scalar Python User Defined Functions (UDFs). By implementing Python UDFs, users can easily expand the functionality of DuckDB while taking advantage of DuckDB's fast execution model, SQL and data safety.
 tags: ["using DuckDB"]
 ---
@@ -23,7 +23,7 @@ There are two main reasons users often refrain from implementing UDFs. 1) There 
 
 DuckDB followed a similar approach. As a DBMS tailored for analytical tasks, performance is a key consideration, leading to the implementation of its core in C++. Consequently, the initial focus of extensibility efforts [was centered around C++](https://www.youtube.com/watch?v=UKo_LQyLTko&ab_channel=DuckDBLabs). However, this  duck is not limited to just waddling; it can also fly. So we are delighted to announce the [recent addition](https://github.com/duckdb/duckdb/pull/7171) of Scalar Python UDFs to DuckDB.
 
-DuckDB provides support for two distinct types of Python UDFs, differing in the Python object used for communication between [DuckDB's native data types]({% link docs/stable/sql/data_types/overview.md %}) and the Python process. These communication layers include support for [Python built-in types]({% link docs/stable/sql/data_types/overview.md %}) and [PyArrow Tables](https://arrow.apache.org/docs/python/generated/pyarrow.Table.html).
+DuckDB provides support for two distinct types of Python UDFs, differing in the Python object used for communication between [DuckDB's native data types]({% link docs/lts/sql/data_types/overview.md %}) and the Python process. These communication layers include support for [Python built-in types]({% link docs/lts/sql/data_types/overview.md %}) and [PyArrow Tables](https://arrow.apache.org/docs/python/generated/pyarrow.Table.html).
 
 The two approaches exhibit two key differences:
 
@@ -31,7 +31,7 @@ The two approaches exhibit two key differences:
 
 2) **Vectorization.** PyArrow Table functions operate on a chunk level, processing chunks of data containing up to 2048 rows. This approach maximizes cache locality and leverages vectorization. On the other hand, the built-in types UDF implementation operates on a per-row basis.
 
-This blog post aims to demonstrate how you can extend DuckDB using Python UDFs, with a particular emphasis on PyArrow-powered UDFs. In our quick-tour section, we will provide examples using the PyArrow UDF types. For those interested in benchmarks, you can jump ahead to the [benchmark section below](#benchmarks). If you want to see a detailed description of the Python UDF API, please refer to our [documentation]({% link docs/stable/clients/python/function.md %}).
+This blog post aims to demonstrate how you can extend DuckDB using Python UDFs, with a particular emphasis on PyArrow-powered UDFs. In our quick-tour section, we will provide examples using the PyArrow UDF types. For those interested in benchmarks, you can jump ahead to the [benchmark section below](#benchmarks). If you want to see a detailed description of the Python UDF API, please refer to our [documentation]({% link docs/lts/clients/python/function.md %}).
 
 ## Python UDFs
 
@@ -237,10 +237,10 @@ arrow_res = con.sql("SELECT sum(add_arrow_type(i)) FROM numbers").fetchall()
 ```
 
 
-|    Name     | Time (s) |
-|-------------|---------:|
-| Built-In    | 5.37     |
-| PyArrow     | 0.35     |
+| Name     | Time (s) |
+| -------- | -------: |
+| Built-In |     5.37 |
+| PyArrow  |     0.35 |
 
 We can observe a performance difference of more than one order of magnitude between the two UDFs. The difference in performance is primarily due to three factors:
 
@@ -295,10 +295,10 @@ exec_external(con)
 ```
 
 
-|    Name     | Time (s) | Peak memory consumption (MB) |
-|-------------|---------:|-----------------------------:|
-| External    | 5.65     | 584.032                      |
-| UDF         | 5.63     | 112.848                      |
+| Name     | Time (s) | Peak memory consumption (MB) |
+| -------- | -------: | ---------------------------: |
+| External |     5.65 |                      584.032 |
+| UDF      |     5.63 |                      112.848 |
 
 
 Here we can see that there is no significant regression in performance when utilizing UDFs. However, you still have the benefits of safer execution and the utilization of SQL. In our example, we can also notice that the external function materializes the entire query, resulting in a 5× higher peak memory consumption compared to the UDF approach.
@@ -313,6 +313,4 @@ While the introduction of Python UDFs is a major step forward, our work in this 
 
 2. **Types**: Scalar Python UDFs currently support most DuckDB types, with the exception of ENUM types and BIT types. We are working towards expanding the type support to ensure comprehensive functionality.
 
-As always, we are happy to hear your thoughts! Feel free to drop us an [email](mailto:pedro@duckdblabs.com;thijs@duckdblabs.com) if you have any suggestions, comments or questions.
-
-Last but not least, if you encounter any problems using our Python UDFs, please open an issue in [DuckDB's issue tracker](https://github.com/duckdb/duckdb/issues).
+If you encounter any problems using our Python UDFs, please open an issue in [DuckDB's issue tracker](https://github.com/duckdb/duckdb-python/issues).

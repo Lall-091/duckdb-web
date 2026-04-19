@@ -32,7 +32,8 @@ a, a:active, a:focus, button, button:active, button:focus {
 
 table a,
 p a,
-li a{
+li a,
+summary a{
 	color: inherit;
 	text-decoration: underline;
 	-webkit-transition: color .3s;
@@ -85,7 +86,6 @@ img.downloadlogo{
 	width: 150px;
 	position: absolute;
 	top: 10px;
-	left: 15px;
 	z-index: 999;
 	opacity: 0!important;
 }
@@ -157,21 +157,6 @@ main .wrap{
 	}
 }
 
-body.landing label.onlymobile,
-body.installation div.environment.select label.onlymobile{
-	position: relative;
-	&::after{
-		content: "\E010";
-		font-family: "DuckDB-Symbol";
-		right: 10px;
-		top: 4px;
-		padding: 0 0 2px;
-		position: absolute;
-		pointer-events: none;
-		font-size: 20px;
-		color: white;
-	}
-}
 .environmentselect{
 	width: 100%;
 	/*border: 1px solid #b8b8b8;*/
@@ -213,7 +198,6 @@ body.installation div.environment.select label.onlymobile{
 
 .layout_default{
 	#main_content_wrap{
-		padding: 0 15px;
 		margin-bottom: 100px;
 	}
 }

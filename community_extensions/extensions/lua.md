@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: lua
   description: Evaluate Lua scripts within queries
-  version: 1.4.1
+  version: 1.5.0
   language: C++
   build: cmake
   license: MIT
@@ -17,7 +17,7 @@ extension:
 
 repo:
   github: isaacbrodsky/duckdb-lua
-  ref: 7096b98e48b8ae1324e1473825a075dd410d6d56
+  ref: 186eb2fbdcf6e978dff6e9b959a4b3e827611938
 
 docs:
   hello_world: |
@@ -25,10 +25,10 @@ docs:
   extended_description: |
     Adds support for the Lua embedded scripting language to DuckDB.
 
-extension_star_count: 5
-extension_star_count_pretty: 5
-extension_download_count: 358
-extension_download_count_pretty: 358
+extension_star_count: 10
+extension_star_count_pretty: 10
+extension_download_count: 788
+extension_download_count_pretty: 788
 image: '/images/community_extensions/social_preview/preview_community_extension_lua.png'
 layout: community_extension_doc
 ---
@@ -57,6 +57,18 @@ LOAD {{ page.extension.name }};
 | function_name | function_type | description | comment | examples |
 |---------------|---------------|-------------|---------|----------|
 | lua           | scalar        | NULL        | NULL    |          |
+
+### Overloaded Functions
+
+<div class="extension_functions_table"></div>
+
+This extension does not add any function overloads.
+
+### Added Types
+
+<div class="extension_types_table"></div>
+
+This extension does not add any types.
 
 ### Added Settings
 

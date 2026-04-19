@@ -13,7 +13,7 @@ class PythonRelAPIParamDetails:
 @dataclass
 class PythonRelAPIDetails:
     # Configure details for each method
-    additional_description: str = ''  # text to be appended to the method description
+    additional_description: str = ""  # text to be appended to the method description
     aliases: list[str] = None  # list of methods the methods is alias of
     parameters: list[PythonRelAPIParamDetails] = None  # method parameter description
     example: str = (
@@ -49,7 +49,7 @@ PLACEHOLDER_EXAMPLE = "```python\n{code_example}\n```"
 PLACEHOLDER_RESULT = "```{result_type}\n{result}\n```"
 
 CREATION_METHODS_MAP = {
-    'from_arrow': PythonRelAPIDetails(
+    "from_arrow": PythonRelAPIDetails(
         example="""
 import duckdb
 import pyarrow as pa
@@ -81,7 +81,7 @@ rel.show()
             )
         ],
     ),
-    'from_csv_auto': PythonRelAPIDetails(
+    "from_csv_auto": PythonRelAPIDetails(
         example="""
 import csv
 import duckdb
@@ -107,7 +107,7 @@ rel.show()
 └───────┴─────────┘
 """,
         use_default_example=False,
-        aliases=['read_csv'],
+        aliases=["read_csv"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="path_or_buffer",
@@ -337,7 +337,7 @@ rel.show()
             ),
         ],
     ),
-    'from_df': PythonRelAPIDetails(
+    "from_df": PythonRelAPIDetails(
         example="""
 import duckdb
 import pandas as pd
@@ -367,7 +367,7 @@ rel.show()
             )
         ],
     ),
-    'from_parquet': PythonRelAPIDetails(
+    "from_parquet": PythonRelAPIDetails(
         example="""
 import duckdb
 import pyarrow as pa
@@ -394,7 +394,7 @@ rel.show()
 └──────┴─────────┘
 """,
         use_default_example=False,
-        aliases=['read_parquet'],
+        aliases=["read_parquet"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="file_glob",
@@ -438,7 +438,10 @@ rel.show()
             ),
         ],
     ),
-    'from_query': PythonRelAPIDetails(
+    "from_query": PythonRelAPIDetails(
+        additional_description="""
+
+> **Warning.** Passing `params` to this method is [discouraged]({% link docs/lts/clients/python/known_issues.md %}#parameterized-queries-in-relational-api) due to significant performance overhead. Use [`execute()`]({% link docs/lts/clients/python/dbapi.md %}#prepared-statements) for parameterized queries instead.""",
         example="""
 import duckdb
 
@@ -473,11 +476,14 @@ rel.show()
             PythonRelAPIParamDetails(
                 parameter_name="params",
                 parameter_type=["object"],
-                parameter_description="Optional query parameters to be used in the SQL query.",
+                parameter_description="Optional query parameters. **Discouraged** due to [significant performance overhead]({% link docs/lts/clients/python/known_issues.md %}#parameterized-queries-in-relational-api). Use [`execute()`]({% link docs/lts/clients/python/dbapi.md %}#prepared-statements) for parameterized queries instead.",
             ),
         ],
     ),
-    'query': PythonRelAPIDetails(
+    "query": PythonRelAPIDetails(
+        additional_description="""
+
+> **Warning.** Passing `params` to this method is [discouraged]({% link docs/lts/clients/python/known_issues.md %}#parameterized-queries-in-relational-api) due to significant performance overhead. Use [`execute()`]({% link docs/lts/clients/python/dbapi.md %}#prepared-statements) for parameterized queries instead.""",
         example="""
 import duckdb
 
@@ -512,11 +518,11 @@ rel.show()
             PythonRelAPIParamDetails(
                 parameter_name="params",
                 parameter_type=["object"],
-                parameter_description="Optional query parameters to be used in the SQL query.",
+                parameter_description="Optional query parameters. **Discouraged** due to [significant performance overhead]({% link docs/lts/clients/python/known_issues.md %}#parameterized-queries-in-relational-api). Use [`execute()`]({% link docs/lts/clients/python/dbapi.md %}#prepared-statements) for parameterized queries instead.",
             ),
         ],
     ),
-    'read_csv': PythonRelAPIDetails(
+    "read_csv": PythonRelAPIDetails(
         example="""
 import csv
 import duckdb
@@ -542,7 +548,7 @@ rel.show()
 └───────┴─────────┘
 """,
         use_default_example=False,
-        aliases=['from_csv_auto'],
+        aliases=["from_csv_auto"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="path_or_buffer",
@@ -772,7 +778,7 @@ rel.show()
             ),
         ],
     ),
-    'read_json': PythonRelAPIDetails(
+    "read_json": PythonRelAPIDetails(
         example="""
 import duckdb
 import json
@@ -898,7 +904,7 @@ rel.show()
             ),
         ],
     ),
-    'read_parquet': PythonRelAPIDetails(
+    "read_parquet": PythonRelAPIDetails(
         example="""
 import duckdb
 import pyarrow as pa
@@ -925,7 +931,7 @@ rel.show()
 └──────┴─────────┘
 """,
         use_default_example=False,
-        aliases=['from_parquet'],
+        aliases=["from_parquet"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="file_glob",
@@ -969,7 +975,10 @@ rel.show()
             ),
         ],
     ),
-    'sql': PythonRelAPIDetails(
+    "sql": PythonRelAPIDetails(
+        additional_description="""
+
+> **Warning.** Passing `params` to this method is [discouraged]({% link docs/lts/clients/python/known_issues.md %}#parameterized-queries-in-relational-api) due to significant performance overhead. Use [`execute()`]({% link docs/lts/clients/python/dbapi.md %}#prepared-statements) for parameterized queries instead.""",
         example="""
 import duckdb
 
@@ -1004,11 +1013,11 @@ rel.show()
             PythonRelAPIParamDetails(
                 parameter_name="params",
                 parameter_type=["object"],
-                parameter_description="Optional query parameters to be used in the SQL query.",
+                parameter_description="Optional query parameters. **Discouraged** due to [significant performance overhead]({% link docs/lts/clients/python/known_issues.md %}#parameterized-queries-in-relational-api). Use [`execute()`]({% link docs/lts/clients/python/dbapi.md %}#prepared-statements) for parameterized queries instead.",
             ),
         ],
     ),
-    'table': PythonRelAPIDetails(
+    "table": PythonRelAPIDetails(
         example="""
 import duckdb
 
@@ -1037,7 +1046,7 @@ rel.show()
             )
         ],
     ),
-    'table_function': PythonRelAPIDetails(
+    "table_function": PythonRelAPIDetails(
         example='''
 import duckdb
 
@@ -1074,7 +1083,7 @@ rel.show()
             ),
         ],
     ),
-    'values': PythonRelAPIDetails(
+    "values": PythonRelAPIDetails(
         example="""
 import duckdb
 
@@ -1094,7 +1103,7 @@ rel.show()
 """,
         use_default_example=False,
     ),
-    'view': PythonRelAPIDetails(
+    "view": PythonRelAPIDetails(
         example="""
 import duckdb
 
@@ -1126,12 +1135,12 @@ rel.show()
 }
 
 DEFINITION_METHODS_MAP = {
-    'columns': PythonRelAPIDetails(
-        example='rel.columns',
+    "columns": PythonRelAPIDetails(
+        example="rel.columns",
         result=" ['id', 'description', 'value', 'created_timestamp']",
     ),
-    'describe': PythonRelAPIDetails(
-        example='rel.describe()',
+    "describe": PythonRelAPIDetails(
+        example="rel.describe()",
         result="""
 ┌─────────┬──────────────────────────────────────┬─────────────────┬────────────────────┬────────────────────────────┐
 │  aggr   │                  id                  │   description   │       value        │     created_timestamp      │
@@ -1146,8 +1155,8 @@ DEFINITION_METHODS_MAP = {
 └─────────┴──────────────────────────────────────┴─────────────────┴────────────────────┴────────────────────────────┘ 
 """,
     ),
-    'description': PythonRelAPIDetails(
-        example='rel.description',
+    "description": PythonRelAPIDetails(
+        example="rel.description",
         result="""
 [('id', 'UUID', None, None, None, None, None),
  ('description', 'STRING', None, None, None, None, None),
@@ -1155,18 +1164,18 @@ DEFINITION_METHODS_MAP = {
  ('created_timestamp', 'DATETIME', None, None, None, None, None)]  
 """,
     ),
-    'dtypes': PythonRelAPIDetails(
-        example='rel.dtypes',
-        result=' [UUID, VARCHAR, BIGINT, TIMESTAMP WITH TIME ZONE]',
-        aliases=['types'],
+    "dtypes": PythonRelAPIDetails(
+        example="rel.dtypes",
+        result=" [UUID, VARCHAR, BIGINT, TIMESTAMP WITH TIME ZONE]",
+        aliases=["types"],
     ),
-    'explain': PythonRelAPIDetails(
-        example='rel.explain()',
+    "explain": PythonRelAPIDetails(
+        example="rel.explain()",
         result="""
 ┌───────────────────────────┐\n│         PROJECTION        │\n│    ────────────────────   │\n│             id            │\n│        description        │\n│           value           │\n│     created_timestamp     │\n│                           │\n│          ~9 Rows          │\n└─────────────┬─────────────┘\n┌─────────────┴─────────────┐\n│           RANGE           │\n│    ────────────────────   │\n│      Function: RANGE      │\n│                           │\n│          ~9 Rows          │\n└───────────────────────────┘\n\n
 """,
     ),
-    'query-1': PythonRelAPIDetails(
+    "query-1": PythonRelAPIDetails(
         example='rel.query(virtual_table_name="rel_view", sql_query="from rel")\n\nduckdb_conn.sql("show rel_view")',
         result="""
 ┌───────────────────┬──────────────────────────┬─────────┬─────────┬─────────┬─────────┐
@@ -1192,9 +1201,9 @@ DEFINITION_METHODS_MAP = {
             ),
         ],
     ),
-    'set_alias': PythonRelAPIDetails(
+    "set_alias": PythonRelAPIDetails(
         example="rel.set_alias('abc').select('abc.id')",
-        result='In the SQL query, the alias will be `abc`',
+        result="In the SQL query, the alias will be `abc`",
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="alias",
@@ -1203,12 +1212,12 @@ DEFINITION_METHODS_MAP = {
             )
         ],
     ),
-    'alias': PythonRelAPIDetails(
-        example='rel.alias', result='unnamed_relation_43c808c247431be5'
+    "alias": PythonRelAPIDetails(
+        example="rel.alias", result="unnamed_relation_43c808c247431be5"
     ),
-    'shape': PythonRelAPIDetails(example='rel.shape', result='(9, 4)'),
-    'show': PythonRelAPIDetails(
-        example='rel.show()',
+    "shape": PythonRelAPIDetails(example="rel.shape", result="(9, 4)"),
+    "show": PythonRelAPIDetails(
+        example="rel.show()",
         result="""
 ┌──────────────────────────────────────┬─────────────────┬───────┬────────────────────────────┐
 │                  id                  │   description   │ value │     created_timestamp      │
@@ -1253,8 +1262,8 @@ DEFINITION_METHODS_MAP = {
             ),
         ],
     ),
-    'sql_query': PythonRelAPIDetails(
-        example='rel.sql_query()',
+    "sql_query": PythonRelAPIDetails(
+        example="rel.sql_query()",
         result="""SELECT 
     gen_random_uuid() AS id, 
     concat('value is ', CASE  WHEN ((mod("range", 2) = 0)) THEN ('even') ELSE 'uneven' END) AS description, 
@@ -1264,11 +1273,11 @@ FROM "range"(1, 10)
 """,
         result_type="sql",
     ),
-    'type': PythonRelAPIDetails(example='rel.type', result='QUERY_RELATION'),
-    'types': PythonRelAPIDetails(
-        example='rel.types',
-        result='[UUID, VARCHAR, BIGINT, TIMESTAMP WITH TIME ZONE]',
-        aliases=['dtypes'],
+    "type": PythonRelAPIDetails(example="rel.type", result="QUERY_RELATION"),
+    "types": PythonRelAPIDetails(
+        example="rel.types",
+        result="[UUID, VARCHAR, BIGINT, TIMESTAMP WITH TIME ZONE]",
+        aliases=["dtypes"],
     ),
 }
 
@@ -1297,7 +1306,7 @@ TRANSFORMATION_METHODS_MAP = {
             ),
         ],
     ),
-    'apply': PythonRelAPIDetails(
+    "apply": PythonRelAPIDetails(
         example="""
 rel.apply(
     function_name="count", 
@@ -1347,7 +1356,7 @@ rel.apply(
             ),
         ],
     ),
-    'cross': PythonRelAPIDetails(
+    "cross": PythonRelAPIDetails(
         example='rel.cross(other_rel=rel.set_alias("other_rel"))',
         result="""
 ┌─────────────────────────────┬─────────────────┬───────┬───────────────────────────┬──────────────────────────────────────┬─────────────────┬───────┬───────────────────────────┐
@@ -1361,12 +1370,12 @@ rel.apply(
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="other_rel",
-                parameter_type=["duckdb.duckdb.DuckDBPyRelation"],
+                parameter_type=["_duckdb.DuckDBPyRelation"],
                 parameter_description="Another relation to perform a cross product with.",
             )
         ],
     ),
-    'except_': PythonRelAPIDetails(
+    "except_": PythonRelAPIDetails(
         example='rel.except_(other_rel=rel.set_alias("other_rel"))',
         result="""
 The relation query is executed twice, therefore generating different ids and timestamps:
@@ -1382,12 +1391,12 @@ The relation query is executed twice, therefore generating different ids and tim
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="other_rel",
-                parameter_type=["duckdb.duckdb.DuckDBPyRelation"],
+                parameter_type=["_duckdb.DuckDBPyRelation"],
                 parameter_description="The relation to subtract from the current relation (set difference).",
             )
         ],
     ),
-    'filter': PythonRelAPIDetails(
+    "filter": PythonRelAPIDetails(
         example='rel.filter("value = 2")',
         result="""
 ┌──────────────────────────────────────┬───────────────┬───────┬───────────────────────────┐
@@ -1406,7 +1415,7 @@ The relation query is executed twice, therefore generating different ids and tim
             )
         ],
     ),
-    'insert': PythonRelAPIDetails(
+    "insert": PythonRelAPIDetails(
         example='''
 import duckdb
 
@@ -1455,7 +1464,7 @@ rel.filter("value = 10")
             )
         ],
     ),
-    'insert_into': PythonRelAPIDetails(
+    "insert_into": PythonRelAPIDetails(
         example='''
 import duckdb
 
@@ -1504,7 +1513,7 @@ duckdb_conn.table("code_example").filter("value = 10")
             )
         ],
     ),
-    'intersect': PythonRelAPIDetails(
+    "intersect": PythonRelAPIDetails(
         example='rel.intersect(other_rel=rel.set_alias("other_rel"))',
         result="""
 The relation query is executed once with `rel` and once with `other_rel`,
@@ -1521,12 +1530,12 @@ therefore generating different ids and timestamps:
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="other_rel",
-                parameter_type=["duckdb.duckdb.DuckDBPyRelation"],
+                parameter_type=["_duckdb.DuckDBPyRelation"],
                 parameter_description="The relation to intersect with the current relation (set intersection).",
             )
         ],
     ),
-    'join': PythonRelAPIDetails(
+    "join": PythonRelAPIDetails(
         example="""
 rel = rel.set_alias("rel").join(
     other_rel=rel.set_alias("other_rel"), 
@@ -1612,7 +1621,7 @@ ON ((unnamed_relation_41bc15e744037078.id = unnamed_relation_307e245965aa2c2b.id
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="other_rel",
-                parameter_type=["duckdb.duckdb.DuckDBPyRelation"],
+                parameter_type=["_duckdb.DuckDBPyRelation"],
                 parameter_description="The relation to join with the current relation.",
             ),
             PythonRelAPIParamDetails(
@@ -1628,8 +1637,8 @@ ON ((unnamed_relation_41bc15e744037078.id = unnamed_relation_307e245965aa2c2b.id
             ),
         ],
     ),
-    'limit': PythonRelAPIDetails(
-        example='rel.limit(1)',
+    "limit": PythonRelAPIDetails(
+        example="rel.limit(1)",
         result="""
 ┌──────────────────────────────────────┬─────────────────┬───────┬────────────────────────────┐
 │                  id                  │   description   │ value │     created_timestamp      │
@@ -1653,7 +1662,7 @@ ON ((unnamed_relation_41bc15e744037078.id = unnamed_relation_307e245965aa2c2b.id
             ),
         ],
     ),
-    'map': PythonRelAPIDetails(
+    "map": PythonRelAPIDetails(
         example="""
 import duckdb
 from pandas import DataFrame
@@ -1691,7 +1700,7 @@ rel.map(multiply_by_2, schema={"id": int, "text": str})
             ),
         ],
     ),
-    'order': PythonRelAPIDetails(
+    "order": PythonRelAPIDetails(
         example='rel.order("value desc").limit(1, offset=4)',
         result="""
 ┌──────────────────────────────────────┬─────────────────┬───────┬────────────────────────────┐
@@ -1710,7 +1719,7 @@ rel.map(multiply_by_2, schema={"id": int, "text": str})
             )
         ],
     ),
-    'project': PythonRelAPIDetails(
+    "project": PythonRelAPIDetails(
         example='rel.project("description").limit(1)',
         result="""
 ┌─────────────────┐
@@ -1721,7 +1730,7 @@ rel.map(multiply_by_2, schema={"id": int, "text": str})
 └─────────────────┘
 """,
         use_default_example=True,
-        aliases=['select'],
+        aliases=["select"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="groups",
@@ -1731,7 +1740,7 @@ rel.map(multiply_by_2, schema={"id": int, "text": str})
             )
         ],
     ),
-    'select': PythonRelAPIDetails(
+    "select": PythonRelAPIDetails(
         example='rel.select("description").limit(1)',
         result="""
 ┌─────────────────┐
@@ -1742,7 +1751,7 @@ rel.map(multiply_by_2, schema={"id": int, "text": str})
 └─────────────────┘
 """,
         use_default_example=True,
-        aliases=['project'],
+        aliases=["project"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="groups",
@@ -1752,7 +1761,7 @@ rel.map(multiply_by_2, schema={"id": int, "text": str})
             )
         ],
     ),
-    'sort': PythonRelAPIDetails(
+    "sort": PythonRelAPIDetails(
         example='rel.sort("description")',
         result="""
 ┌──────────────────────────────────────┬─────────────────┬───────┬────────────────────────────┐
@@ -1765,7 +1774,7 @@ rel.map(multiply_by_2, schema={"id": int, "text": str})
 """,
         use_default_example=True,
     ),
-    'union': PythonRelAPIDetails(
+    "union": PythonRelAPIDetails(
         example='rel = rel.union(union_rel=rel)\n\nrel.count("*")',
         result="""
 ┌──────────────┐
@@ -1780,12 +1789,12 @@ rel.map(multiply_by_2, schema={"id": int, "text": str})
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="union_rel",
-                parameter_type=["duckdb.duckdb.DuckDBPyRelation"],
+                parameter_type=["_duckdb.DuckDBPyRelation"],
                 parameter_description="The relation to union with the current relation (set union).",
             )
         ],
     ),
-    'update': PythonRelAPIDetails(
+    "update": PythonRelAPIDetails(
         example='''
 import duckdb
 
@@ -1840,7 +1849,7 @@ rel.show()
 }
 
 FUNCTION_METHODS_MAP = {
-    'any_value': PythonRelAPIDetails(
+    "any_value": PythonRelAPIDetails(
         example="rel.any_value('id')",
         result="""
 ┌──────────────────────────────────────┐
@@ -1876,7 +1885,7 @@ FUNCTION_METHODS_MAP = {
             ),
         ],
     ),
-    'arg_max': PythonRelAPIDetails(
+    "arg_max": PythonRelAPIDetails(
         example='rel.arg_max(arg_column="value", value_column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬───────────────────────────┐
@@ -1918,7 +1927,7 @@ FUNCTION_METHODS_MAP = {
             ),
         ],
     ),
-    'arg_min': PythonRelAPIDetails(
+    "arg_min": PythonRelAPIDetails(
         example='rel.arg_min(arg_column="value", value_column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬───────────────────────────┐
@@ -1960,7 +1969,7 @@ FUNCTION_METHODS_MAP = {
             ),
         ],
     ),
-    'avg': PythonRelAPIDetails(
+    "avg": PythonRelAPIDetails(
         example="rel.avg('value')",
         result="""
 ┌──────────────┐
@@ -1996,7 +2005,7 @@ FUNCTION_METHODS_MAP = {
             ),
         ],
     ),
-    'bit_and': PythonRelAPIDetails(
+    "bit_and": PythonRelAPIDetails(
         example="""
 rel = rel.select("description, value::bit as value_bit")
 
@@ -2037,7 +2046,7 @@ rel.bit_and(column="value_bit", groups="description", projected_columns="descrip
             ),
         ],
     ),
-    'bit_or': PythonRelAPIDetails(
+    "bit_or": PythonRelAPIDetails(
         example="""
 rel = rel.select("description, value::bit as value_bit")
 
@@ -2078,7 +2087,7 @@ rel.bit_or(column="value_bit", groups="description", projected_columns="descript
             ),
         ],
     ),
-    'bit_xor': PythonRelAPIDetails(
+    "bit_xor": PythonRelAPIDetails(
         example="""
 rel = rel.select("description, value::bit as value_bit")
 
@@ -2119,7 +2128,7 @@ rel.bit_xor(column="value_bit", groups="description", projected_columns="descrip
             ),
         ],
     ),
-    'bitstring_agg': PythonRelAPIDetails(
+    "bitstring_agg": PythonRelAPIDetails(
         example='rel.bitstring_agg(column="value", groups="description", projected_columns="description", min=1, max=9)',
         result="""
 ┌─────────────────┬────────────────────────┐
@@ -2168,7 +2177,7 @@ rel.bit_xor(column="value_bit", groups="description", projected_columns="descrip
             ),
         ],
     ),
-    'bool_and': PythonRelAPIDetails(
+    "bool_and": PythonRelAPIDetails(
         example="""
 rel = rel.select("description, mod(value,2)::boolean as uneven")
 
@@ -2209,7 +2218,7 @@ rel.bool_and(column="uneven", groups="description", projected_columns="descripti
             ),
         ],
     ),
-    'bool_or': PythonRelAPIDetails(
+    "bool_or": PythonRelAPIDetails(
         example="""
 rel = rel.select("description, mod(value,2)::boolean as uneven")
 
@@ -2250,7 +2259,7 @@ rel.bool_or(column="uneven", groups="description", projected_columns="descriptio
             ),
         ],
     ),
-    'count': PythonRelAPIDetails(
+    "count": PythonRelAPIDetails(
         example='rel.count("id")',
         result="""
 ┌───────────┐
@@ -2286,7 +2295,7 @@ rel.bool_or(column="uneven", groups="description", projected_columns="descriptio
             ),
         ],
     ),
-    'cume_dist': PythonRelAPIDetails(
+    "cume_dist": PythonRelAPIDetails(
         example='rel.cume_dist(window_spec="over (partition by description order by value)", projected_columns="description, value")',
         result="""
 ┌─────────────────┬───────┬──────────────────────────────────────────────────────────────┐
@@ -2318,7 +2327,7 @@ rel.bool_or(column="uneven", groups="description", projected_columns="descriptio
             ),
         ],
     ),
-    'dense_rank': PythonRelAPIDetails(
+    "dense_rank": PythonRelAPIDetails(
         example=' rel.dense_rank(window_spec="over (partition by description order by value)", projected_columns="description, value")',
         result="""
 ┌─────────────────┬───────┬───────────────────────────────────────────────────────────────┐
@@ -2336,7 +2345,7 @@ rel.bool_or(column="uneven", groups="description", projected_columns="descriptio
 │ value is uneven │     9 │                                                             5 │
 └─────────────────┴───────┴───────────────────────────────────────────────────────────────┘
 """,
-        aliases=['rank_dense'],
+        aliases=["rank_dense"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="window_spec",
@@ -2351,7 +2360,7 @@ rel.bool_or(column="uneven", groups="description", projected_columns="descriptio
             ),
         ],
     ),
-    'distinct': PythonRelAPIDetails(
+    "distinct": PythonRelAPIDetails(
         example="""
 import duckdb
 
@@ -2375,7 +2384,7 @@ rel.distinct().order("range")
 """,
         use_default_example=False,
     ),
-    'favg': PythonRelAPIDetails(
+    "favg": PythonRelAPIDetails(
         example='rel.favg(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬───────────────┐
@@ -2412,7 +2421,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'first': PythonRelAPIDetails(
+    "first": PythonRelAPIDetails(
         example='rel.first(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬──────────────────┐
@@ -2443,7 +2452,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'first_value': PythonRelAPIDetails(
+    "first_value": PythonRelAPIDetails(
         example='rel.first_value(column="value", window_spec="over (partition by description order by value)", projected_columns="description").distinct()',
         result="""
 ┌─────────────────┬───────────────────────────────────────────────────────────────────────┐
@@ -2474,7 +2483,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'fsum': PythonRelAPIDetails(
+    "fsum": PythonRelAPIDetails(
         example='rel.fsum(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬───────────────┐
@@ -2511,7 +2520,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'geomean': PythonRelAPIDetails(
+    "geomean": PythonRelAPIDetails(
         example='rel.geomean(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬───────────────────┐
@@ -2542,7 +2551,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'histogram': PythonRelAPIDetails(
+    "histogram": PythonRelAPIDetails(
         example='rel.histogram(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬───────────────────────────┐
@@ -2573,7 +2582,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'lag': PythonRelAPIDetails(
+    "lag": PythonRelAPIDetails(
         example='rel.lag(column="description", window_spec="over (order by value)", projected_columns="description, value")',
         result="""
 ┌─────────────────┬───────┬───────────────────────────────────────────────────┐
@@ -2628,7 +2637,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'last': PythonRelAPIDetails(
+    "last": PythonRelAPIDetails(
         example='rel.last(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬─────────────────┐
@@ -2659,7 +2668,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'last_value': PythonRelAPIDetails(
+    "last_value": PythonRelAPIDetails(
         example='rel.last_value(column="value", window_spec="over (order by description)", projected_columns="description").distinct()',
         result="""
 ┌─────────────────┬─────────────────────────────────────────────────┐
@@ -2690,7 +2699,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'lead': PythonRelAPIDetails(
+    "lead": PythonRelAPIDetails(
         example='rel.lead(column="description", window_spec="over (order by value)", projected_columns="description, value")',
         result="""
 ┌─────────────────┬───────┬────────────────────────────────────────────────────┐
@@ -2745,7 +2754,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'list': PythonRelAPIDetails(
+    "list": PythonRelAPIDetails(
         example='rel.list(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬─────────────────┐
@@ -2782,7 +2791,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'max': PythonRelAPIDetails(
+    "max": PythonRelAPIDetails(
         example=' rel.max(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬──────────────┐
@@ -2819,7 +2828,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'mean': PythonRelAPIDetails(
+    "mean": PythonRelAPIDetails(
         example='rel.mean(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬──────────────┐
@@ -2856,7 +2865,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'median': PythonRelAPIDetails(
+    "median": PythonRelAPIDetails(
         example='rel.median(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬─────────────────┐
@@ -2893,7 +2902,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'min': PythonRelAPIDetails(
+    "min": PythonRelAPIDetails(
         example='rel.min(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬──────────────┐
@@ -2930,7 +2939,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'mode': PythonRelAPIDetails(
+    "mode": PythonRelAPIDetails(
         example='rel.mode(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬─────────────────┐
@@ -2967,7 +2976,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'n_tile': PythonRelAPIDetails(
+    "n_tile": PythonRelAPIDetails(
         example='rel.n_tile(window_spec="over (partition by description)", num_buckets=2, projected_columns="description, value")',
         result="""
 ┌─────────────────┬───────┬──────────────────────────────────────────┐
@@ -3004,7 +3013,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'nth_value': PythonRelAPIDetails(
+    "nth_value": PythonRelAPIDetails(
         example='rel.nth_value(column="value", window_spec="over (partition by description)", projected_columns="description", offset=1)',
         result="""
 ┌─────────────────┬───────────────────────────────────────────────────────┐
@@ -3052,7 +3061,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'percent_rank': PythonRelAPIDetails(
+    "percent_rank": PythonRelAPIDetails(
         example='rel.percent_rank(window_spec="over (partition by description order by value)", projected_columns="description, value")',
         result="""
 ┌─────────────────┬───────┬─────────────────────────────────────────────────────────────────┐
@@ -3084,7 +3093,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'product': PythonRelAPIDetails(
+    "product": PythonRelAPIDetails(
         example='rel.product(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬──────────────────┐
@@ -3121,7 +3130,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'quantile': PythonRelAPIDetails(
+    "quantile": PythonRelAPIDetails(
         example='rel.quantile(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬──────────────────────────────────┐
@@ -3164,7 +3173,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'quantile_cont': PythonRelAPIDetails(
+    "quantile_cont": PythonRelAPIDetails(
         example='rel.quantile_cont(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬──────────────────────────────────┐
@@ -3207,7 +3216,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'quantile_disc': PythonRelAPIDetails(
+    "quantile_disc": PythonRelAPIDetails(
         example='rel.quantile_disc(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬──────────────────────────────────┐
@@ -3250,7 +3259,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'rank': PythonRelAPIDetails(
+    "rank": PythonRelAPIDetails(
         example='rel.rank(window_spec="over (partition by description order by value)", projected_columns="description, value")',
         result="""
 ┌─────────────────┬───────┬─────────────────────────────────────────────────────────┐
@@ -3282,7 +3291,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'rank_dense': PythonRelAPIDetails(
+    "rank_dense": PythonRelAPIDetails(
         example=' rel.rank_dense(window_spec="over (partition by description order by value)", projected_columns="description, value")',
         result="""
 ┌─────────────────┬───────┬───────────────────────────────────────────────────────────────┐
@@ -3300,7 +3309,7 @@ rel.distinct().order("range")
 │ value is even   │     8 │                                                             4 │
 └─────────────────┴───────┴───────────────────────────────────────────────────────────────┘
 """,
-        aliases=['dense_rank'],
+        aliases=["dense_rank"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="window_spec",
@@ -3315,7 +3324,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'row_number': PythonRelAPIDetails(
+    "row_number": PythonRelAPIDetails(
         example='rel.row_number(window_spec="over (partition by description order by value)", projected_columns="description, value")',
         result="""
 ┌─────────────────┬───────┬───────────────────────────────────────────────────────────────┐
@@ -3347,8 +3356,8 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'select_dtypes': PythonRelAPIDetails(
-        example='rel.select_dtypes(types=[duckdb.typing.VARCHAR]).distinct()',
+    "select_dtypes": PythonRelAPIDetails(
+        example="rel.select_dtypes(types=[duckdb.sqltypes.VARCHAR]).distinct()",
         result="""
 ┌─────────────────┐
 │   description   │
@@ -3358,7 +3367,7 @@ rel.distinct().order("range")
 │ value is uneven │
 └─────────────────┘
 """,
-        aliases=['select_types'],
+        aliases=["select_types"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="types",
@@ -3367,8 +3376,8 @@ rel.distinct().order("range")
             )
         ],
     ),
-    'select_types': PythonRelAPIDetails(
-        example='rel.select_types(types=[duckdb.typing.VARCHAR]).distinct()',
+    "select_types": PythonRelAPIDetails(
+        example="rel.select_types(types=[duckdb.sqltypes.VARCHAR]).distinct()",
         result="""
 ┌─────────────────┐
 │   description   │
@@ -3378,7 +3387,7 @@ rel.distinct().order("range")
 │ value is uneven │
 └─────────────────┘
 """,
-        aliases=['select_dtypes'],
+        aliases=["select_dtypes"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="types",
@@ -3387,7 +3396,7 @@ rel.distinct().order("range")
             )
         ],
     ),
-    'std': PythonRelAPIDetails(
+    "std": PythonRelAPIDetails(
         example='rel.std(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬──────────────────────┐
@@ -3398,7 +3407,7 @@ rel.distinct().order("range")
 │ value is even   │    2.581988897471611 │
 └─────────────────┴──────────────────────┘
 """,
-        aliases=['stddev', 'stddev_samp'],
+        aliases=["stddev", "stddev_samp"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="column",
@@ -3425,7 +3434,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'stddev': PythonRelAPIDetails(
+    "stddev": PythonRelAPIDetails(
         example='rel.stddev(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬──────────────────────┐
@@ -3436,7 +3445,7 @@ rel.distinct().order("range")
 │ value is uneven │   3.1622776601683795 │
 └─────────────────┴──────────────────────┘
 """,
-        aliases=['std', 'stddev_samp'],
+        aliases=["std", "stddev_samp"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="column",
@@ -3463,7 +3472,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'stddev_pop': PythonRelAPIDetails(
+    "stddev_pop": PythonRelAPIDetails(
         example='rel.stddev_pop(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬─────────────────────┐
@@ -3500,7 +3509,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'stddev_samp': PythonRelAPIDetails(
+    "stddev_samp": PythonRelAPIDetails(
         example='rel.stddev_samp(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬──────────────────────┐
@@ -3511,7 +3520,7 @@ rel.distinct().order("range")
 │ value is uneven │   3.1622776601683795 │
 └─────────────────┴──────────────────────┘
 """,
-        aliases=['stddev', 'std'],
+        aliases=["stddev", "std"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="column",
@@ -3538,7 +3547,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'string_agg': PythonRelAPIDetails(
+    "string_agg": PythonRelAPIDetails(
         example='rel.string_agg(column="value", sep=",", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬──────────────────────────┐
@@ -3581,7 +3590,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'sum': PythonRelAPIDetails(
+    "sum": PythonRelAPIDetails(
         example='rel.sum(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬──────────────┐
@@ -3618,7 +3627,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'unique': PythonRelAPIDetails(
+    "unique": PythonRelAPIDetails(
         example='rel.unique(unique_aggr="description")',
         result="""
 ┌─────────────────┐
@@ -3637,7 +3646,7 @@ rel.distinct().order("range")
             )
         ],
     ),
-    'value_counts': PythonRelAPIDetails(
+    "value_counts": PythonRelAPIDetails(
         example='rel.value_counts(column="description", groups="description")',
         result="""
 ┌─────────────────┬────────────────────┐
@@ -3662,7 +3671,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'var': PythonRelAPIDetails(
+    "var": PythonRelAPIDetails(
         example='rel.var(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬───────────────────┐
@@ -3673,7 +3682,7 @@ rel.distinct().order("range")
 │ value is uneven │              10.0 │
 └─────────────────┴───────────────────┘
 """,
-        aliases=['variance', 'var_samp'],
+        aliases=["variance", "var_samp"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="column",
@@ -3700,7 +3709,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'var_pop': PythonRelAPIDetails(
+    "var_pop": PythonRelAPIDetails(
         example='rel.var_pop(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬──────────────────┐
@@ -3737,7 +3746,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'var_samp': PythonRelAPIDetails(
+    "var_samp": PythonRelAPIDetails(
         example='rel.var_samp(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬───────────────────┐
@@ -3748,7 +3757,7 @@ rel.distinct().order("range")
 │ value is uneven │              10.0 │
 └─────────────────┴───────────────────┘
 """,
-        aliases=['variance', 'var'],
+        aliases=["variance", "var"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="column",
@@ -3775,7 +3784,7 @@ rel.distinct().order("range")
             ),
         ],
     ),
-    'variance': PythonRelAPIDetails(
+    "variance": PythonRelAPIDetails(
         example='rel.variance(column="value", groups="description", projected_columns="description")',
         result="""
 ┌─────────────────┬───────────────────┐
@@ -3786,7 +3795,7 @@ rel.distinct().order("range")
 │ value is uneven │              10.0 │
 └─────────────────┴───────────────────┘
 """,
-        aliases=['var', 'var_samp'],
+        aliases=["var", "var_samp"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="column",
@@ -3816,8 +3825,8 @@ rel.distinct().order("range")
 }
 
 OUTPUT_METHODS_MAP = {
-    'arrow': PythonRelAPIDetails(
-        example='pa_table = rel.arrow()\n\npa_table',
+    "arrow": PythonRelAPIDetails(
+        example="pa_table = rel.arrow()\n\npa_table",
         result="""
 pyarrow.Table
 id: string
@@ -3831,7 +3840,7 @@ value: [[1,2,3,4,5,6,7,8,9]]
 created_timestamp: [[2025-04-10 09:07:12.614000Z,2025-04-10 09:08:12.614000Z,2025-04-10 09:09:12.614000Z,2025-04-10 09:10:12.614000Z,2025-04-10 09:11:12.614000Z,2025-04-10 09:12:12.614000Z,2025-04-10 09:13:12.614000Z,2025-04-10 09:14:12.614000Z,2025-04-10 09:15:12.614000Z]]
 """,
         use_default_example=True,
-        aliases=['fetch_arrow_table', 'to_arrow_table'],
+        aliases=["fetch_arrow_table", "to_arrow_table"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="batch_size",
@@ -3842,7 +3851,7 @@ created_timestamp: [[2025-04-10 09:07:12.614000Z,2025-04-10 09:08:12.614000Z,202
         ],
     ),
     # 'close': PythonRelAPIDetails(example=  '', result=  '', use_default_example=False)
-    'create': PythonRelAPIDetails(
+    "create": PythonRelAPIDetails(
         example='rel.create("table_code_example")\n\nduckdb_conn.table("table_code_example").limit(1)',
         result="""
 ┌──────────────────────────────────────┬─────────────────┬───────┬────────────────────────────┐
@@ -3863,7 +3872,7 @@ created_timestamp: [[2025-04-10 09:07:12.614000Z,2025-04-10 09:08:12.614000Z,202
             )
         ],
     ),
-    'create_view': PythonRelAPIDetails(
+    "create_view": PythonRelAPIDetails(
         example='rel.create_view("view_code_example", replace=True)\n\nduckdb_conn.table("view_code_example").limit(1)',
         result="""
 ┌──────────────────────────────────────┬─────────────────┬───────┬────────────────────────────┐
@@ -3890,8 +3899,8 @@ created_timestamp: [[2025-04-10 09:07:12.614000Z,2025-04-10 09:08:12.614000Z,202
             ),
         ],
     ),
-    'df': PythonRelAPIDetails(
-        example='rel.df()',
+    "df": PythonRelAPIDetails(
+        example="rel.df()",
         result="""
                                      id      description  value                created_timestamp
 0  3ac9e0ba-8390-4a02-ad72-33b1caea6354  value is uneven      1 2025-04-10 11:07:12.614000+02:00
@@ -3900,7 +3909,7 @@ created_timestamp: [[2025-04-10 09:07:12.614000Z,2025-04-10 09:08:12.614000Z,202
 ...
 """,
         use_default_example=True,
-        aliases=['fetchdf', 'to_df'],
+        aliases=["fetchdf", "to_df"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="date_as_object",
@@ -3910,8 +3919,8 @@ created_timestamp: [[2025-04-10 09:07:12.614000Z,2025-04-10 09:08:12.614000Z,202
             )
         ],
     ),
-    'execute': PythonRelAPIDetails(
-        example='rel.execute()',
+    "execute": PythonRelAPIDetails(
+        example="rel.execute()",
         result="""
 ┌──────────────────────────────────────┬─────────────────┬───────┬────────────────────────────┐
 │                  id                  │   description   │ value │     created_timestamp      │
@@ -3923,8 +3932,8 @@ created_timestamp: [[2025-04-10 09:07:12.614000Z,2025-04-10 09:08:12.614000Z,202
 """,
         use_default_example=True,
     ),
-    'fetch_arrow_reader': PythonRelAPIDetails(
-        example='pa_reader = rel.fetch_arrow_reader(batch_size=1)\n\npa_reader.read_next_batch()',
+    "fetch_arrow_reader": PythonRelAPIDetails(
+        example="pa_reader = rel.fetch_arrow_reader(batch_size=1)\n\npa_reader.read_next_batch()",
         result="""
 pyarrow.RecordBatch
 id: string
@@ -3947,8 +3956,8 @@ created_timestamp: [2025-04-10 09:25:51.259000Z]
             )
         ],
     ),
-    'fetch_arrow_table': PythonRelAPIDetails(
-        example='rel.fetch_arrow_table()',
+    "fetch_arrow_table": PythonRelAPIDetails(
+        example="rel.fetch_arrow_table()",
         result="""
 pyarrow.Table
 id: string
@@ -3962,7 +3971,7 @@ value: [[1,2,3,4,5,6,7,8,9]]
 created_timestamp: [[2025-04-10 09:24:51.259000Z,2025-04-10 09:25:51.259000Z,2025-04-10 09:26:51.259000Z,2025-04-10 09:27:51.259000Z,2025-04-10 09:28:51.259000Z,2025-04-10 09:29:51.259000Z,2025-04-10 09:30:51.259000Z,2025-04-10 09:31:51.259000Z,2025-04-10 09:32:51.259000Z]]
 """,
         use_default_example=True,
-        aliases=['arrow', 'to_arrow_table'],
+        aliases=["arrow", "to_arrow_table"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="batch_size",
@@ -3972,8 +3981,34 @@ created_timestamp: [[2025-04-10 09:24:51.259000Z,2025-04-10 09:25:51.259000Z,202
             )
         ],
     ),
-    'fetch_df_chunk': PythonRelAPIDetails(
-        example='rel.fetch_df_chunk()',
+    "fetch_record_batch": PythonRelAPIDetails(
+        additional_description="\n\n> Deprecated `fetch_record_batch()` is deprecated since 1.4.0. Use [`record_batch()`](#record_batch) instead.",
+        example="pa_reader = rel.fetch_record_batch(rows_per_batch=1)\n\npa_reader.read_next_batch()",
+        result="""
+pyarrow.RecordBatch
+id: string
+description: string
+value: int64
+created_timestamp: timestamp[us, tz=Europe/Amsterdam]
+----
+id: ["908cf67c-a086-4b94-9017-2089a83e4a6c"]
+description: ["value is uneven"]
+value: [1]
+created_timestamp: [2025-04-10 09:52:55.249000Z]
+""",
+        use_default_example=True,
+        aliases=["record_batch"],
+        parameters=[
+            PythonRelAPIParamDetails(
+                parameter_name="rows_per_batch",
+                parameter_type=["int"],
+                parameter_default="1000000",
+                parameter_description="The number of rows per batch.",
+            )
+        ],
+    ),
+    "fetch_df_chunk": PythonRelAPIDetails(
+        example="rel.fetch_df_chunk()",
         result="""
                                      id      description  value                created_timestamp
 0  1587b4b0-3023-49fe-82cf-06303ca136ac  value is uneven      1 2025-04-10 11:24:51.259000+02:00
@@ -3997,8 +4032,8 @@ created_timestamp: [[2025-04-10 09:24:51.259000Z,2025-04-10 09:25:51.259000Z,202
             ),
         ],
     ),
-    'fetchall': PythonRelAPIDetails(
-        example='rel.limit(1).fetchall()',
+    "fetchall": PythonRelAPIDetails(
+        example="rel.limit(1).fetchall()",
         result="""
 [(UUID('1587b4b0-3023-49fe-82cf-06303ca136ac'),
   'value is uneven',
@@ -4007,8 +4042,8 @@ created_timestamp: [[2025-04-10 09:24:51.259000Z,2025-04-10 09:25:51.259000Z,202
 """,
         use_default_example=True,
     ),
-    'fetchdf': PythonRelAPIDetails(
-        example='rel.fetchdf()',
+    "fetchdf": PythonRelAPIDetails(
+        example="rel.fetchdf()",
         result="""
                                      id      description  value                created_timestamp
 0  1587b4b0-3023-49fe-82cf-06303ca136ac  value is uneven      1 2025-04-10 11:24:51.259000+02:00
@@ -4017,7 +4052,7 @@ created_timestamp: [[2025-04-10 09:24:51.259000Z,2025-04-10 09:25:51.259000Z,202
 ...
 """,
         use_default_example=True,
-        aliases=['df', 'to_df'],
+        aliases=["df", "to_df"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="date_as_object",
@@ -4027,7 +4062,7 @@ created_timestamp: [[2025-04-10 09:24:51.259000Z,2025-04-10 09:25:51.259000Z,202
             )
         ],
     ),
-    'fetchmany': PythonRelAPIDetails(
+    "fetchmany": PythonRelAPIDetails(
         example="""
 while res := rel.fetchmany(size=1):
     print(res)
@@ -4079,8 +4114,8 @@ while res := rel.fetchmany(size=1):
             )
         ],
     ),
-    'fetchnumpy': PythonRelAPIDetails(
-        example='rel.fetchnumpy()',
+    "fetchnumpy": PythonRelAPIDetails(
+        example="rel.fetchnumpy()",
         result="""
 {'id': array([UUID('1587b4b0-3023-49fe-82cf-06303ca136ac'),
         UUID('e4ab8cb4-4609-40cb-ad7e-4304ed5ed4bd'),
@@ -4104,7 +4139,7 @@ while res := rel.fetchmany(size=1):
 """,
         use_default_example=True,
     ),
-    'fetchone': PythonRelAPIDetails(
+    "fetchone": PythonRelAPIDetails(
         example="""
 while res := rel.fetchone():
     print(res)
@@ -4148,8 +4183,8 @@ while res := rel.fetchone():
 >```
 ''',
     ),
-    'pl': PythonRelAPIDetails(
-        example='rel.pl(batch_size=1)',
+    "pl": PythonRelAPIDetails(
+        example="rel.pl(batch_size=1)",
         result="""
 shape: (9, 4)
 ┌─────────────────────────────────┬─────────────────┬───────┬────────────────────────────────┐
@@ -4169,8 +4204,8 @@ shape: (9, 4)
             )
         ],
     ),
-    'record_batch': PythonRelAPIDetails(
-        example='pa_batch = rel.record_batch(batch_size=1)\n\npa_batch.read_next_batch()',
+    "record_batch": PythonRelAPIDetails(
+        example="pa_batch = rel.record_batch(batch_size=1)\n\npa_batch.read_next_batch()",
         result="""
 pyarrow.RecordBatch
 id: string
@@ -4193,7 +4228,7 @@ created_timestamp: [2025-04-10 09:52:55.249000Z]
             )
         ],
     ),
-    'tf': PythonRelAPIDetails(
+    "tf": PythonRelAPIDetails(
         example='rel.select("description, value").tf()',
         result="""
 {'description': <tf.Tensor: shape=(9,), dtype=string, numpy=
@@ -4205,8 +4240,8 @@ created_timestamp: [2025-04-10 09:52:55.249000Z]
 """,
         use_default_example=True,
     ),
-    'to_arrow_table': PythonRelAPIDetails(
-        example='rel.to_arrow_table()',
+    "to_arrow_table": PythonRelAPIDetails(
+        example="rel.to_arrow_table()",
         result="""
 pyarrow.Table
 id: string
@@ -4220,7 +4255,7 @@ value: [[1,2,3,4,5,6,7,8,9]]
 created_timestamp: [[2025-04-10 09:54:24.015000Z,2025-04-10 09:55:24.015000Z,2025-04-10 09:56:24.015000Z,2025-04-10 09:57:24.015000Z,2025-04-10 09:58:24.015000Z,2025-04-10 09:59:24.015000Z,2025-04-10 10:00:24.015000Z,2025-04-10 10:01:24.015000Z,2025-04-10 10:02:24.015000Z]]
 """,
         use_default_example=True,
-        aliases=['fetch_arrow_table', 'arrow'],
+        aliases=["fetch_arrow_table", "arrow"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="batch_size",
@@ -4230,11 +4265,11 @@ created_timestamp: [[2025-04-10 09:54:24.015000Z,2025-04-10 09:55:24.015000Z,202
             )
         ],
     ),
-    'to_csv': PythonRelAPIDetails(
+    "to_csv": PythonRelAPIDetails(
         example='rel.to_csv("code_example.csv")',
-        result='The data is exported to a CSV file, named code_example.csv',
+        result="The data is exported to a CSV file, named code_example.csv",
         use_default_example=True,
-        aliases=['write_csv'],
+        aliases=["write_csv"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="file_name",
@@ -4334,8 +4369,8 @@ created_timestamp: [[2025-04-10 09:54:24.015000Z,2025-04-10 09:55:24.015000Z,202
             ),
         ],
     ),
-    'to_df': PythonRelAPIDetails(
-        example='rel.to_df()',
+    "to_df": PythonRelAPIDetails(
+        example="rel.to_df()",
         result="""
                                      id      description  value                created_timestamp
 0  e1f79925-60fd-4ee2-ae67-5eff6b0543d1  value is uneven      1 2025-04-10 11:56:04.452000+02:00
@@ -4344,7 +4379,7 @@ created_timestamp: [[2025-04-10 09:54:24.015000Z,2025-04-10 09:55:24.015000Z,202
 ...
 """,
         use_default_example=True,
-        aliases=['fetchdf', 'df'],
+        aliases=["fetchdf", "df"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="date_as_object",
@@ -4354,11 +4389,11 @@ created_timestamp: [[2025-04-10 09:54:24.015000Z,2025-04-10 09:55:24.015000Z,202
             )
         ],
     ),
-    'to_parquet': PythonRelAPIDetails(
+    "to_parquet": PythonRelAPIDetails(
         example='rel.to_parquet("code_example.parquet")',
-        result='The data is exported to a Parquet file, named code_example.parquet',
+        result="The data is exported to a Parquet file, named code_example.parquet",
         use_default_example=True,
-        aliases=['write_parquet'],
+        aliases=["write_parquet"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="file_name",
@@ -4428,9 +4463,9 @@ created_timestamp: [[2025-04-10 09:54:24.015000Z,2025-04-10 09:55:24.015000Z,202
             ),
         ],
     ),
-    'to_table': PythonRelAPIDetails(
+    "to_table": PythonRelAPIDetails(
         example='rel.to_table("table_code_example")',
-        result='A table, named table_code_example, is created with the data of the relation',
+        result="A table, named table_code_example, is created with the data of the relation",
         use_default_example=True,
         aliases=["create"],
         parameters=[
@@ -4442,9 +4477,9 @@ created_timestamp: [[2025-04-10 09:54:24.015000Z,2025-04-10 09:55:24.015000Z,202
             )
         ],
     ),
-    'to_view': PythonRelAPIDetails(
+    "to_view": PythonRelAPIDetails(
         example='rel.to_view("view_code_example", replace=True)',
-        result='A view, named view_code_example, is created with the query definition of the relation',
+        result="A view, named view_code_example, is created with the query definition of the relation",
         use_default_example=True,
         aliases=["create_view"],
         parameters=[
@@ -4462,16 +4497,16 @@ created_timestamp: [[2025-04-10 09:54:24.015000Z,2025-04-10 09:55:24.015000Z,202
             ),
         ],
     ),
-    'torch': PythonRelAPIDetails(
+    "torch": PythonRelAPIDetails(
         example='rel.select("value").torch()',
         result="{'value': tensor([1, 2, 3, 4, 5, 6, 7, 8, 9])}",
         use_default_example=True,
     ),
-    'write_csv': PythonRelAPIDetails(
+    "write_csv": PythonRelAPIDetails(
         example='rel.write_csv("code_example.csv")',
-        result='The data is exported to a CSV file, named code_example.csv',
+        result="The data is exported to a CSV file, named code_example.csv",
         use_default_example=True,
-        aliases=['to_csv'],
+        aliases=["to_csv"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="file_name",
@@ -4571,11 +4606,11 @@ created_timestamp: [[2025-04-10 09:54:24.015000Z,2025-04-10 09:55:24.015000Z,202
             ),
         ],
     ),
-    'write_parquet': PythonRelAPIDetails(
+    "write_parquet": PythonRelAPIDetails(
         example='rel.write_parquet("code_example.parquet")',
-        result='The data is exported to a Parquet file, named code_example.parquet',
+        result="The data is exported to a Parquet file, named code_example.parquet",
         use_default_example=True,
-        aliases=['to_parquet'],
+        aliases=["to_parquet"],
         parameters=[
             PythonRelAPIParamDetails(
                 parameter_name="file_name",

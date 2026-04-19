@@ -57,10 +57,10 @@ docs:
     | `format` | The format of the input file, when its extension does not indicate it, either `'sas7bdat'`, `'xpt'`, `'sav'`, `'por'`, or `'dta'` | `VARCHAR` | `NULL` |
     | `encoding` | The character encoding of the input file, as defined by `iconv`, see https://www.gnu.org/software/libiconv/ | `VARCHAR` | `NULL` |
 
-extension_star_count: 22
-extension_star_count_pretty: 22
-extension_download_count: null
-extension_download_count_pretty: n/a
+extension_star_count: 29
+extension_star_count_pretty: 29
+extension_download_count: 808
+extension_download_count_pretty: 808
 image: '/images/community_extensions/social_preview/preview_community_extension_read_stat.png'
 layout: community_extension_doc
 ---
@@ -89,5 +89,23 @@ LOAD {{ page.extension.name }};
 | function_name | function_type | description | comment | examples |
 |---------------|---------------|-------------|---------|----------|
 | read_stat     | table         | NULL        | NULL    |          |
+
+### Overloaded Functions
+
+<div class="extension_functions_table"></div>
+
+This extension does not add any function overloads.
+
+### Added Types
+
+<div class="extension_types_table"></div>
+
+This extension does not add any types.
+
+### Added Settings
+
+<div class="extension_settings_table"></div>
+
+This extension does not add any settings.
 
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Reading and Writing Google Sheets in DuckDB"
-author: "Alex Monahan and Archie Wood"
+author: "Alex Monahan, Archie Wood"
 thumb: "/images/blog/thumbs/gsheets.svg"
 image: "/images/blog/thumbs/gsheets.png"
 excerpt: "Securely read from and write to Google Sheets directly in DuckDB using the GSheets community extension! For ad hoc querying, authentication is as easy as logging into Google from a browser. Scheduled workflows can use persistent DuckDB Secrets. SQL-on-Sheets has arrived!"
@@ -59,8 +59,8 @@ This includes any publicly available sheets like the one below, so give it a run
 FROM 'https://docs.google.com/spreadsheets/d/1B4RFuOnZ4ITZ-nR9givZ7vWVOTVddC3VTKuSqgifiyE/edit?gid=0#gid=0';
 ```
 
-|                 Gotham Wisdom                  |
-|------------------------------------------------|
+| Gotham Wisdom                                  |
+| ---------------------------------------------- |
 | You either die a hero                          |
 | or live long enough to query from spreadsheets |
 
@@ -209,7 +209,7 @@ The GSheets extension will use it to generate an access token periodically.
 
 After acquiring this key file, the persistent private key must be converted to a temporary token once every 30 minutes.
 That process is now automated with the `key_file` secret provider.
-Create the [secret]({% link docs/stable/configuration/secrets_manager.md %}) with a command like below, pointing to the JSON file exported from Google.
+Create the [secret]({% link docs/lts/configuration/secrets_manager.md %}) with a command like below, pointing to the JSON file exported from Google.
 
 ```sql
 CREATE OR REPLACE PERSISTENT SECRET my_secret (
@@ -220,7 +220,7 @@ CREATE OR REPLACE PERSISTENT SECRET my_secret (
 ```
 
 As the secret is created, the private key is stored in DuckDB and a temporary token is created.
-The secret can be stored in memory or optionally persisted to disk (unencrypted) using the [`PERSISTENT` keyword]({% link docs/stable/configuration/secrets_manager.md %}#persistent-secrets).
+The secret can be stored in memory or optionally persisted to disk (unencrypted) using the [`PERSISTENT` keyword]({% link docs/lts/configuration/secrets_manager.md %}#persistent-secrets).
 The temporary token is cached within the `SECRET` as well and is recreated if it is over 30 minutes old.
 
 This unlocks the use of the GSheets extension within pipelines, like GitHub Actions (GHA) or other orchestrators like dbt.
@@ -241,7 +241,7 @@ There are a few more fun features we are thinking about for the extension – we
 We would like to use a better heuristic for detecting data types when reading from a Sheet.
 The DuckDB type system is more advanced than Sheets, so it would be beneficial to be more precise.
 
-Enabling the GSheets extension to work in [DuckDB-Wasm]({% link docs/stable/clients/wasm/overview.md %}) would allow in-browser applications to query Sheets directly – no server needed!
+Enabling the GSheets extension to work in [DuckDB-Wasm]({% link docs/lts/clients/wasm/overview.md %}) would allow in-browser applications to query Sheets directly – no server needed!
 Several `http` functions need some modification to work in a browser environment.
 
 The OAuth flow that powers the browser-based login may be useful for authenticating to other APIs.

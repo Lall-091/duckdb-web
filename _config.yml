@@ -20,23 +20,41 @@ description: >- # this means to ignore newlines until "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://duckdb.org" # the base hostname & protocol for your site, e.g. http://example.com
 # Set current codename of DuckDB and version numbers of DuckDB clients
-current_duckdb_codename: "Ossivalis"
-current_short_duckdb_version: "1.4"
-preview_short_duckdb_version: "1.5-dev"
-current_duckdb_version: 1.4.1
-current_duckdb_hash: "b390a7c376"
-current_duckdb_odbc_version: 1.4.1.0
-current_duckdb_odbc_short_version: 1.4.1
-current_duckdb_go_version: 1.4.1
-current_duckdb_nodejs_version: 1.4.1
-current_duckdb_node_neo_version: 1.4.1
-current_duckdb_r_version: 1.4.1
-current_duckdb_rust_version: 1.4.1
-current_duckdb_wasm_version: 1.4.1
-current_duckdb_csharp_version: 1.4.1
-current_duckdb_dart_version: 1.2.2
-current_duckdb_java_version: 1.4.1.0
-current_duckdb_java_short_version: 1.4.1
+# current version information
+current_duckdb_codename: "Variegata"
+current_duckdb_csharp_version: "1.5.0"
+current_duckdb_dart_version: ""
+current_duckdb_go_version: "1.5.2"
+current_duckdb_go_tag: "v2.10502.0"
+current_duckdb_hash: "8a5851971f"
+current_duckdb_java_short_version: "1.5.2"
+current_duckdb_java_version: "1.5.2.0"
+current_duckdb_node_neo_version: "1.5.2"
+current_duckdb_odbc_short_version: "1.5.2"
+current_duckdb_odbc_version: "1.5.2.0"
+current_duckdb_r_version: "1.5.2"
+current_duckdb_rust_version: "1.5.2"
+current_duckdb_version: "1.5.2"
+current_duckdb_wasm_version: "1.5.2"
+current_short_duckdb_version: "1.5"
+# LTS version information
+lts_duckdb_codename: "Andium"
+lts_duckdb_csharp_version: "1.4.4"
+lts_duckdb_dart_version: "1.4.4"
+lts_duckdb_go_tag: "v2.5.5"
+lts_duckdb_go_version: "1.4.4"
+lts_duckdb_java_short_version: "1.4.4"
+lts_duckdb_java_version: "1.4.4.0"
+lts_duckdb_node_neo_version: "1.4.4"
+lts_duckdb_nodejs_version: "1.4.4"
+lts_duckdb_odbc_short_version: "1.4.4"
+lts_duckdb_odbc_version: "1.4.4.0"
+lts_duckdb_r_version: "1.4.4"
+lts_duckdb_rust_version: "1.4.4"
+lts_duckdb_version: "1.4.4"
+lts_duckdb_wasm_version: "1.4.4"
+lts_short_duckdb_version: "1.4"
+# more Jekyll config
 livereload: true
 highlighter: rouge
 incremental: false
@@ -46,6 +64,8 @@ kramdown:
   input: GFM
   syntax_highlighter: rouge
   smart_quotes: ["apos", "apos", "quot", "quot"]
+sass:
+  style: compressed
 theme: minima
 plugins:
   - jekyll-regex-replace
@@ -57,15 +77,12 @@ plugins:
   - jekyll-toc
 
 collections:
-  media:
-    output: true
-    permalink: /media/:title/
   events:
     output: true
     permalink: /events/:year/:month/:day/:title/
-  science:
+  library:
     output: true
-    permalink: /science/:title/
+    permalink: /library/:title/
   everywhere:
     output: true
     permalink: /everywhere/:title/
@@ -106,7 +123,7 @@ repository: "duckdb/duckdb-web"
 #   - vendor/gems/
 #   - vendor/ruby/
 
-star_count: '33.6k'
+star_count: '37.6k'
 
 toc:
   min_level: 1
@@ -116,5 +133,5 @@ toc:
 exclude: ['Gemfile', 'Gemfile.lock', 'node_modules', 'vendor/bundle', 'vendor/cache', 'vendor/gems', 'vendor/ruby', 'bundle']
 
 include:
-  - docs/stable/clients/python/reference/objects.inv
-  - docs/preview/clients/python/reference/objects.inv
+  - docs/lts/clients/python/reference/objects.inv
+  - docs/current/clients/python/reference/objects.inv

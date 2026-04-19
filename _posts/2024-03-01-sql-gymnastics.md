@@ -14,7 +14,7 @@ tags: ["using DuckDB"]
      width="300"
      />
 
-DuckDB's [especially]({% post_url 2022-05-04-friendlier-sql %}) [friendly]({% post_url 2023-08-23-even-friendlier-sql %}) [SQL dialect]({% link docs/stable/sql/dialect/friendly_sql.md %}) simplifies common query operations.
+DuckDB's [especially]({% post_url 2022-05-04-friendlier-sql %}) [friendly]({% post_url 2023-08-23-even-friendlier-sql %}) [SQL dialect]({% link docs/lts/sql/dialect/friendly_sql.md %}) simplifies common query operations.
 However, these features also unlock new and flexible ways to write advanced SQL! 
 In this post we will combine multiple friendly features to both move closer to real-world use cases and stretch your imagination.
 These queries are useful in their own right, but their component pieces are even more valuable to have in your toolbox.
@@ -56,17 +56,17 @@ FROM example;
 </details>
 
 | col1 | col2 | col3 | col4 |
-|-----:|-----:|-----:|-----:|
-| 1    | 1    | 1    | 1    |
-| 2    | 2    | 0    | 1    |
-| 3    | 3    | 1    | 1    |
-| 4    | 4    | 0    | 1    |
-| 5    | 0    | 1    | 1    |
-| 6    | 1    | 0    | 1    |
-| 7    | 2    | 1    | 1    |
-| 8    | 3    | 0    | 1    |
-| 9    | 4    | 1    | 1    |
-| 10   | 0    | 0    | 1    |
+| ---: | ---: | ---: | ---: |
+|    1 |    1 |    1 |    1 |
+|    2 |    2 |    0 |    1 |
+|    3 |    3 |    1 |    1 |
+|    4 |    4 |    0 |    1 |
+|    5 |    0 |    1 |    1 |
+|    6 |    1 |    0 |    1 |
+|    7 |    2 |    1 |    1 |
+|    8 |    3 |    0 |    1 |
+|    9 |    4 |    1 |    1 |
+|   10 |    0 |    0 |    1 |
 
 ### Creating the Macro
 
@@ -142,20 +142,20 @@ FROM dynamic_aggregates(
 Executing either of those queries will return this result:
 
 | col3 | col4 | list_aggregate(list(example.col1), 'min') | list_aggregate(list(example.col2), 'min') |
-|-----:|-----:|------------------------------------------:|------------------------------------------:|
-| 0    | 1    | 2                                         | 0                                         |
-| 1    | 1    | 1                                         | 0                                         |
+| ---: | ---: | ----------------------------------------: | ----------------------------------------: |
+|    0 |    1 |                                         2 |                                         0 |
+|    1 |    1 |                                         1 |                                         0 |
 
 #### Understanding the Design
 
-The first step of our flexible [table macro]({% link docs/stable/sql/statements/create_macro.md %}#table-macros) is to choose a specific table using DuckDB's [`FROM`-first syntax]({% post_url 2023-08-23-even-friendlier-sql %}#from-first-in-select-statements).
+The first step of our flexible [table macro]({% link docs/lts/sql/statements/create_macro.md %}#table-macros) is to choose a specific table using DuckDB's [`FROM`-first syntax]({% post_url 2023-08-23-even-friendlier-sql %}#from-first-in-select-statements).
 Well that's not very dynamic!
 If we wanted to, we could work around this by creating a copy of this macro for each table we want to expose to our application.
 However, we will show another approach in our next example, and completely solve the issue in a follow up blog post with an in-development DuckDB feature.
 Stay tuned!
 
 Then we `SELECT` our grouping columns based on the list parameters that were passed in.
-The [`COLUMNS` expression]({% link docs/stable/sql/expressions/star.md %}#columns-expression) will execute a [lambda function]({% link docs/stable/sql/functions/lambda.md %}) to decide which columns meet the criteria to be selected.
+The [`COLUMNS` expression]({% link docs/lts/sql/expressions/star.md %}#columns-expression) will execute a [lambda function]({% link docs/lts/sql/functions/lambda.md %}) to decide which columns meet the criteria to be selected.
 
 The first portion of the lambda function checks if a column name was passed in within the `included_columns` list.
 However, if we choose not to use an inclusion rule (by passing in a blank `included_columns` list), we want to ignore that parameter.
@@ -172,14 +172,14 @@ The `COLUMNS` expression will acquire the columns that are in our `aggregated_co
 Then, we do a little bit of gymnastics (it had to happen sometime...).
 
 If we were to apply a typical aggregation function (like `sum` or `min`), it would need to be specified statically in our macro.
-To pass it in dynamically as a string (potentially all the way from the application code calling this SQL statement), we take advantage of a unique property of the [`list_aggregate` function]({% link docs/stable/sql/functions/nested.md %}#list-aggregates).
+To pass it in dynamically as a string (potentially all the way from the application code calling this SQL statement), we take advantage of a unique property of the [`list_aggregate` function]({% link docs/lts/sql/functions/nested.md %}#list-aggregates).
 It accepts the name of a function (as a string) in its second parameter.
-So, to use this unique property, we use the [`list` aggregate function]({% link docs/stable/sql/functions/aggregates.md %}#general-aggregate-functions) to transform all the values within each group into a list.
+So, to use this unique property, we use the [`list` aggregate function]({% link docs/lts/sql/functions/aggregates.md %}#general-aggregate-functions) to transform all the values within each group into a list.
 Then we use the `list_aggregate` function to apply the `aggregate_function` we passed into the macro to each list.
 
 Almost done!
-Now [`GROUP BY ALL`]({% link docs/stable/sql/query_syntax/groupby.md %}#group-by-all) will automatically choose to group by the columns returned by the first `COLUMNS` expression.
-The [`ORDER BY ALL`]({% link docs/stable/sql/query_syntax/orderby.md %}#order-by-all) expression will order each column in ascending order, moving from left to right.
+Now [`GROUP BY ALL`]({% link docs/lts/sql/query_syntax/groupby.md %}#group-by-all) will automatically choose to group by the columns returned by the first `COLUMNS` expression.
+The [`ORDER BY ALL`]({% link docs/lts/sql/query_syntax/orderby.md %}#order-by-all) expression will order each column in ascending order, moving from left to right.
 
 We made it!
 
@@ -203,7 +203,7 @@ Let's relax those two constraints!
 This approach takes advantage of two key concepts:
 
 * Macros can be used to create temporary aggregate functions
-* A macro can query a [Common Table Expression (CTE) / `WITH` clause]({% link docs/stable/sql/query_syntax/with.md %}) that is in scope during execution
+* A macro can query a [Common Table Expression (CTE) / `WITH` clause]({% link docs/lts/sql/query_syntax/with.md %}) that is in scope during execution
 
 ```sql
 CREATE OR REPLACE MACRO dynamic_aggregates_any_cte_any_func(
@@ -256,7 +256,7 @@ FROM dynamic_aggregates_any_cte_any_func(
 ```
 
 | another_group | one_big_group | any_func(any_cte.id) | any_func(any_cte.my_group) |
-|---------------|---------------|----------------------|----------------------------|
+| ------------- | ------------- | -------------------- | -------------------------- |
 | 0             | 1             | 502.0                | 200.0                      |
 | 1             | 1             | 490.0                | 200.0                      |
 
@@ -291,12 +291,12 @@ This query powers a portion of the MotherDuck Web UI's [Column Explorer](https:/
 [Hamilton Ulmer](https://www.linkedin.com/in/hamilton-ulmer-28b97817/) led the creation of this component and is the author of this query as well!
 The purpose of the Column Explorer, and this query, is to get a high-level overview of the data in all columns within a dataset as quickly and easily as possible.
 
-DuckDB has a built-in [`SUMMARIZE` keyword]({% link docs/stable/guides/meta/summarize.md %}) that can calculate similar metrics across an entire table.
+DuckDB has a built-in [`SUMMARIZE` keyword]({% link docs/lts/guides/meta/summarize.md %}) that can calculate similar metrics across an entire table.
 However, for larger datasets, `SUMMARIZE` can take a couple of seconds to load.
 This query provides a custom summarization capability that can be tailored to the properties of your data that you are most interested in.
 
 Traditionally, databases required that every column be referred to explicitly, and work best when data is arranged in separate columns.
-This query takes advantage of DuckDB's ability to apply functions to all columns at once, its ability to [`UNPIVOT`]({% link docs/stable/sql/statements/unpivot.md %}) (or stack) columns, and its [`STRUCT`]({% link docs/stable/sql/data_types/struct.md %}) data type to store key/value pairs.
+This query takes advantage of DuckDB's ability to apply functions to all columns at once, its ability to [`UNPIVOT`]({% link docs/lts/sql/statements/unpivot.md %}) (or stack) columns, and its [`STRUCT`]({% link docs/lts/sql/data_types/struct.md %}) data type to store key/value pairs.
 The result is a clean, pivoted summary of all the rows and columns in a table.
 
 Let's take a look at the entire function, then break it down piece by piece.
@@ -346,29 +346,29 @@ FROM custom_summarize();
 
 The result contains one row for every column in the raw dataset, and several columns of summary statistics.
 
-|       name       |  type   |                           max                           |             min              | approx_unique | nulls |
-|------------------|---------|---------------------------------------------------------|------------------------------|--------------:|------:|
-| Unnamed: 0       | BIGINT  | 113999                                                  | 0                            | 114089        | 0     |
-| track_id         | VARCHAR | 7zz7iNGIWhmfFE7zlXkMma                                  | 0000vdREvCVMxbQTkS888c       | 89815         | 0     |
-| artists          | VARCHAR | 龍藏Ryuzo                                               | !nvite                       | 31545         | 1     |
-| album_name       | VARCHAR | 당신이 잠든 사이에 Pt. 4 Original Television Soundtrack | ! ! ! ! ! Whispers ! ! ! ! ! | 47093         | 1     |
-| track_name       | VARCHAR | 행복하길 바래                                           | !I'll Be Back!               | 72745         | 1     |
-| popularity       | BIGINT  | 100                                                     | 0                            | 99            | 0     |
-| duration_ms      | BIGINT  | 5237295                                                 | 0                            | 50168         | 0     |
-| explicit         | BOOLEAN | true                                                    | false                        | 2             | 0     |
-| danceability     | DOUBLE  | 0.985                                                   | 0.0                          | 1180          | 0     |
-| energy           | DOUBLE  | 1.0                                                     | 0.0                          | 2090          | 0     |
-| key              | BIGINT  | 11                                                      | 0                            | 12            | 0     |
-| loudness         | DOUBLE  | 4.532                                                   | -49.531                      | 19436         | 0     |
-| mode             | BIGINT  | 1                                                       | 0                            | 2             | 0     |
-| speechiness      | DOUBLE  | 0.965                                                   | 0.0                          | 1475          | 0     |
-| acousticness     | DOUBLE  | 0.996                                                   | 0.0                          | 4976          | 0     |
-| instrumentalness | DOUBLE  | 1.0                                                     | 0.0                          | 5302          | 0     |
-| liveness         | DOUBLE  | 1.0                                                     | 0.0                          | 1717          | 0     |
-| valence          | DOUBLE  | 0.995                                                   | 0.0                          | 1787          | 0     |
-| tempo            | DOUBLE  | 243.372                                                 | 0.0                          | 46221         | 0     |
-| time_signature   | BIGINT  | 5                                                       | 0                            | 5             | 0     |
-| track_genre      | VARCHAR | world-music                                             | acoustic                     | 115           | 0     |
+| name             | type    | max                                                     | min                          | approx_unique | nulls |
+| ---------------- | ------- | ------------------------------------------------------- | ---------------------------- | ------------: | ----: |
+| Unnamed: 0       | BIGINT  | 113999                                                  | 0                            |        114089 |     0 |
+| track_id         | VARCHAR | 7zz7iNGIWhmfFE7zlXkMma                                  | 0000vdREvCVMxbQTkS888c       |         89815 |     0 |
+| artists          | VARCHAR | 龍藏Ryuzo                                               | !nvite                       |         31545 |     1 |
+| album_name       | VARCHAR | 당신이 잠든 사이에 Pt. 4 Original Television Soundtrack | ! ! ! ! ! Whispers ! ! ! ! ! |         47093 |     1 |
+| track_name       | VARCHAR | 행복하길 바래                                           | !I'll Be Back!               |         72745 |     1 |
+| popularity       | BIGINT  | 100                                                     | 0                            |            99 |     0 |
+| duration_ms      | BIGINT  | 5237295                                                 | 0                            |         50168 |     0 |
+| explicit         | BOOLEAN | true                                                    | false                        |             2 |     0 |
+| danceability     | DOUBLE  | 0.985                                                   | 0.0                          |          1180 |     0 |
+| energy           | DOUBLE  | 1.0                                                     | 0.0                          |          2090 |     0 |
+| key              | BIGINT  | 11                                                      | 0                            |            12 |     0 |
+| loudness         | DOUBLE  | 4.532                                                   | -49.531                      |         19436 |     0 |
+| mode             | BIGINT  | 1                                                       | 0                            |             2 |     0 |
+| speechiness      | DOUBLE  | 0.965                                                   | 0.0                          |          1475 |     0 |
+| acousticness     | DOUBLE  | 0.996                                                   | 0.0                          |          4976 |     0 |
+| instrumentalness | DOUBLE  | 1.0                                                     | 0.0                          |          5302 |     0 |
+| liveness         | DOUBLE  | 1.0                                                     | 0.0                          |          1717 |     0 |
+| valence          | DOUBLE  | 0.995                                                   | 0.0                          |          1787 |     0 |
+| tempo            | DOUBLE  | 243.372                                                 | 0.0                          |         46221 |     0 |
+| time_signature   | BIGINT  | 5                                                       | 0                            |             5 |     0 |
+| track_genre      | VARCHAR | world-music                                             | acoustic                     |           115 |     0 |
 
 So how was this query constructed? 
 Let's break down each CTE step by step.
@@ -392,9 +392,9 @@ SELECT
     };
 ```
 
-| main.struct_pack("name" := first(alias(subset."Unnamed: 0")), ... | main.struct_pack("name" := first(alias(subset.track_id)), ... | ... | main.struct_pack("name" := first(alias(subset.time_signature)), ... | main.struct_pack("name" := first(alias(subset.track_genre)), ... |
-|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| {'name': Unnamed: 0, 'type': BIGINT, 'max': 113999, 'min': 0, 'approx_unique': 114089, 'nulls': 0}                                                                                                                                                                                                                                   | {'name': track_id, 'type': VARCHAR, 'max': 7zz7iNGIWhmfFE7zlXkMma, 'min': 0000vdREvCVMxbQTkS888c, 'approx_unique': 89815, 'nulls': 0}                                                                                                                                                                        | ... | {'name': time_signature, 'type': BIGINT, 'max': 5, 'min': 0, 'approx_unique': 5, 'nulls': 0}                                                                                                                                                                                                                                                  | {'name': track_genre, 'type': VARCHAR, 'max': world-music, 'min': acoustic, 'approx_unique': 115, 'nulls': 0}                                                                                                                                                                                                                  |
+| main.struct_pack("name" := first(alias(subset."Unnamed: 0")), ...                                  | main.struct_pack("name" := first(alias(subset.track_id)), ...                                                                         | ... | main.struct_pack("name" := first(alias(subset.time_signature)), ...                          | main.struct_pack("name" := first(alias(subset.track_genre)), ...                                              |
+| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | --- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| {'name': Unnamed: 0, 'type': BIGINT, 'max': 113999, 'min': 0, 'approx_unique': 114089, 'nulls': 0} | {'name': track_id, 'type': VARCHAR, 'max': 7zz7iNGIWhmfFE7zlXkMma, 'min': 0000vdREvCVMxbQTkS888c, 'approx_unique': 89815, 'nulls': 0} | ... | {'name': time_signature, 'type': BIGINT, 'max': 5, 'min': 0, 'approx_unique': 5, 'nulls': 0} | {'name': track_genre, 'type': VARCHAR, 'max': world-music, 'min': acoustic, 'approx_unique': 115, 'nulls': 0} |
 
 
 This intermediate result maintains the same number of columns as the original dataset, but only returns a single row of summary statistics.
@@ -418,20 +418,20 @@ UNPIVOT metrics
 ON COLUMNS(*);
 ```
 
-|           name           |                                                                           value                                                                            |
-|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| main.struct_pack("name" := first(alias(spotify_tracks."Unnamed: 0")), ... | {'name': Unnamed: 0, 'type': BIGINT, 'max': 113999, 'min': 0, 'approx_unique': 114089, 'nulls': 0}                                                                             |
-| main.struct_pack("name" := first(alias(spotify_tracks.track_id)), ... | {'name': track_id, 'type': VARCHAR, 'max': 7zz7iNGIWhmfFE7zlXkMma, 'min': 0000vdREvCVMxbQTkS888c, 'approx_unique': 89815, 'nulls': 0}                                          |
-|           ...            |                                                                            ...                                                                             |
-| main.struct_pack("name" := first(alias(spotify_tracks.time_signature)), ... | {'name': time_signature, 'type': BIGINT, 'max': 5, 'min': 0, 'approx_unique': 5, 'nulls': 0}                                                                                   |
-| main.struct_pack("name" := first(alias(spotify_tracks.track_genre)), ... | {'name': track_genre, 'type': VARCHAR, 'max': world-music, 'min': acoustic, 'approx_unique': 115, 'nulls': 0}                                                                  |
+| name                                                                        | value                                                                                                                                 |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| main.struct_pack("name" := first(alias(spotify_tracks."Unnamed: 0")), ...   | {'name': Unnamed: 0, 'type': BIGINT, 'max': 113999, 'min': 0, 'approx_unique': 114089, 'nulls': 0}                                    |
+| main.struct_pack("name" := first(alias(spotify_tracks.track_id)), ...       | {'name': track_id, 'type': VARCHAR, 'max': 7zz7iNGIWhmfFE7zlXkMma, 'min': 0000vdREvCVMxbQTkS888c, 'approx_unique': 89815, 'nulls': 0} |
+| ...                                                                         | ...                                                                                                                                   |
+| main.struct_pack("name" := first(alias(spotify_tracks.time_signature)), ... | {'name': time_signature, 'type': BIGINT, 'max': 5, 'min': 0, 'approx_unique': 5, 'nulls': 0}                                          |
+| main.struct_pack("name" := first(alias(spotify_tracks.track_genre)), ...    | {'name': track_genre, 'type': VARCHAR, 'max': world-music, 'min': acoustic, 'approx_unique': 115, 'nulls': 0}                         |
 
 By unpivoting on `COLUMNS(*)`, we take all columns and pivot them downward into two columns: one for the auto-generated `name` of the column, and one for the `value` that was within that column.
 
 #### Return the Results
 
 The final step is the most gymnastics-like portion of this query.
-We explode the `value` column's struct format so that each key becomes its own column using the [`STRUCT.*` syntax]({% link docs/stable/sql/data_types/struct.md %}#struct).
+We explode the `value` column's struct format so that each key becomes its own column using the [`STRUCT.*` syntax]({% link docs/lts/sql/data_types/struct.md %}#struct).
 This is another way to make a query less reliant on column names – the split occurs automatically based on the keys in the struct.
 
 ```sql
@@ -441,29 +441,29 @@ FROM stacked_metrics;
 
 We have now split apart the data into multiple columns, so the summary metrics are nice and interpretable.
 
-|       name       |  type   |                           max                           |             min              | approx_unique | nulls |
-|------------------|---------|---------------------------------------------------------|------------------------------|--------------:|------:|
-| Unnamed: 0       | BIGINT  | 113999                                                  | 0                            | 114089        | 0     |
-| track_id         | VARCHAR | 7zz7iNGIWhmfFE7zlXkMma                                  | 0000vdREvCVMxbQTkS888c       | 89815         | 0     |
-| artists          | VARCHAR | 龍藏Ryuzo                                               | !nvite                       | 31545         | 1     |
-| album_name       | VARCHAR | 당신이 잠든 사이에 Pt. 4 Original Television Soundtrack | ! ! ! ! ! Whispers ! ! ! ! ! | 47093         | 1     |
-| track_name       | VARCHAR | 행복하길 바래                                           | !I'll Be Back!               | 72745         | 1     |
-| popularity       | BIGINT  | 100                                                     | 0                            | 99            | 0     |
-| duration_ms      | BIGINT  | 5237295                                                 | 0                            | 50168         | 0     |
-| explicit         | BOOLEAN | true                                                    | false                        | 2             | 0     |
-| danceability     | DOUBLE  | 0.985                                                   | 0.0                          | 1180          | 0     |
-| energy           | DOUBLE  | 1.0                                                     | 0.0                          | 2090          | 0     |
-| key              | BIGINT  | 11                                                      | 0                            | 12            | 0     |
-| loudness         | DOUBLE  | 4.532                                                   | -49.531                      | 19436         | 0     |
-| mode             | BIGINT  | 1                                                       | 0                            | 2             | 0     |
-| speechiness      | DOUBLE  | 0.965                                                   | 0.0                          | 1475          | 0     |
-| acousticness     | DOUBLE  | 0.996                                                   | 0.0                          | 4976          | 0     |
-| instrumentalness | DOUBLE  | 1.0                                                     | 0.0                          | 5302          | 0     |
-| liveness         | DOUBLE  | 1.0                                                     | 0.0                          | 1717          | 0     |
-| valence          | DOUBLE  | 0.995                                                   | 0.0                          | 1787          | 0     |
-| tempo            | DOUBLE  | 243.372                                                 | 0.0                          | 46221         | 0     |
-| time_signature   | BIGINT  | 5                                                       | 0                            | 5             | 0     |
-| track_genre      | VARCHAR | world-music                                             | acoustic                     | 115           | 0     |
+| name             | type    | max                                                     | min                          | approx_unique | nulls |
+| ---------------- | ------- | ------------------------------------------------------- | ---------------------------- | ------------: | ----: |
+| Unnamed: 0       | BIGINT  | 113999                                                  | 0                            |        114089 |     0 |
+| track_id         | VARCHAR | 7zz7iNGIWhmfFE7zlXkMma                                  | 0000vdREvCVMxbQTkS888c       |         89815 |     0 |
+| artists          | VARCHAR | 龍藏Ryuzo                                               | !nvite                       |         31545 |     1 |
+| album_name       | VARCHAR | 당신이 잠든 사이에 Pt. 4 Original Television Soundtrack | ! ! ! ! ! Whispers ! ! ! ! ! |         47093 |     1 |
+| track_name       | VARCHAR | 행복하길 바래                                           | !I'll Be Back!               |         72745 |     1 |
+| popularity       | BIGINT  | 100                                                     | 0                            |            99 |     0 |
+| duration_ms      | BIGINT  | 5237295                                                 | 0                            |         50168 |     0 |
+| explicit         | BOOLEAN | true                                                    | false                        |             2 |     0 |
+| danceability     | DOUBLE  | 0.985                                                   | 0.0                          |          1180 |     0 |
+| energy           | DOUBLE  | 1.0                                                     | 0.0                          |          2090 |     0 |
+| key              | BIGINT  | 11                                                      | 0                            |            12 |     0 |
+| loudness         | DOUBLE  | 4.532                                                   | -49.531                      |         19436 |     0 |
+| mode             | BIGINT  | 1                                                       | 0                            |             2 |     0 |
+| speechiness      | DOUBLE  | 0.965                                                   | 0.0                          |          1475 |     0 |
+| acousticness     | DOUBLE  | 0.996                                                   | 0.0                          |          4976 |     0 |
+| instrumentalness | DOUBLE  | 1.0                                                     | 0.0                          |          5302 |     0 |
+| liveness         | DOUBLE  | 1.0                                                     | 0.0                          |          1717 |     0 |
+| valence          | DOUBLE  | 0.995                                                   | 0.0                          |          1787 |     0 |
+| tempo            | DOUBLE  | 243.372                                                 | 0.0                          |         46221 |     0 |
+| time_signature   | BIGINT  | 5                                                       | 0                            |             5 |     0 |
+| track_genre      | VARCHAR | world-music                                             | acoustic                     |           115 |     0 |
 
 
 ## Conclusion

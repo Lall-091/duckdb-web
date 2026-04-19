@@ -66,8 +66,8 @@ SELECT
 ```
 
 
-|                        intro                        | starship_loc | trimmed_intro |
-|:---|:---|:---|
+| intro                                               | starship_loc | trimmed_intro |
+| :-------------------------------------------------- | :----------- | :------------ |
 | These are the voyages of the starship Enterprise... | 30           | Enterprise... |
 
 ### Dynamic Column Selection
@@ -76,7 +76,7 @@ Databases typically prefer strictness in column definitions and flexibility in t
 
 No longer do you need to know all of your column names up front! DuckDB can select and even modify columns based on regular expression pattern matching, `EXCLUDE` or `REPLACE` modifiers, and even lambda functions (see the [section on lambda functions below](#list-lambda-functions) for details!).
 
-Let’s take a look at some facts gathered about the first season of Star Trek. Using DuckDB’s [`httpfs` extension]({% link docs/stable/core_extensions/httpfs/overview.md %}), we can query a CSV dataset directly from GitHub. It has several columns so let’s `DESCRIBE` it.
+Let’s take a look at some facts gathered about the first season of Star Trek. Using DuckDB’s [`httpfs` extension]({% link docs/lts/core_extensions/httpfs/overview.md %}), we can query a CSV dataset directly from GitHub. It has several columns so let’s `DESCRIBE` it.
 
 ```sql
 INSTALL httpfs;
@@ -90,8 +90,8 @@ DESCRIBE trek_facts;
 ```
 
 
-|               column_name               | column_type | null | key  | default | extra |
-|:---|:---|:---|:---|:---|:---|
+| column_name                             | column_type | null | key  | default | extra |
+| :-------------------------------------- | :---------- | :--- | :--- | :------ | :---- |
 | season_num                              | BIGINT      | YES  | NULL | NULL    | NULL  |
 | episode_num                             | BIGINT      | YES  | NULL | NULL    | NULL  |
 | aired_date                              | DATE        | YES  | NULL | NULL    | NULL  |
@@ -104,7 +104,7 @@ DESCRIBE trek_facts;
 | highest_warp_speed_issued               | BIGINT      | YES  | NULL | NULL    | NULL  |
 | bool_hand_phasers_fired                 | BIGINT      | YES  | NULL | NULL    | NULL  |
 | bool_ship_phasers_fired                 | BIGINT      | YES  | NULL | NULL    | NULL  |
-| bool_ship_photon_torpedoes_fired         | BIGINT      | YES  | NULL | NULL    | NULL  |
+| bool_ship_photon_torpedoes_fired        | BIGINT      | YES  | NULL | NULL    | NULL  |
 | cnt_transporter_pax                     | BIGINT      | YES  | NULL | NULL    | NULL  |
 | cnt_damn_it_jim_quote                   | BIGINT      | YES  | NULL | NULL    | NULL  |
 | cnt_im_givin_her_all_shes_got_quote     | BIGINT      | YES  | NULL | NULL    | NULL  |
@@ -124,7 +124,7 @@ FROM trek_facts;
 
 
 | episode_num | cnt_warp_speed_orders | highest_warp_speed_issued |
-|:---|:---|:---|
+| :---------- | :-------------------- | :------------------------ |
 | 0           | 1                     | 1                         |
 | 1           | 0                     | 0                         |
 | 2           | 1                     | 1                         |
@@ -144,7 +144,7 @@ FROM trek_facts;
 
 
 | max(trek_facts.cnt_warp_speed_orders) | max(trek_facts.highest_warp_speed_issued) |
-|:---|:---|
+| :------------------------------------ | :---------------------------------------- |
 | 5                                     | 8                                         |
 
 We can also create a `WHERE` clause that applies across multiple columns. All columns must match the filter criteria, which is equivalent to combining them with `AND`. Which episodes had at least 2 warp speed orders and at least a warp speed level of 2?
@@ -163,7 +163,7 @@ WHERE
 
 
 | episode_num | cnt_warp_speed_orders | highest_warp_speed_issued |
-|:---|:---|:---|
+| :---------- | :-------------------- | :------------------------ |
 | 14          | 3                     | 7                         |
 | 17          | 2                     | 7                         |
 | 18          | 2                     | 8                         |
@@ -180,9 +180,9 @@ FROM trek_facts;
 ```
 
 
-| max(trek_facts.<br>episode_num) | max(trek_facts.<br>aired_date) | max(trek_facts.<br>cnt_kirk_hookups) | ... | max(trek_facts.<br>bool_enterprise_saved_the_day) |
-|:---|:---|:---|:---|:---|
-| 29                          | 1967-04-13                 | 2                                | ... | 1                                          |
+| max(trek_facts.<br>episode_num) | max(trek_facts.<br>aired_date) | max(trek_facts.<br>cnt_kirk_hookups) | ...  | max(trek_facts.<br>bool_enterprise_saved_the_day) |
+| :------------------------------ | :----------------------------- | :----------------------------------- | :--- | :------------------------------------------------ |
+| 29                              | 1967-04-13                     | 2                                    | ...  | 1                                                 |
 
 The `REPLACE` syntax is also useful when applied to a dynamic set of columns. In this example, we want to convert the dates into timestamps prior to finding the maximum value in each column. Previously this would have required an entire subquery or CTE to pre-process just that single column!
 
@@ -193,28 +193,28 @@ FROM trek_facts;
 ```
 
 
-| max(trek_facts.<br>season_num) | max(trek_facts.<br>episode_num) | max(aired_date := <br>CAST(aired_date AS TIMESTAMP)) | ... | max(trek_facts.<br>bool_enterprise_saved_the_day) |
-|:---|:---|:---|:---|:---|
-| 1                          | 29                          | 1967-04-13 00:00:00                              | ... | 1                                                   |
+| max(trek_facts.<br>season_num) | max(trek_facts.<br>episode_num) | max(aired_date := <br>CAST(aired_date AS TIMESTAMP)) | ...  | max(trek_facts.<br>bool_enterprise_saved_the_day) |
+| :----------------------------- | :------------------------------ | :--------------------------------------------------- | :--- | :------------------------------------------------ |
+| 1                              | 29                              | 1967-04-13 00:00:00                                  | ...  | 1                                                 |
 
 ### `COLUMNS()` with Lambda Functions
 
-The most flexible way to query a dynamic set of columns is through a [lambda function]({% link docs/stable/sql/functions/nested.md %}#lambda-functions). This allows for any matching criteria to be applied to the names of the columns, not just regular expressions. See more details about lambda functions below. 
+The most flexible way to query a dynamic set of columns is through a [lambda function]({% link docs/lts/sql/functions/nested.md %}#lambda-functions). This allows for any matching criteria to be applied to the names of the columns, not just regular expressions. See more details about lambda functions below. 
 
 For example, if using the `LIKE` syntax is more comfortable, we can select columns matching a `LIKE` pattern rather than with a regular expression.
 
 ```sql
 SELECT
     episode_num,
-    COLUMNS(col -> col LIKE '%warp%')
+    COLUMNS(lambda col: col LIKE '%warp%')
 FROM trek_facts
 WHERE
-    COLUMNS(col -> col LIKE '%warp%') >= 2;
+    COLUMNS(lambda col: LIKE '%warp%') >= 2;
 ```
 
 
 | episode_num | cnt_warp_speed_orders | highest_warp_speed_issued |
-|:---|:---|:---|
+| :---------- | :-------------------- | :------------------------ |
 | 14          | 3                     | 7                         |
 | 17          | 2                     | 7                         |
 | 18          | 2                     | 8                         |
@@ -237,9 +237,9 @@ SELECT
 FROM 'https://raw.githubusercontent.com/vlad-saling/star-trek-ipsum/master/src/content/content.json';
 ```
 
-|                                                                            starship                                                                            |
-|:---|
-| USS Farragut - NCC-1647 - Ship on which James Kirk served as a phaser station operator. Attacked by the Dikironium Cloud Creature, killing half the crew. ad.  |
+| starship                                                                                                                                                      |
+| :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| USS Farragut - NCC-1647 - Ship on which James Kirk served as a phaser station operator. Attacked by the Dikironium Cloud Creature, killing half the crew. ad. |
 
 Now for some new SQL capabilities beyond the ideas from the prior post!
 
@@ -285,7 +285,7 @@ SELECT
 
 
 | im_not_messing_around_number_one |
-|:---|
+| :------------------------------- |
 | MAKE.IT.SO.                      |
 
 Now compare that with the old way...
@@ -302,8 +302,8 @@ SELECT
 ```
 
 
-|      oof      |
-|:---|
+| oof           |
+| :------------ |
 | MAKE.IT.STOP. |
 
 ## Union by Name
@@ -325,12 +325,12 @@ FROM proverbs;
 ```
 
 
-|               klingon_proverb                |      borg_proverb       |
-|:---|:---|
+| klingon_proverb                              | borg_proverb            |
+| :------------------------------------------- | :---------------------- |
 | Revenge is a dish best served cold           | NULL                    |
 | If winning is not important, why keep score? | You will be assimilated |
 
-This approach has additional benefits. As seen above, not only can tables with different column orders be combined, but so can tables with different numbers of columns entirely. This is helpful as schemas migrate, and is particularly useful for DuckDB’s [multi-file reading capabilities]({% link docs/stable/data/multiple_files/combining_schemas.md %}#union-by-name).
+This approach has additional benefits. As seen above, not only can tables with different column orders be combined, but so can tables with different numbers of columns entirely. This is helpful as schemas migrate, and is particularly useful for DuckDB’s [multi-file reading capabilities]({% link docs/lts/data/multiple_files/combining_schemas.md %}#union-by-name).
 
 ## Insert by Name
 
@@ -346,8 +346,8 @@ SELECT * FROM proverbs;
 ```
 
 
-|               klingon_proverb                |      borg_proverb       |
-|:---|:---|
+| klingon_proverb                              | borg_proverb            |
+| :------------------------------------------- | :---------------------- |
 | Revenge is a dish best served cold           | NULL                    |
 | If winning is not important, why keep score? | You will be assimilated |
 | NULL                                         | Resistance is futile    |
@@ -373,8 +373,8 @@ FROM purchases;
 ```
 
 
-|       item       | year | count |
-|:---|:---|:---|
+| item             | year | count |
+| :--------------- | :--- | :---- |
 | phasers          | 2155 | 1035  |
 | phasers          | 2156 | 25039 |
 | phasers          | 2157 | 95000 |
@@ -395,8 +395,8 @@ FROM pivoted_purchases;
 ```
 
 
-|       item       | 2155 | 2156  | 2157  |
-|:---|:---|:---|:---|
+| item             | 2155 | 2156  | 2157  |
+| :--------------- | :--- | :---- | :---- |
 | phasers          | 1035 | 25039 | 95000 |
 | photon torpedoes | 255  | 17899 | 87492 |
 
@@ -415,8 +415,8 @@ UNPIVOT pivoted_purchases
 ```
 
 
-|       item       | year | count |
-|:---|:---|:---|
+| item             | year | count |
+| :--------------- | :--- | :---- |
 | phasers          | 2155 | 1035  |
 | phasers          | 2156 | 25039 |
 | phasers          | 2157 | 95000 |
@@ -424,7 +424,7 @@ UNPIVOT pivoted_purchases
 | photon torpedoes | 2156 | 17899 |
 | photon torpedoes | 2157 | 87492 |
 
-More examples are included as a part of our [DuckDB 0.8.0 announcement post]({% post_url 2023-05-17-announcing-duckdb-080 %}#new-sql-features), and the [`PIVOT`]({% link docs/stable/sql/statements/pivot.md %}) and [`UNPIVOT`]({% link docs/stable/sql/statements/unpivot.md %}) documentation pages highlight more complex queries.
+More examples are included as a part of our [DuckDB 0.8.0 announcement post]({% post_url 2023-05-17-announcing-duckdb-080 %}#new-sql-features), and the [`PIVOT`]({% link docs/lts/sql/statements/pivot.md %}) and [`UNPIVOT`]({% link docs/lts/sql/statements/unpivot.md %}) documentation pages highlight more complex queries.
 
 Stay tuned for a future post to cover what is happening behind the scenes!
 
@@ -437,12 +437,12 @@ In this example, a lambda function is used in combination with the `list_transfo
 ```sql
 SELECT 
      (['Enterprise NCC-1701', 'Voyager NCC-74656', 'Discovery NCC-1031'])
-          .list_transform(x -> x.string_split(' ')[1]) AS short_name;
+          .list_transform(lambda x: x.string_split(' ')[1]) AS short_name;
 ```
 
 
-|            ship_name             |
-|:---|
+| ship_name                        |
+| :------------------------------- |
 | [Enterprise, Voyager, Discovery] |
 
 Lambdas can also be used to filter down the items in a list. The lambda returns a list of booleans, which is used by the `list_filter` function to select specific items. The `contains` function is using the [function chaining](#function-chaining) described earlier.
@@ -450,12 +450,12 @@ Lambdas can also be used to filter down the items in a list. The lambda returns 
 ```sql
 SELECT 
      (['Enterprise NCC-1701', 'Voyager NCC-74656', 'Discovery NCC-1031'])
-          .list_filter(x -> x.contains('1701')) AS the_original;
+          .list_filter(lambda x: x.contains('1701')) AS the_original;
 ```
 
 
-|     the_original      |
-|:---|
+| the_original          |
+| :-------------------- |
 | [Enterprise NCC-1701] |
 
 ## List Comprehensions
@@ -473,7 +473,7 @@ SELECT
 
 
 | ready_to_boldly_go |
-|:---|
+| :----------------- |
 | [Enterprise]       |
 
 ## Exploding Struct.*
@@ -491,7 +491,7 @@ SELECT
 
 
 | gold_casualties | blue_casualties | red_casualties |
-|:---|:---|:---|
+| :-------------- | :-------------- | :------------- |
 | 5               | 15              | 10000          |
 
 ## Automatic Struct Creation
@@ -509,8 +509,8 @@ SELECT officers;
 ```
 
 
-|                   officers                   |
-|:---|
+| officers                                     |
+| :------------------------------------------- |
 | {'rank': Captain, 'name': Jean-Luc Picard}   |
 | {'rank': Lieutenant Commander, 'name': Data} |
 
@@ -533,8 +533,8 @@ SELECT 'First Contact';
 ```
 
 
-|       movie        |
-|:---|
+| movie              |
+| :----------------- |
 | The Motion Picture |
 | First Contact      |
 | 6                  |
@@ -561,15 +561,15 @@ SELECT
 ```
 
 
-|       movie        | type |        name        | num |
-|:---|:---|:---|:---|
-| The Motion Picture | name | The Motion Picture |     |
-| 2                  | num  |                    | 2   |
-| 3                  | num  |                    | 3   |
-| 4                  | num  |                    | 4   |
-| 5                  | num  |                    | 5   |
-| 6                  | num  |                    | 6   |
-| First Contact      | name | First Contact      |     |
+| movie              | type | name               | num  |
+| :----------------- | :--- | :----------------- | :--- |
+| The Motion Picture | name | The Motion Picture |      |
+| 2                  | num  |                    | 2    |
+| 3                  | num  |                    | 3    |
+| 4                  | num  |                    | 4    |
+| 5                  | num  |                    | 5    |
+| 6                  | num  |                    | 6    |
+| First Contact      | name | First Contact      |      |
 
 ## Additional Friendly Features
 
@@ -579,7 +579,7 @@ DuckDB takes a nod from the [`describe` function in Pandas](https://pandas.pydat
 
 Have a look at the [correlated subqueries post]({% post_url 2023-05-26-correlated-subqueries-in-sql %}) to see how to use subqueries that refer to each others’ columns. DuckDB’s advanced optimizer improves correlated subquery performance by orders of magnitude, allowing for queries to be expressed as naturally as possible. What was once an anti-pattern for performance reasons can now be used freely!
 
-DuckDB has added more ways to `JOIN` tables together that make expressing common calculations much easier. Some like `LATERAL`, `ASOF`, `SEMI`, and `ANTI` joins are present in other systems, but have high-performance implementations in DuckDB. DuckDB also adds a new `POSITIONAL` join that combines by the row numbers in each table to match the commonly used Pandas capability of joining on row number indexes. See the [`JOIN` documentation]({% link docs/stable/sql/query_syntax/from.md %}) for details, and look out for a blog post describing DuckDB’s state of the art `ASOF` joins!
+DuckDB has added more ways to `JOIN` tables together that make expressing common calculations much easier. Some like `LATERAL`, `ASOF`, `SEMI`, and `ANTI` joins are present in other systems, but have high-performance implementations in DuckDB. DuckDB also adds a new `POSITIONAL` join that combines by the row numbers in each table to match the commonly used Pandas capability of joining on row number indexes. See the [`JOIN` documentation]({% link docs/lts/sql/query_syntax/from.md %}) for details, and look out for a blog post describing DuckDB’s state of the art `ASOF` joins!
 
 ## Summary and Future Work
 

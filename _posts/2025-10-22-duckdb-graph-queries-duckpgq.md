@@ -57,7 +57,7 @@ If you're thinking this sounds a lot like the relational model, you're exactly r
 
 To write our graph queries, we could use DuckDB and the SQL we are familiar with. But let us make life a little simpler for ourselves and leverage DuckDB's rich extension ecosystem. We will be using [`DuckPGQ`](https://duckdb.org/community_extensions/extensions/duckpgq), a community extension that adds support to DuckDB's parser for a new visual graph syntax. This new syntax is SQL / Property Graph Queries (SQL/PGQ), which is part of the official SQL:2023 standard. SQL/PGQ is partially inspired by the popular graph query language [Cypher](https://en.wikipedia.org/wiki/Cypher_(query_language)).
 
-> The DuckPGQ extension started out as a [research]({% link _science/2023-01-08-duckpgq.md %}) [prototype]({% link _science/2023-08-28-duckpgq-demo.md %}) and is now available as a community extension.
+> The DuckPGQ extension started out as a [research]({% link _library/2023-01-08-duckpgq.md %}) [prototype]({% link _library/2023-08-28-duckpgq-demo.md %}) and is now available as a community extension.
 
 Installing and loading the extension is as simple as it gets:
 
@@ -86,7 +86,7 @@ EDGE TABLES (
 );
 ```
 
-During the creation of the property graph, we make a clear distinction between `VERTEX` tables and `EDGE` tables. For `VERTEX` tables, we only have to specify the name of the table. For `EDGE` tables, a little more work is required since for both the `SOURCE` and the `DESTINATION`, we need to specify the column in the edge table that forms the key for the `SOURCE` or `DESTINATION`. This is the same principle as defining a [`FOREIGN KEY` constraint]({% link docs/stable/sql/constraints.md %}#foreign-keys), linking our edge table back to the node tables it connects.
+During the creation of the property graph, we make a clear distinction between `VERTEX` tables and `EDGE` tables. For `VERTEX` tables, we only have to specify the name of the table. For `EDGE` tables, a little more work is required since for both the `SOURCE` and the `DESTINATION`, we need to specify the column in the edge table that forms the key for the `SOURCE` or `DESTINATION`. This is the same principle as defining a [`FOREIGN KEY` constraint]({% link docs/lts/sql/constraints.md %}#foreign-keys), linking our edge table back to the node tables it connects.
 The `LABEL` clause gives a clean name to the relationship type. While our table is named `AccountTransferAccount`, the edges within it represent a `Transfer` relationship. This is the name we'll use in our graph queries.
 
 Now that we have created our property graph, we are ready to investigate the financial data and uncover its secrets!

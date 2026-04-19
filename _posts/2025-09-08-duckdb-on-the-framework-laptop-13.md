@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Big Data on the Move: DuckDB on the Framework Laptop 13"
-author: Gabor Szarnyas
+author: Gábor Szárnyas
 thumb: "/images/blog/thumbs/framework-laptop-13.png"
 image: "/images/blog/thumbs/framework-laptop-13.svg"
 excerpt: "We put DuckDB through its paces on a 12-core ultrabook with 128 GB RAM, running TPC-H queries up to SF10,000."
@@ -40,7 +40,7 @@ To see how this laptop performs, we ran a few benchmarks focusing on loading and
 
 ### CSV Loading
 
-To measure CSV loading performance, we used one of our favorite datasets: the [Dutch railway services]({% link docs/stable/guides/snippets/dutch_railway_datasets.md %}). We picked the [full dataset spanning the last 80 months](https://blobs.duckdb.org/nl-railway/railway-services-80-months.zip) (between Jan 2019 and Aug 2025).
+To measure CSV loading performance, we used one of our favorite datasets: the [Dutch railway services]({% link docs/lts/guides/snippets/dutch_railway_datasets.md %}). We picked the [full dataset spanning the last 80 months](https://blobs.duckdb.org/nl-railway/railway-services-80-months.zip) (between Jan 2019 and Aug 2025).
 We can fetch and decompress the file as follows:
 
 ```bash
@@ -74,13 +74,13 @@ and were curious: how far can DuckDB scale on this laptop?
 #### Data Generation
 
 Of course, we first needed some big TPC-H datasets, and we needed to generate them locally – downloading them could take days.
-Luckily, we could use the [tpchgen-rs](https://github.com/clflushopt/tpchgen-rs/) tool, a pure Rust implementation of the TPC-H generator that can produce large-scale datasets on the laptop in just a few hours. We generated the data as Parquet files and loaded them into DuckDB.
+Luckily, we could use the [`tpchgen-cli`](https://github.com/clflushopt/tpchgen-rs/) tool, a pure Rust implementation of the TPC-H generator that can produce large-scale datasets on the laptop in just a few hours. We generated the data as Parquet files and loaded them into DuckDB.
 
 > Omarchy comes with the [btrfs](https://en.wikipedia.org/wiki/Btrfs) file system by default. We created a directory for the generated data and disabled copy-on-write (see the [configuration details](#file-system-configuration)).
 
 #### SF3,000
 
-We first ran all 22 TPC-H queries on the SF3,000 the dataset, which corresponds to 3 TB of CSV files.
+We first ran all 22 TPC-H queries on the SF3,000 dataset, which corresponds to 3 TB of CSV files.
 The total runtime of the queries was 47.5 minutes with a geometric mean query runtime of 86.5 seconds.
 
 During the experiments, we noticed that the laptop bottom cover heated up [above 45 degrees Celsius](https://www.notebookcheck.net/Framework-Laptop-13-5-Ryzen-AI-9-review-Skip-the-Intel-version-for-better-performance.997363.0.html): while the keyboard was still usable, you definitely won't want to keep this machine on your lap while running data crunching workloads.
@@ -128,18 +128,18 @@ Just don't forget to pause every now and then to allow the laptop to cool down a
 
 Here's the cost breakdown of the laptop using retail prices in euros (including the 21% Dutch VAT). The items were purchased in August 2025.
 
-| Item                                                         |   Cost (EUR) |
-| ------------------------------------------------------------ | -----------: |
+| Item                                                                                        |   Cost (EUR) |
+| ------------------------------------------------------------------------------------------- | -----------: |
 | [Framework Laptop 13 DIY Edition w/ AMD Ryzen AI 9 HX 370 CPU](https://frame.work/laptop13) |     1,785.00 |
-| Framework Laptop 13 Bezel – Translucent Green                |        55.00 |
-| Keyboard – US English                                        |       109.00 |
-| Power Adapter – 60W – EU                                     |        49.00 |
-| HDMI (3rd Gen) Expansion Card                                |        20.00 |
-| USB-A Expansion Card                                         |        10.00 |
-| USB-C Expansion Card – Translucent Green (2 pcs)             |        20.00 |
-| [WD_BLACK SN850X NVMe SSD 8TB](https://www.amazon.nl/dp/B0D9WT512W?th=1)                                 |       582.69 |
-| [Crucial DDR5 RAM 128GB Kit](https://www.amazon.nl/dp/B0DSQMKYLN)                                   |       327.87 |
-| **Total (euros, VAT included)**                              | **2,974.87** |
+| Framework Laptop 13 Bezel – Translucent Green                                               |        55.00 |
+| Keyboard – US English                                                                       |       109.00 |
+| Power Adapter – 60W – EU                                                                    |        49.00 |
+| HDMI (3rd Gen) Expansion Card                                                               |        20.00 |
+| USB-A Expansion Card                                                                        |        10.00 |
+| USB-C Expansion Card – Translucent Green (2 pcs)                                            |        20.00 |
+| [WD_BLACK SN850X NVMe SSD 8TB](https://www.amazon.nl/dp/B0D9WT512W?th=1)                    |       582.69 |
+| [Crucial DDR5 RAM 128GB Kit](https://www.amazon.nl/dp/B0DSQMKYLN)                           |       327.87 |
+| **Total (euros, VAT included)**                                                             | **2,974.87** |
 
 Note that Framework currently only sells 96 GB memory kits but both the motherboard and the CPU can handle 128 GB (2 × 64 GB) kits.
 

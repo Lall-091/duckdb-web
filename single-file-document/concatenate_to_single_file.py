@@ -90,7 +90,7 @@ def replace_html_code_blocks(doc_body):
 
 def doc_path_to_page_header_header_label(doc_file_full_path):
     return doc_file_full_path \
-        .replace("../docs/stable/", "docs/stable/") \
+        .replace("../docs/current/", "docs/current/") \
         .replace(".md", "") \
         .replace("../", "") \
         .replace("/", ":")
@@ -114,8 +114,8 @@ def adjust_links_in_doc_body(doc_body):
     # replace link to the Python guides index page
     # with a link to the Python guides section
     doc_body = doc_body.replace(
-        "]({% link docs/stable/guides/overview.md %}#python-client)",
-        "]({% link docs/stable/python/overview.md %})"
+        "]({% link docs/current/guides/overview.md %}#python-client)",
+        "]({% link docs/current/python/overview.md %})"
     )
 
     # replace "`, `" (with the surrounding characters used for emphasis) with "`,` " to allow line breaking
@@ -132,6 +132,27 @@ def adjust_links_in_doc_body(doc_body):
     doc_body = re.sub(
         r'<div[^>]*?>[\n ]*([^§]*?)[\n ]*</div>',
         r'\1',
+        doc_body,
+        flags=re.MULTILINE
+    )
+
+    # remove videos
+    doc_body = re.sub(
+        r'<video[^§]*?</video>',
+        '',
+        doc_body,
+        flags=re.MULTILINE
+    )
+
+    # remove dark mode images
+    doc_body = re.sub(
+        r'.*{: .darkmode-img }',
+        '',
+        doc_body
+    )
+    doc_body = re.sub(
+        r'<img [^>]*class="darkmode-img"[^>]*>',
+        '',
         doc_body,
         flags=re.MULTILINE
     )
@@ -411,9 +432,9 @@ with open(f"duckdb-docs.md", "w") as of:
     with open("cover-page.md") as cover_page_file:
         of.write(cover_page_file.read())
 
-    with open("../_data/menu_docs_stable.json") as menu_docs_file:
+    with open("../_data/menu_docs_current.json") as menu_docs_file:
         menu = json.load(menu_docs_file)
-        add_main_documentation("../docs/stable", menu, config, of)
+        add_main_documentation("../docs/current", menu, config, of)
 
     add_blog_posts("../_posts", of)
 

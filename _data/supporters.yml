@@ -1,7 +1,7 @@
 gold:
-  - name: Voltron Data
-    url: https://voltrondata.com
-    logoimg: voltrondata.svg
+  - name: AWS
+    url: https://aws.amazon.com/
+    logoimg: aws.svg
 
   - name: MotherDuck
     url: https://motherduck.com
@@ -68,7 +68,23 @@ silver:
     url: https://shiguredo.jp/
     logoimg: shiguredo.svg
 
+  - name: Altertable
+    url: https://altertable.ai/
+    logoimg: altertable.svg
+
+  - name: PostHog
+    url: https://posthog.com/
+    logoimg: posthog.svg
+
+oss:
+  - name: Bloomberg
+    url: https://www.bloomberg.com/company/stories/bloomberg-ospo-launches-foss-contributor-fund/
+    logoimg: bloomberg.svg
+
 technical:
   - name: Cloudflare
     url: https://www.cloudflare.com/
     logoimg: cloudflare.svg
+  #- name: Namespace
+  #  url: https://namespace.so/
+  #  logoimg: namespace.svg

@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: eeagrid
   description: Extension that adds support for working with the EEA Reference Grid System.
-  version: 1.4.0
+  version: 0.1.0
   language: C++
   build: cmake
   license: MIT
@@ -17,7 +17,7 @@ extension:
 
 repo:
   github: ahuarte47/duckdb-eeagrid
-  ref: 1b4f24e483f1b0be9cb2f774450b14805caddee9
+  ref: c0a9786303eb07165fb0d991097c1774d1a9e6e4
 
 docs:
   hello_world: |
@@ -69,8 +69,8 @@ docs:
 
 extension_star_count: 0
 extension_star_count_pretty: 0
-extension_download_count: 355
-extension_download_count_pretty: 355
+extension_download_count: 786
+extension_download_count_pretty: 786
 image: '/images/community_extensions/social_preview/preview_community_extension_eeagrid.png'
 layout: community_extension_doc
 ---
@@ -104,5 +104,23 @@ LOAD {{ page.extension.name }};
 | EEA_GridNumAt100m   | scalar        | Returns the Grid code at 100 m resolution given an EEA reference Grid code.                                                                                        | NULL    | [SELECT EEA_GridNumAt100m(23090257455218688);]  |
 | EEA_GridNumAt10km   | scalar        | Returns the Grid code at 10 km resolution given an EEA reference Grid code.                                                                                        | NULL    | [SELECT EEA_GridNumAt10km(23090257455218688);]  |
 | EEA_GridNumAt1km    | scalar        | Returns the Grid code at 1 km resolution given an EEA reference Grid code.                                                                                         | NULL    | [SELECT EEA_GridNumAt1km(23090257455218688);]   |
+
+### Overloaded Functions
+
+<div class="extension_functions_table"></div>
+
+This extension does not add any function overloads.
+
+### Added Types
+
+<div class="extension_types_table"></div>
+
+This extension does not add any types.
+
+### Added Settings
+
+<div class="extension_settings_table"></div>
+
+This extension does not add any settings.
 
 

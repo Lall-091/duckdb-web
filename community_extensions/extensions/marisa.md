@@ -18,15 +18,16 @@ extension:
   maintainers:
   - rustyconover
   name: marisa
-  version: '2025101201'
+  version: '2025120401'
 repo:
+  andium: 8feeb0b0157b7fad0694ee09c430bbabce54cbb7
   github: query-farm/marisa
-  ref: 62a09ef28fab1d81c18bafe143eaed935b4abf08
+  ref: a064878c5b56d4d08aaf1a634d56b4db64438785
 
-extension_star_count: 3
-extension_star_count_pretty: 3
-extension_download_count: 380
-extension_download_count_pretty: 380
+extension_star_count: 11
+extension_star_count_pretty: 11
+extension_download_count: 783
+extension_download_count_pretty: 783
 image: '/images/community_extensions/social_preview/preview_community_extension_marisa.png'
 layout: community_extension_doc
 ---
@@ -52,44 +53,29 @@ LOAD {{ page.extension.name }};
 
 <div class="extension_functions_table"></div>
 
-|    function_name     | function_type | description | comment | examples |
-|----------------------|---------------|-------------|---------|----------|
-| marisa_common_prefix | scalar        | NULL        | NULL    | NULL     |
-| marisa_lookup        | scalar        | NULL        | NULL    | NULL     |
-| marisa_predictive    | scalar        | NULL        | NULL    | NULL     |
-| marisa_trie          | aggregate     | NULL        | NULL    | NULL     |
+|    function_name     | function_type |                    description                     | comment |                examples                 |
+|----------------------|---------------|----------------------------------------------------|---------|-----------------------------------------|
+| marisa_common_prefix | scalar        | NULL                                               | NULL    |                                         |
+| marisa_lookup        | scalar        | NULL                                               | NULL    |                                         |
+| marisa_predictive    | scalar        | NULL                                               | NULL    |                                         |
+| marisa_trie          | aggregate     | Creates a new Marisa Trie from the value supplied. | NULL    | [SELECT marisa_trie(column) FROM table] |
+
+### Overloaded Functions
+
+<div class="extension_functions_table"></div>
+
+This extension does not add any function overloads.
+
+### Added Types
+
+<div class="extension_types_table"></div>
+
+This extension does not add any types.
 
 ### Added Settings
 
 <div class="extension_settings_table"></div>
 
-|                 name                 |                                         description                                          | input_type | scope  | aliases |
-|--------------------------------------|----------------------------------------------------------------------------------------------|------------|--------|---------|
-| auto_fallback_to_full_download       | Allows automatically falling back to full file downloads when possible.                      | BOOLEAN    | GLOBAL | []      |
-| ca_cert_file                         | Path to a custom certificate file for self-signed certificates.                              | VARCHAR    | GLOBAL | []      |
-| enable_curl_server_cert_verification | Enable server side certificate verification for CURL backend.                                | BOOLEAN    | GLOBAL | []      |
-| enable_server_cert_verification      | Enable server side certificate verification.                                                 | BOOLEAN    | GLOBAL | []      |
-| force_download                       | Forces upfront download of file                                                              | BOOLEAN    | GLOBAL | []      |
-| hf_max_per_page                      | Debug option to limit number of items returned in list requests                              | UBIGINT    | GLOBAL | []      |
-| http_keep_alive                      | Keep alive connections. Setting this to false can help when running into connection failures | BOOLEAN    | GLOBAL | []      |
-| http_retries                         | HTTP retries on I/O error                                                                    | UBIGINT    | GLOBAL | []      |
-| http_retry_backoff                   | Backoff factor for exponentially increasing retry wait time                                  | FLOAT      | GLOBAL | []      |
-| http_retry_wait_ms                   | Time between retries                                                                         | UBIGINT    | GLOBAL | []      |
-| http_timeout                         | HTTP timeout read/write/connection/retry (in seconds)                                        | UBIGINT    | GLOBAL | []      |
-| httpfs_client_implementation         | Select which is the HTTPUtil implementation to be used                                       | VARCHAR    | GLOBAL | []      |
-| s3_access_key_id                     | S3 Access Key ID                                                                             | VARCHAR    | GLOBAL | []      |
-| s3_endpoint                          | S3 Endpoint                                                                                  | VARCHAR    | GLOBAL | []      |
-| s3_kms_key_id                        | S3 KMS Key ID                                                                                | VARCHAR    | GLOBAL | []      |
-| s3_region                            | S3 Region                                                                                    | VARCHAR    | GLOBAL | []      |
-| s3_requester_pays                    | S3 use requester pays mode                                                                   | BOOLEAN    | GLOBAL | []      |
-| s3_secret_access_key                 | S3 Access Key                                                                                | VARCHAR    | GLOBAL | []      |
-| s3_session_token                     | S3 Session Token                                                                             | VARCHAR    | GLOBAL | []      |
-| s3_uploader_max_filesize             | S3 Uploader max filesize (between 50GB and 5TB)                                              | VARCHAR    | GLOBAL | []      |
-| s3_uploader_max_parts_per_file       | S3 Uploader max parts per file (between 1 and 10000)                                         | UBIGINT    | GLOBAL | []      |
-| s3_uploader_thread_limit             | S3 Uploader global thread limit                                                              | UBIGINT    | GLOBAL | []      |
-| s3_url_compatibility_mode            | Disable Globs and Query Parameters on S3 URLs                                                | BOOLEAN    | GLOBAL | []      |
-| s3_url_style                         | S3 URL style                                                                                 | VARCHAR    | GLOBAL | []      |
-| s3_use_ssl                           | S3 use SSL                                                                                   | BOOLEAN    | GLOBAL | []      |
-| unsafe_disable_etag_checks           | Disable checks on ETag consistency                                                           | BOOLEAN    | GLOBAL | []      |
+This extension does not add any settings.
 
 

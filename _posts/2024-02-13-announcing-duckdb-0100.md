@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Announcing DuckDB 0.10.0"
-author: Mark Raasveldt and Hannes Mühleisen
+author: Mark Raasveldt, Hannes Mühleisen
 thumb: "/images/blog/thumbs/duckdb-release-0-10-0.svg"
 image: "/images/blog/thumbs/duckdb-release-0-10-0.png"
 excerpt: "The DuckDB team is happy to announce the latest DuckDB release (0.10.0). This release is named Fusca after the [Velvet scoter](https://en.wikipedia.org/wiki/Velvet_scoter) native to Europe."
@@ -188,18 +188,18 @@ We expect that as the format stabilizes and matures this will happen less freque
 Below is a benchmark comparing the loading time of 11 million rows of the NYC Taxi dataset from a CSV file on an M1 Max with 10 cores:
 
 
-| Version  | Load time  |
-|----------|-----------:|
-| v0.9.2   | 2.6 s      |
-| v0.10.0  | 1.2 s      |
+| Version | Load time |
+| ------- | --------: |
+| v0.9.2  |     2.6 s |
+| v0.10.0 |     1.2 s |
 
 Furthermore, many optimizations have been done that make running queries over CSV files directly significantly faster as well. Below is a benchmark comparing the execution time of a `SELECT count(*)` query directly over the NYC Taxi CSV file.
 
 
-| Version  | Query time |
-|----------|-----------:|
-| v0.9.2   | 1.8 s      |
-| v0.10.0  | 0.3 s      |
+| Version | Query time |
+| ------- | ---------: |
+| v0.9.2  |      1.8 s |
+| v0.10.0 |      0.3 s |
 
 ## Fixed-Length Arrays
 
@@ -226,7 +226,7 @@ FROM vectors;
 └───────────────────┘
 ```
 
-See the [Array Type page]({% link docs/stable/sql/data_types/array.md %}) in the documentation for more information.
+See the [Array Type page]({% link docs/lts/sql/data_types/array.md %}) in the documentation for more information.
 
 ## Multi-Database Support
 
@@ -293,7 +293,7 @@ CREATE PERSISTENT SECRET my_persistent_secret (
 
 As mentioned, this will write the secret (unencrypted, so beware) to the `~/.duckdb/stored_secrets` directory.
 
-See the [Create Secret page]({% link docs/stable/sql/statements/create_secret.md %}) in the documentation for more information.
+See the [Create Secret page]({% link docs/lts/sql/statements/create_secret.md %}) in the documentation for more information.
 
 ## Temporary Memory Manager
 
@@ -334,8 +334,8 @@ With the new version 0.10.0, this query completes in ca. 5 s on a MacBook, while
 Floating point numbers are notoriously difficult to compress efficiently, both in terms of compression ratio as well as speed of compression and decompression. In the past, DuckDB had support for the then state-of-the-art "[Chimp](https://github.com/duckdb/duckdb/pull/4878)" and the "[Patas](https://github.com/duckdb/duckdb/pull/5044)" compression methods. Turns out, those were not the last word in floating point compression. Researchers [Azim Afroozeh](https://www.cwi.nl/en/people/azim-afroozeh/), [Leonard Kuffo](https://www.cwi.nl/en/people/leonardo-xavier-kuffo-rivero/) and (the one and only) [Peter Boncz](https://homepages.cwi.nl/~boncz/) have recently published a paper titled "[ALP: Adaptive Lossless floating-Point Compression](https://dl.acm.org/doi/pdf/10.1145/3626717)" at SIGMOD, a top-tier academic conference for data management research. In an uncommon yet highly commendable move, they have also sent a [pull request](https://github.com/duckdb/duckdb/pull/9635) to DuckDB. The new compression scheme replaces Chimp and Patas. Inside DuckDB, ALP is **x2-4 times faster** than Patas (at decompression) achieving **compression ratios twice as high** (sometimes even much more).
 
 
-| Compression  | Load    | Query   | Size   |
-|:-------------|--------:|--------:|-------:|
+| Compression  |    Load |   Query |   Size |
+| :----------- | ------: | ------: | -----: |
 | ALP          | 0.434 s | 0.020 s | 184 MB |
 | Patas        | 0.603 s | 0.080 s | 275 MB |
 | Uncompressed | 0.316 s | 0.012 s | 489 MB |
@@ -344,14 +344,14 @@ As a user, you don't have to do anything to make use of the new ALP compression 
 
 ## CLI Improvements
 
-The command-line client has seen a lot of work this release. In particular, multi-line editing has been made the default mode, and has seen many improvements. The query history is now also multi-line. [Syntax highlighting has improved]({% link docs/stable/clients/cli/syntax_highlighting.md %}) – missing brackets and unclosed quotes are highlighted as errors, and matching brackets are highlighted when the cursor moves over them. Compatibility with read-line has also been [greatly extended]({% link docs/stable/clients/cli/editing.md %}).
+The command-line client has seen a lot of work this release. In particular, multi-line editing has been made the default mode, and has seen many improvements. The query history is now also multi-line. [Syntax highlighting has improved]({% link docs/lts/clients/cli/syntax_highlighting.md %}) – missing brackets and unclosed quotes are highlighted as errors, and matching brackets are highlighted when the cursor moves over them. Compatibility with read-line has also been [greatly extended]({% link docs/lts/clients/cli/editing.md %}).
 
 <img src="{% link images/syntax_highlighting_screenshot.png %}"
      alt="Image showing syntax highlighting in the shell"
      width="700"
      />
 
-See the [extended CLI docs for more information]({% link docs/stable/clients/cli/overview.md %}).
+See the [extended CLI docs for more information]({% link docs/lts/clients/cli/overview.md %}).
 
 ## Final Thoughts
 

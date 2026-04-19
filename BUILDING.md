@@ -18,7 +18,10 @@
     * [Jekyll doesn't work on Windows](#jekyll-doesnt-work-on-windows)
     * [Cannot install dependency](#cannot-install-dependency)
     * [Jekyll fails](#jekyll-fails)
+    * [Jekyll Content Not Rendering Properly](#jekyll-content-not-rendering-properly)
     * [Bundle update fails](#bundle-update-fails)
+    * [Bundle install fails](#bundle-install-fails)
+    * [`ERROR bad URI`](#error-bad-uri)
 
 The site is built using [Jekyll](https://jekyllrb.com/) used by GitHub Pages.
 
@@ -54,7 +57,7 @@ scripts/serve-latest.sh
 
 Visit <http://localhost:4000/docs/> to browse the website.
 
-Note that to save time on building, the `serve-latest.sh` script only deploys the latest stable version and excludes the archives. To serve the full website with old versions included, run:
+Note that to save time on building, the `serve-latest.sh` script only deploys the current/lts versions and excludes the legacy versions. To serve the full website with old versions included, run:
 
 ```batch
 scripts/serve.sh
@@ -182,6 +185,18 @@ To do so, run:
 rm Gemfile.lock
 bundle install
 ```
+
+### Jekyll Content Not Rendering Properly
+
+Dynamic page regeneration might not apply to includes, railroad diagrams, or other content.
+To force regeneration of a page or include so that it is rendered in your localhost browser, perform the following steps: 
+
+1. Stop the terminal session where you ran the Jekyll build command, i.e., `scripts/serve-latest.sh`.
+1. Run `git add myfile.md` for your particular page.
+1. Stop Jekyll and run `rm -rf _site` to  cleanup the previously generated file.
+1. If the site is still not regenerating, run `git clean` to cleanup the repository but be careful not to loose any unstaged/uncommitted changes.
+1. Run the `scripts/serve-latest.sh` from your terminal again.
+1. If the page your editing is open in your browser, it should refresh automatically. If this doesn't happen, refresh manually. The changes from your local branch should be visible now.
 
 ### Bundle update fails
 

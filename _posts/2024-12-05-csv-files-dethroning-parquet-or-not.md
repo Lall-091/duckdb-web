@@ -79,9 +79,9 @@ FROM 'path/to/file.csv';
 FROM 'path/to/file.parquet';
 ```
 
-Things can differ drastically for wild, rule-breaking [Arthur Morgan](https://reddead.fandom.com/wiki/Arthur_Morgan)-like CSV files. This is evident from the number of parameters that can be set for each scanner. The [Parquet]({% link docs/stable/data/parquet/overview.md %}) scanner has a total of six parameters that can alter how the file is read. For the majority of cases, the user will never need to manually adjust any of them.
+Things can differ drastically for wild, rule-breaking [Arthur Morgan](https://reddead.fandom.com/wiki/Arthur_Morgan)-like CSV files. This is evident from the number of parameters that can be set for each scanner. The [Parquet]({% link docs/lts/data/parquet/overview.md %}) scanner has a total of six parameters that can alter how the file is read. For the majority of cases, the user will never need to manually adjust any of them.
 
-The CSV reader, on the other hand, depends on the sniffer being able to automatically detect many different configuration options. For example: What is the delimiter? How many rows should it skip from the top of the file? Are there any comments? And so on. This results in over [30 configuration options]({% link docs/stable/data/csv/overview.md %}) that the user might have to manually adjust to properly parse their CSV file. Again, this number of options is necessary due to the lack of a widely adopted standard. However, in most scenarios, users can rely on the sniffer or, at most, change one or two options.
+The CSV reader, on the other hand, depends on the sniffer being able to automatically detect many different configuration options. For example: What is the delimiter? How many rows should it skip from the top of the file? Are there any comments? And so on. This results in over [30 configuration options]({% link docs/lts/data/csv/overview.md %}) that the user might have to manually adjust to properly parse their CSV file. Again, this number of options is necessary due to the lack of a widely adopted standard. However, in most scenarios, users can rely on the sniffer or, at most, change one or two options.
 
 The CSV reader also has an extensive error-handling system and will always provide suggestions for options to review if something goes wrong.
 
@@ -144,11 +144,11 @@ For creating the table, we focus on the `lineitem` table.
 
 After defining the schema, both files can be loaded with a simple `COPY` statement, with no additional parameters set. Note that even with the schema defined, the CSV sniffer will still be executed to determine the dialect (e.g., quote character, delimiter character, etc.) and match types and names.
 
-|      Name      | Time (s) | Size (GB) |
-|----------------|---------:|----------:|
+| Name           | Time (s) | Size (GB) |
+| -------------- | -------: | --------: |
 | CSV            |    11.76 |     15.95 |
 | Parquet Snappy |     5.21 |      3.78 |
-| Parquet ZSTD   |     5.52 |      3.22 |
+| Parquet Zstd   |     5.52 |      3.22 |
 
 We can see that the Parquet files are definitely smaller. About 5× smaller than the CSV file, but the performance difference is not drastic.
 
@@ -162,7 +162,7 @@ We will run two different TPC-H queries on our files.
 
 **Query 01.** First, we run TPC-H Q01. This query operates solely on the `lineitem` table, performing an aggregation and grouping with a filter. It filters on one column and projects 7 out of the 16 columns from `lineitem`.
 
-Therefore, this query will stress the filter pushdown, which is [supported by the Parquet reader]({% link docs/stable/data/parquet/overview.md %}#partial-reading) but not the CSV reader, and the projection pushdown, which is supported by both.
+Therefore, this query will stress the filter pushdown, which is [supported by the Parquet reader]({% link docs/lts/data/parquet/overview.md %}#partial-reading) but not the CSV reader, and the projection pushdown, which is supported by both.
 
 ```sql
 SELECT
@@ -188,11 +188,11 @@ ORDER BY
     l_linestatus;
 ```
 
-|      Name      | Time (s) |
-|----------------|---------:|
+| Name           | Time (s) |
+| -------------- | -------: |
 | CSV            |     6.72 |
 | Parquet Snappy |     0.88 |
-| Parquet ZSTD   |     0.95 |
+| Parquet Zstd   |     0.95 |
 
 We can see that running this query directly on our file presents a much larger performance gap of approximately 7x compared to simply loading the data into the table. In the Parquet file, we can directly skip row groups that do not match our filter `l_shipdate <= CAST('1996-09-02' AS date)`. Note that this filter, eliminates approximately 30% of the data. Not only that, but we can also skip individual rows that do not match the filter. Additionally, since the Parquet format is column-oriented, we can completely skip any computation on columns that are not projected.
 
@@ -243,11 +243,11 @@ ORDER BY
 LIMIT 100;
 ```
 
-|      Name      | Time (s) |
-|----------------|---------:|
+| Name           | Time (s) |
+| -------------- | -------: |
 | CSV            |    19.95 |
 | Parquet Snappy |     2.08 |
-| Parquet ZSTD   |     2.12 |
+| Parquet Zstd   |     2.12 |
 
 We can see that this query now has a performance difference of approximately 10×. We observe an effect similar to Query 01, but now we also incur the additional cost of performing join ordering with no statistical information for the CSV file.
 

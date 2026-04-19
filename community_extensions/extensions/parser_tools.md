@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: parser_tools
   description: Exposes functions for parsing referenced tables and usage context from SQL queries using DuckDB's native parser.
-  version: 0.5.0
+  version: 0.6.0
   language: C++
   build: cmake
   license: MIT
@@ -16,8 +16,9 @@ extension:
     - zfarrell
 
 repo:
-  github: zfarrell/duckdb_extension_parser_tools
-  ref: 0c74f1b24610d324d6254fce6b32755f734e3df7
+  github: hotdata-dev/duckdb_extension_parser_tools
+  andium: 4c294fa226e9994c146d073cdb2e8c5e42a9db86
+  ref: 6a94f2b261bdca4c8f2f8454697e2f6e7bcea9c5
 
 docs:
   hello_world: |
@@ -166,10 +167,10 @@ docs:
     Future versions may expose additional aspects of the parsed query structure.
     For more details and examples, visit the [extension repository](https://github.com/zacMode/duckdb_extension_parser_tools).
 
-extension_star_count: 16
-extension_star_count_pretty: 16
-extension_download_count: 362
-extension_download_count_pretty: 362
+extension_star_count: 25
+extension_star_count_pretty: 25
+extension_download_count: 1764
+extension_download_count_pretty: 1.8k
 image: '/images/community_extensions/social_preview/preview_community_extension_parser_tools.png'
 layout: community_extension_doc
 ---
@@ -210,5 +211,23 @@ LOAD {{ page.extension.name }};
 | parse_where          | scalar        | NULL        | NULL    |          |
 | parse_where          | table         | NULL        | NULL    |          |
 | parse_where_detailed | table         | NULL        | NULL    |          |
+
+### Overloaded Functions
+
+<div class="extension_functions_table"></div>
+
+This extension does not add any function overloads.
+
+### Added Types
+
+<div class="extension_types_table"></div>
+
+This extension does not add any types.
+
+### Added Settings
+
+<div class="extension_settings_table"></div>
+
+This extension does not add any settings.
 
 

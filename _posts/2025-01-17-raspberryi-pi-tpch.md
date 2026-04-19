@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "TPC-H on a Raspberry Pi"
-author: Gabor Szarnyas
+author: Gábor Szárnyas
 thumb: "/images/blog/thumbs/raspberry-pi.svg"
 image: "/images/blog/thumbs/raspberry-pi.png"
 excerpt: DuckDB can run all TPC-H queries on a Raspberry Pi 5 board up to the 1,000 GiB dataset.
@@ -29,14 +29,14 @@ We ventured to find out.
 
 Our setup consisted of the following components, priced at a total of $300:
 
-| Component | Price (USD) |
-|-----------|------------:|
-| [Raspberry Pi 5 with 16 GB RAM](https://www.raspberrypi.com/products/raspberry-pi-5/) | 120.00 |
-| [Raspberry Pi 27 W USB-C power supply](https://www.raspberrypi.com/products/27w-power-supply/) | 13.60 |
-| [Raspberry Pi microSD card (128 GB)](https://www.raspberrypi.com/products/sd-cards/) | 33.40 |
-| [Samsung 980 NVMe SSD (1 TB)](https://www.amazon.com/Technology-Intelligent-Turbowrite-MZ-V8V1T0B-AM/dp/B08V83JZH4) | 84.00 |
-| [Argon ONE V3 Case](https://argon40.com/products/argon-one-v3-m-2-nvme-case) | 49.00 |
-| **Total** | **$300.00** |
+| Component                                                                                                           | Price (USD) |
+| ------------------------------------------------------------------------------------------------------------------- | ----------: |
+| [Raspberry Pi 5 with 16 GB RAM](https://www.raspberrypi.com/products/raspberry-pi-5/)                               |      120.00 |
+| [Raspberry Pi 27 W USB-C power supply](https://www.raspberrypi.com/products/27w-power-supply/)                      |       13.60 |
+| [Raspberry Pi microSD card (128 GB)](https://www.raspberrypi.com/products/sd-cards/)                                |       33.40 |
+| [Samsung 980 NVMe SSD (1 TB)](https://www.amazon.com/Technology-Intelligent-Turbowrite-MZ-V8V1T0B-AM/dp/B08V83JZH4) |       84.00 |
+| [Argon ONE V3 Case](https://argon40.com/products/argon-one-v3-m-2-nvme-case)                                        |       49.00 |
+| **Total**                                                                                                           | **$300.00** |
 
 We installed the heat sinks, popped the SSD into place, and assembled the house.
 Here is a photo of our machine:
@@ -52,11 +52,11 @@ Here is a photo of our machine:
 So what is this little box capable of? We used the [TPC-H workload](https://www.tpc.org/tpch/) to find out.
 
 We first updated the Raspberry Pi OS (a fork of Debian Linux) to its latest version, 2024-11-19.
-We then compiled DuckDB [version `0024e5d4be`](https://github.com/duckdb/duckdb/commit/0024e5d4be) using the [Raspberry Pi build instructions]({% link docs/stable/dev/building/raspberry_pi.md %}).
-To make the queries easy to run, we also included the [TPC-H extension]({% link docs/stable/core_extensions/tpch.md %}) in the build:
+We then compiled DuckDB [version `0024e5d4be`](https://github.com/duckdb/duckdb/commit/0024e5d4be) using the [Raspberry Pi build instructions]({% link docs/lts/dev/building/raspberry_pi.md %}).
+To make the queries easy to run, we also included the [TPC-H extension]({% link docs/lts/core_extensions/tpch.md %}) in the build:
 
 ```bash
-GEN=ninja CORE_EXTENSIONS="tpch" make
+GEN=ninja BUILD_EXTENSIONS="tpch" make
 ```
 
 We then downloaded DuckDB database files containing the TPC-H datasets at different scale factors (SF):
@@ -118,7 +118,7 @@ We did not encounter any crashes, errors or incorrect results.
 The following table contains the aggregated runtimes:
 
 | Scale factor | Storage      | Geometric mean runtime | Total runtime |
-|--------------|--------------|-----------------------:|--------------:|
+| ------------ | ------------ | ---------------------: | ------------: |
 | SF100        | microSD card |                 23.8 s |       769.9 s |
 | SF100        | NVMe SSD     |                 11.7 s |       372.3 s |
 | SF300        | microSD card |                171.9 s |     4,866.5 s |
@@ -188,4 +188,4 @@ We hope you enjoyed this blog post. If you have an interesting DuckDB setup, don
 
 > Do you have a cool DuckDB setup?
 > We would like to hear about it!
-> Please post about it on social media or email it to <gabor@duckdblabs.com>.
+> Please post about it on social media or email it to [Gábor Szárnyas](mailto:gabor@duckdblabs.com).

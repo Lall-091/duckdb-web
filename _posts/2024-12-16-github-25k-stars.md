@@ -12,7 +12,7 @@ Our [GitHub repository](https://github.com/duckdb/duckdb) has just passed 25,000
 
 We would like to highlight two main events that have happened this year:
 
-* We [released DuckDB 1.0.0]({% post_url 2024-06-03-announcing-duckdb-100 %}). This version introduced a stable storage format which guarantees [backwards compatibility and limited forward compatibility]({% link docs/stable/internals/storage.md %}#compatibility).
+* We [released DuckDB 1.0.0]({% post_url 2024-06-03-announcing-duckdb-100 %}). This version introduced a stable storage format which guarantees [backwards compatibility and limited forward compatibility]({% link docs/lts/internals/storage.md %}#compatibility).
 * We started the [DuckDB Community Extensions project]({% post_url 2024-07-05-community-extensions %}). Community extensions allow developers to contribute packages to DuckDB and users to easily install these extensions using the simple command `INSTALL xyz FROM community`.
 
 Besides the GitHub stars we have also observed a lot of growth in various metrics.
@@ -26,7 +26,7 @@ We should note that we’re not glorifying those numbers and they are not a targ
 
 As an aside, we have recently opened a [Bluesky account](https://bsky.app/profile/duckdb.org) and are seeing great discussions happening over there. The account has already exceeded 4 thousand followers!
 
-Following our ancient two-year tradition, we hosted two DuckCon events, one in [Amsterdam]({% link _events/2023-10-06-duckcon4.md %}) and another in [Seattle]({% link _events/2024-08-15-duckcon5.md %}). We also organized the first [DuckDB Amsterdam Meetup]({% link _events/2024-10-17-duckdb-amsterdam-meetup-1.md %}).
+Following our ancient two-year tradition, we hosted two DuckCon events, one in [Amsterdam]({% link _events/2024-02-02-duckcon4.md %}) and another in [Seattle]({% link _events/2024-08-15-duckcon5.md %}). We also organized the first [DuckDB Amsterdam Meetup]({% link _events/2024-10-17-duckdb-amsterdam-meetup-1.md %}).
 
 Early next year, we are going to host [DuckCon in Amsterdam]({% link _events/2025-01-31-duckcon6.md %}), which is going to be the first event that we live stream in order to be more accessible to the growing DuckDB users in, e.g., Asia.
 But for now, let’s sit around the syntax tree and be merry thinking about what’s to come.
