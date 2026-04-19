@@ -260,7 +260,7 @@ COPY tbl
     (FORMAT parquet, COMPRESSION zstd, COMPRESSION_LEVEL 1);
 ```
 
-Write to Parquet file with [key-value metadata]({% link docs/current/data/parquet/metadata.md %}):
+Write to Parquet file with [key-value metadata]({% link docs/current/data/parquet/metadata.md %}#parquet-key-value-metadata):
 
 ```sql
 COPY (
