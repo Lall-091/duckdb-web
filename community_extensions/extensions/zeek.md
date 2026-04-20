@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: zeek
   description: Read Zeek network security monitor log files with automatic schema detection and type-aware parsing
-  version: 0.4.0
+  version: 0.4.1
   language: C++
   build: cmake
   license: MIT
@@ -17,7 +17,7 @@ extension:
 
 repo:
   github: ynadji/zeek-duckdb
-  ref: 47e6491094f188e6987d105c178b72d272c05539
+  ref: ad3580e3ba6130d0da395ad283cfca4e9cbb2024
 
 docs:
   hello_world: |
@@ -52,8 +52,8 @@ docs:
 
 extension_star_count: 2
 extension_star_count_pretty: 2
-extension_download_count: 396
-extension_download_count_pretty: 396
+extension_download_count: 436
+extension_download_count_pretty: 436
 image: '/images/community_extensions/social_preview/preview_community_extension_zeek.png'
 layout: community_extension_doc
 ---

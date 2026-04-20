@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: talib
   description: "Technical Analysis Library (TA-Lib) functions for DuckDB -- 100+ indicators for financial market analysis"
-  version: 0.1.0
+  version: 0.1.1
   language: C++
   build: cmake
   license: MIT
@@ -18,26 +18,41 @@ extension:
 
 repo:
   github: neuesql/atm_talib
-  ref: e13ee1f9f321f7a7552647e4ded47d2aa23b72d8
+  ref: e3f6fb79dda4e930e0fa25ce68a6a0a2383645da
 
 docs:
   hello_world: |
-    -- Moving averages and RSI on financial data
-    SELECT ta_sma([1.0, 2.0, 3.0, 4.0, 5.0], 3);
+    -- Scalar form: operate on a pre-collected list
+    SELECT t_sma([1.0, 2.0, 3.0, 4.0, 5.0], 3);
+
+    -- Aggregate/window form: use OVER() for row-by-row SMA
+    SELECT date, close,
+           ta_sma(close, 14) OVER (ORDER BY date
+                                   ROWS BETWEEN 13 PRECEDING AND CURRENT ROW) AS sma_14
+    FROM ohlc;
+
+    -- Multi-output indicators return structs (MACD, Bollinger Bands)
+    SELECT t_macd(list(close ORDER BY date), 12, 26, 9) FROM ohlc;
+    SELECT t_bbands(list(close ORDER BY date), 20, 2.0, 2.0, 0) FROM ohlc;
+
+    -- Candlestick pattern recognition
+    SELECT t_cdldoji(list(open  ORDER BY date), list(high  ORDER BY date),
+                     list(low   ORDER BY date), list(close ORDER BY date))
+    FROM ohlc;
   extended_description: |
-    100+ TA-Lib technical analysis indicators as native DuckDB functions.
-    Includes momentum (RSI, MACD, Stochastic), overlap studies (SMA, EMA, BBANDS),
-    volatility (ATR, NATR), 49 candlestick pattern recognizers, volume indicators,
-    cycle indicators, and math/statistics functions.
+    100+ TA-Lib indicators as native DuckDB functions: overlap studies
+    (SMA, EMA, BBANDS), momentum (RSI, MACD, Stochastic), volatility
+    (ATR, NATR), volume and cycle indicators, math/statistics, and
+    candlestick pattern recognizers.
 
-    Functions are available in two modes:
-    - Scalar (ta_* prefix): operate on pre-collected lists
-    - Window/Aggregate (taw_* prefix): use OVER() for row-by-row computation
+    Every function is registered in two forms:
+    - Scalar (`t_*`): pass pre-collected lists, returns a list
+    - Aggregate/window (`ta_*`): use with `OVER()` for row-by-row results
 
-extension_star_count: 0
-extension_star_count_pretty: 0
-extension_download_count: 8
-extension_download_count_pretty: 8
+extension_star_count: 1
+extension_star_count_pretty: 1
+extension_download_count: 149
+extension_download_count_pretty: 149
 image: '/images/community_extensions/social_preview/preview_community_extension_talib.png'
 layout: community_extension_doc
 ---
