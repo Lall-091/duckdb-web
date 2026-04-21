@@ -193,12 +193,12 @@ body.landing{
 				margin: 20px 20px 0px 20px;
 				display: -webkit-inline-box;
 				display: -ms-inline-flexbox;
-				display: inline-flex; /* Ändere von flex zu inline-flex */
+				display: inline-flex;
 				border: 1px solid var(--main-codebox-border-color, #E6E6E6);
 				list-style: none;
 				-webkit-box-align: start;
 					-ms-flex-align: start;
-						align-items: flex-start; /* Beibehaltung der vertikalen Ausrichtung */
+						align-items: flex-start;
 				border-radius: 100px; 
 				padding: 5px;
 				li {
