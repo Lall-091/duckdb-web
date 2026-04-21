@@ -68,10 +68,10 @@ docs:
 
     For more details, visit the [extension repository](https://github.com/sidequery/yardstick).
 
-extension_star_count: 50
-extension_star_count_pretty: 50
-extension_download_count: 415
-extension_download_count_pretty: 415
+extension_star_count: 49
+extension_star_count_pretty: 49
+extension_download_count: 428
+extension_download_count_pretty: 428
 image: '/images/community_extensions/social_preview/preview_community_extension_yardstick.png'
 layout: community_extension_doc
 ---

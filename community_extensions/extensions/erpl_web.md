@@ -19,10 +19,10 @@ repo:
   github: DataZooDE/erpl-web
   ref: 331e2f04cbca0486f235d4c026374f0f6e467675
 
-extension_star_count: 28
-extension_star_count_pretty: 28
-extension_download_count: 847
-extension_download_count_pretty: 847
+extension_star_count: 27
+extension_star_count_pretty: 27
+extension_download_count: 848
+extension_download_count_pretty: 848
 image: '/images/community_extensions/social_preview/preview_community_extension_erpl_web.png'
 layout: community_extension_doc
 ---

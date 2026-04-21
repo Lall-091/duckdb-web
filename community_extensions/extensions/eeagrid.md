@@ -17,7 +17,7 @@ extension:
 
 repo:
   github: ahuarte47/duckdb-eeagrid
-  ref: c0a9786303eb07165fb0d991097c1774d1a9e6e4
+  ref: 55c15fe37f81eac3fac8f8cb3cc612d1380de61d
 
 docs:
   hello_world: |
@@ -69,8 +69,8 @@ docs:
 
 extension_star_count: 0
 extension_star_count_pretty: 0
-extension_download_count: 804
-extension_download_count_pretty: 804
+extension_download_count: 809
+extension_download_count_pretty: 809
 image: '/images/community_extensions/social_preview/preview_community_extension_eeagrid.png'
 layout: community_extension_doc
 ---

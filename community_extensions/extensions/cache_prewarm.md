@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: cache_prewarm
   description: Prewarm data blocks into DuckDB's buffer pool or OS page cache for faster queries
-  version: 0.2.1
+  version: 0.2.2
   language: C++
   build: cmake
   license: MIT
@@ -18,7 +18,7 @@ extension:
     - dentiny
 repo:
   github: dentiny/duckdb-cache-prewarm
-  ref: cb52c2f36542430e7f4379a7aaacc57b017a7643
+  ref: 1047d2a4763615299959fe4b92fb2777b9675e61
 docs:
   hello_world: |
     -- Prewarm a table into the buffer pool
@@ -55,8 +55,8 @@ docs:
 
 extension_star_count: 8
 extension_star_count_pretty: 8
-extension_download_count: 810
-extension_download_count_pretty: 810
+extension_download_count: 809
+extension_download_count_pretty: 809
 image: '/images/community_extensions/social_preview/preview_community_extension_cache_prewarm.png'
 layout: community_extension_doc
 ---

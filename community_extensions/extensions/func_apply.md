@@ -90,8 +90,8 @@ docs:
 
     Aggregate and table functions are not supported.
 
-extension_star_count: 4
-extension_star_count_pretty: 4
+extension_star_count: 3
+extension_star_count_pretty: 3
 extension_download_count: 823
 extension_download_count_pretty: 823
 image: '/images/community_extensions/social_preview/preview_community_extension_func_apply.png'
