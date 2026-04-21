@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: table_inspector
   description: Observability into DuckDB storage internals at the database, table, and column levels
-  version: 0.1.1
+  version: 0.1.2
   language: C++
   build: cmake
   license: MIT
@@ -19,7 +19,7 @@ extension:
 repo:
   github: dentiny/duckdb-table-inspector
   andium: 13b830f3ccee4b4be3058a8211ad2f566c1ef698
-  ref: 4d106bcadf9b2d26e15febb752827a60f1d0ed27
+  ref: 3683e460e9048c00c0c8cfbe0ede8f35fcf09d62
 
 docs:
   hello_world: |
@@ -41,8 +41,8 @@ docs:
 
 extension_star_count: 0
 extension_star_count_pretty: 0
-extension_download_count: 783
-extension_download_count_pretty: 783
+extension_download_count: 792
+extension_download_count_pretty: 792
 image: '/images/community_extensions/social_preview/preview_community_extension_table_inspector.png'
 layout: community_extension_doc
 ---

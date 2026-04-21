@@ -93,10 +93,10 @@ docs:
     
     The extension implements the complete JSON-RPC 2.0 MCP protocol with support for multiple transport mechanisms. It enables powerful use cases including database federation, remote data access, tool orchestration, and exposing database insights to external MCP-compatible systems. Perfect for integration with AI agents, data pipelines, and distributed analytical workflows.
 
-extension_star_count: 45
-extension_star_count_pretty: 45
-extension_download_count: 833
-extension_download_count_pretty: 833
+extension_star_count: 47
+extension_star_count_pretty: 47
+extension_download_count: 834
+extension_download_count_pretty: 834
 image: '/images/community_extensions/social_preview/preview_community_extension_duckdb_mcp.png'
 layout: community_extension_doc
 ---

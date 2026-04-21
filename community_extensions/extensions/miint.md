@@ -21,7 +21,7 @@ extension:
 
 repo:
   github: the-miint/duckdb-miint
-  ref: 7a081072aa61f5d9db63ffc209b8dea66d9c2401
+  ref: 05bb99d7ac174e41b15cee5143cf7cf25cd6d4e9
 
 docs:
   hello_world: |
@@ -76,8 +76,8 @@ docs:
 
 extension_star_count: 3
 extension_star_count_pretty: 3
-extension_download_count: 785
-extension_download_count_pretty: 785
+extension_download_count: 804
+extension_download_count_pretty: 804
 image: '/images/community_extensions/social_preview/preview_community_extension_miint.png'
 layout: community_extension_doc
 ---
