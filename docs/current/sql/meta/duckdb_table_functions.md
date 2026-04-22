@@ -108,6 +108,7 @@ Apart from the database associated at startup, the list also includes databases 
 | `internal` | `true` indicates a system or built-in database. `false` indicates a user-defined database. | `BOOLEAN` |
 | `type` | The type indicates the type of RDBMS implemented by the attached database. For DuckDB databases, that value is `duckdb`. | `VARCHAR` |
 | `readonly` | Denotes whether the database is read-only. | `BOOLEAN` |
+| `options` | The options used in the `ATTACH` statement, as a map of option names to their string values. | `MAP(VARCHAR, VARCHAR)` |
 
 ## `duckdb_dependencies`
 
@@ -139,18 +140,6 @@ The `duckdb_extensions()` function provides metadata about the extensions availa
 | `install_mode` | The installation mode that was used to install the extension: `UNKNOWN`, `REPOSITORY`, `CUSTOM_PATH`, `STATICALLY_LINKED`, `NOT_INSTALLED`, `NULL`. | `VARCHAR` |
 | `installed_from` | Name of the repository the extension was installed from, e.g., `community` or `core_nightly`. The empty string denotes the `core` repository. | `VARCHAR` |
 
-## `duckdb_eviction_queues`
-
-The `duckdb_eviction_queues()` function provides introspection into the buffer pool eviction queues.
-
-| Column | Description | Type |
-|:-|:---|:-|
-| `queue_index` | The index of the eviction queue. | `BIGINT` |
-| `queue_type` | The type of the eviction queue (e.g., `BLOCK_AND_EXTERNAL_FILE`, `MANAGED_BUFFER`, `TINY_BUFFER`). | `VARCHAR` |
-| `approximate_size` | The approximate number of entries in the queue. | `BIGINT` |
-| `dead_nodes` | The number of dead (evicted) nodes in the queue. | `BIGINT` |
-| `total_insertions` | The total number of insertions into the queue. | `BIGINT` |
-
 ## `duckdb_functions`
 
 The `duckdb_functions()` function provides metadata about the functions (including macros) available in the DuckDB instance.
@@ -161,7 +150,7 @@ The `duckdb_functions()` function provides metadata about the functions (includi
 | `database_oid` | Internal identifier of the database containing the index. | `BIGINT` |
 | `schema_name` | The SQL name of the schema where the function resides. | `VARCHAR` |
 | `function_name` | The SQL name of the function. | `VARCHAR` |
-| `function_type` | The function kind. Value is one of: `table`,`scalar`,`aggregate`,`pragma`,`macro`| `VARCHAR` |
+| `function_type` | The function kind. Value is one of: `table`, `scalar`, `aggregate`, `pragma`, `macro`, `table_macro` | `VARCHAR` |
 | `description` | Description of this function (always `NULL`)| `VARCHAR` |
 | `comment` | A comment created by the [`COMMENT ON` statement]({% link docs/current/sql/statements/comment_on.md %}). | `VARCHAR` |
 | `tags` | A map of string key–value pairs. | `MAP(VARCHAR, VARCHAR)` |

@@ -55,10 +55,8 @@ The functions below are difficult to categorize into specific function types and
 | [`read_text(source)`](#read_textsource) | Returns the content from `source` (a filename, a list of filenames, or a glob pattern) as a `VARCHAR`. The file content is first validated to be valid UTF-8. If `read_text` attempts to read a file with invalid UTF-8 an error is thrown suggesting to use `read_blob` instead. See the [`read_text` guide]({% link docs/current/guides/file_formats/read_file.md %}#read_text) for more details. |
 | [`sha1(string)`](#sha1string) | Returns a `VARCHAR` with the SHA-1 hash of the `string`. |
 | [`sha256(string)`](#sha256string) | Returns a `VARCHAR` with the SHA-256 hash of the `string`. |
-| [`sleep(milliseconds)`](#sleepmilliseconds) | Pause execution for the specified number of milliseconds. Returns `NULL`. |
-| [`sql_tokenize(string)`](#sql_tokenizestring) | Tokenize a SQL string and return a table with the token start position, type, and text. |
+| [`sleep_ms(milliseconds)`](#sleep_msmilliseconds) | Pause execution for the specified number of milliseconds. Returns `NULL`. |
 | [`stats(expression)`](#statsexpression) | Returns a string with statistics about the expression. Expression can be a column, constant, or SQL expression. |
-| [`try_parse_formatted_bytes(string)`](#try_parse_formatted_bytesstring) | Parse a human-readable byte size string into a `UBIGINT` number of bytes. Returns `NULL` on invalid input. |
 | [`txid_current()`](#txid_current) | Returns the current transaction's identifier, a `BIGINT` value. It will assign a new one if the current transaction does not have one already. |
 | [`typeof(expression)`](#typeofexpression) | Returns the name of the data type of the result of the expression. |
 | [`uuid()`](#uuid) | Return a random UUID (UUIDv4) similar to this: `eeccb8c5-9943-b2bb-bb5e-222f4e14b687`. |
@@ -377,21 +375,13 @@ The functions below are difficult to categorize into specific function types and
 | **Example** | `sha256('🦆')` |
 | **Result** | `d7a5c5e0d1d94c32218539e7e47d4ba9c3c7b77d61332fb60d633dde89e473fb` |
 
-#### `sleep(milliseconds)`
+#### `sleep_ms(milliseconds)`
 
 <div class="nostroke_table"></div>
 
 | **Description** | Pause execution for the specified number of milliseconds. Returns `NULL`. |
-| **Example** | `sleep(500)` |
+| **Example** | `sleep_ms(500)` |
 | **Result** | `NULL` |
-
-#### `sql_tokenize(string)`
-
-<div class="nostroke_table"></div>
-
-| **Description** | Tokenize a SQL string and return a table with the token start position, type, and text. |
-| **Example** | `sql_tokenize('SELECT 1 + 2')` |
-| **Result** | Table with columns `start`, `token_type`, `word` |
 
 #### `stats(expression)`
 
@@ -400,14 +390,6 @@ The functions below are difficult to categorize into specific function types and
 | **Description** | Returns a string with statistics about the expression. Expression can be a column, constant, or SQL expression. |
 | **Example** | `stats(5)` |
 | **Result** | `'[Min: 5, Max: 5][Has Null: false]'` |
-
-#### `try_parse_formatted_bytes(string)`
-
-<div class="nostroke_table"></div>
-
-| **Description** | Parse a human-readable byte size string into a `UBIGINT` number of bytes. Returns `NULL` on invalid input instead of throwing an error. |
-| **Example** | `try_parse_formatted_bytes('invalid')` |
-| **Result** | `NULL` |
 
 #### `txid_current()`
 
