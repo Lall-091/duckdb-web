@@ -1,5 +1,5 @@
 const canvas = document.getElementById('snake-canvas');
-if (canvas && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+if (canvas && !matchMedia('(prefers-reduced-motion: reduce)').matches && !matchMedia('(max-width: 768px)').matches) {
     const ctx = canvas.getContext('2d');
     const svgPaths = document.querySelectorAll('.track-path');
 

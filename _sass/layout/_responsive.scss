@@ -753,9 +753,11 @@
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-	body.landing section.welcome,
 	body.landing section {
 		padding: 55px 15px;
+	}
+	body.landing section.welcome{
+		padding: 90px 15px 55px 15px;
 	}
 
 	body.landing .boxlayout .box:last-child {
