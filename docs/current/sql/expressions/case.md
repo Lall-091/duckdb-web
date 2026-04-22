@@ -79,3 +79,32 @@ This is equivalent to:
 SELECT i, CASE WHEN i = 1 THEN 10 WHEN i = 2 THEN 20 WHEN i = 3 THEN 30 END AS test
 FROM integers;
 ```
+
+## `SWITCH` Expression
+
+The `SWITCH` expression is syntactic sugar for the `CASE` expression. It takes an expression, a [`MAP`]({% link docs/current/sql/data_types/map.md %}) of values to results, and an optional default value.
+
+```sql
+CREATE OR REPLACE TABLE integers AS SELECT unnest([1, 2, 3]) AS i;
+SELECT i, switch(i, map {1: 'one', 2: 'two', 3: 'three'}) AS test
+FROM integers;
+```
+
+| i | test  |
+|--:|-------|
+| 1 | one   |
+| 2 | two   |
+| 3 | three |
+
+A default value can be provided as the third argument, which is returned when none of the map keys match:
+
+```sql
+SELECT i, switch(i, map {1: 'one', 2: 'two'}, 'other') AS test
+FROM integers;
+```
+
+| i | test  |
+|--:|-------|
+| 1 | one   |
+| 2 | two   |
+| 3 | other |
