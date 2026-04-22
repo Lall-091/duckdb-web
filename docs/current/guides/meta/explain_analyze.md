@@ -16,6 +16,8 @@ EXPLAIN ANALYZE SELECT * FROM tbl;
 
 Note that the **cumulative** wall-clock time that is spent on every operator is shown. When multiple threads are processing the query in parallel, the total processing time of the query may be lower than the sum of all the times spent on the individual operators.
 
+For multi-file reads (e.g., reading multiple Parquet files), the output includes the file names being read.
+
 Below is an example of running `EXPLAIN ANALYZE` on a query:
 
 ```sql
