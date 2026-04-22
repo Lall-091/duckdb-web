@@ -60,8 +60,8 @@ docs:
 
 extension_star_count: 24
 extension_star_count_pretty: 24
-extension_download_count: 638
-extension_download_count_pretty: 638
+extension_download_count: 644
+extension_download_count_pretty: 644
 image: '/images/community_extensions/social_preview/preview_community_extension_paimon.png'
 layout: community_extension_doc
 ---

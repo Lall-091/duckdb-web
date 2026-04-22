@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: raster
   description: DuckDB Extension for reading and writing raster files using SQL.
-  version: 0.4.0
+  version: 0.5.1
   language: C++
   build: cmake
   excluded_platforms: "windows_amd64_mingw;wasm_mvp;wasm_eh;wasm_threads"
@@ -18,7 +18,7 @@ extension:
 
 repo:
   github: ahuarte47/duckdb-raster
-  ref: 710884da7d20b73f4928d34df7dd882b97d59f60
+  ref: 4cce9a54748da3c48b6c8736437df67ed9a37161
 
 docs:
   hello_world: |
@@ -63,11 +63,21 @@ docs:
     -- Example transforming the BLOB data of the bands into arrays of integers, to allow analyzing the raster data:
 
     SELECT
-        RT_Blob2ArrayInt32(databand_1, true) AS r,
-        RT_Blob2ArrayInt32(databand_2, true) AS g,
-        RT_Blob2ArrayInt32(databand_3, true) AS b
+        RT_Cube2ArrayInt32(databand_1, true) AS r,
+        RT_Cube2ArrayInt32(databand_2, true) AS g,
+        RT_Cube2ArrayInt32(databand_3, true) AS b
     FROM
         RT_Read('path/to/raster/file.tif')
+    ;
+
+    -- Example to back data from the arrays to BLOBs, to be able to write the data back to a raster file:
+
+    SELECT
+        RT_Array2Cube(r.values, 'RAW', r.bands, r.cols, r.rows, r.no_data) AS r_cube,
+        RT_Array2Cube(g.values, 'RAW', g.bands, g.cols, g.rows, g.no_data) AS g_cube,
+        RT_Array2Cube(b.values, 'RAW', b.bands, b.cols, b.rows, b.no_data) AS b_cube,
+    FROM
+        ...
     ;
 
     -- Example of using COPY to export the data table to a new raster file:
@@ -86,6 +96,21 @@ docs:
         GEOMETRY_COLUMN 'geometry',
         DATABAND_COLUMNS ['databand_3', 'databand_2', 'databand_1']
     );
+
+    -- You can combine data band using algebraic operations, set CAST to ARRAY...:
+
+    WITH __input AS (
+        SELECT
+            databand_1 AS red,
+            databand_3 AS nir
+        FROM
+            RT_Read('path/to/raster/file.tif', blocksize_x := 512, blocksize_y := 512)
+    )
+    SELECT
+        (nir - red) / (nir + red) AS ndvi
+    FROM
+        __input
+    ;
 
   extended_description: |
     Extension for DuckDB for reading and writing raster files using SQL.
@@ -128,16 +153,10 @@ docs:
     - `GEOMETRY_COLUMN`: The name of the column that contains the geometry of the tiles. This column will be used to determine the spatial location and the resolution of the tiles in the output raster file.
     - `DATABAND_COLUMNS`: A list with the names of the columns that contain the data of the bands. The order of the columns in the list will determine the order of the bands in the output raster file.
 
-    This extension is still in early development, and there are many features that I want to add in the future:
-
-    - Add functions to convert from arrays of numeric values to BLOB databand columns.
-    - Compression formats for the data band BLOBs (`GZip`, `ZSTD`?).
-    - Integration with DuckDB File System.
-
-extension_star_count: 28
-extension_star_count_pretty: 28
-extension_download_count: 503
-extension_download_count_pretty: 503
+extension_star_count: 30
+extension_star_count_pretty: 30
+extension_download_count: 519
+extension_download_count_pretty: 519
 image: '/images/community_extensions/social_preview/preview_community_extension_raster.png'
 layout: community_extension_doc
 ---

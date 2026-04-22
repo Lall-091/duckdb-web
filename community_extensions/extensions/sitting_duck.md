@@ -177,10 +177,10 @@ docs:
 
     **GitHub:** https://github.com/teaguesterling/sitting_duck
 
-extension_star_count: 12
-extension_star_count_pretty: 12
-extension_download_count: 1414
-extension_download_count_pretty: 1.4k
+extension_star_count: 13
+extension_star_count_pretty: 13
+extension_download_count: 1325
+extension_download_count_pretty: 1.3k
 image: '/images/community_extensions/social_preview/preview_community_extension_sitting_duck.png'
 layout: community_extension_doc
 ---
