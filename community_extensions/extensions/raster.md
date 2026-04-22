@@ -182,34 +182,70 @@ LOAD {{ page.extension.name }};
 
 <div class="extension_functions_table"></div>
 
-|    function_name    | function_type |                          description                          | comment |                      examples                       |
-|---------------------|---------------|---------------------------------------------------------------|---------|-----------------------------------------------------|
-| RT_Drivers          | table         | Returns the list of supported GDAL raster drivers.            | NULL    | [SELECT RT_Drivers();]                              |
-| RT_Read             | table         | Reads a raster file and returns a table with the raster data. | NULL    | [SELECT * FROM RT_Read('path/to/raster/file.tif');] |
-| RT_Blob2ArrayFloat  | scalar        | NULL                                                          | NULL    | NULL                                                |
-| RT_Blob2ArrayInt64  | scalar        | NULL                                                          | NULL    | NULL                                                |
-| RT_Blob2ArrayInt32  | scalar        | NULL                                                          | NULL    | NULL                                                |
-| RT_Blob2ArrayUInt32 | scalar        | NULL                                                          | NULL    | NULL                                                |
-| RT_Blob2ArrayUInt8  | scalar        | NULL                                                          | NULL    | NULL                                                |
-| RT_Blob2ArrayUInt64 | scalar        | NULL                                                          | NULL    | NULL                                                |
-| RT_Blob2ArrayInt16  | scalar        | NULL                                                          | NULL    | NULL                                                |
-| RT_Blob2ArrayUInt16 | scalar        | NULL                                                          | NULL    | NULL                                                |
-| RT_Blob2ArrayDouble | scalar        | NULL                                                          | NULL    | NULL                                                |
-| RT_Blob2ArrayInt8   | scalar        | NULL                                                          | NULL    | NULL                                                |
+|    function_name    | function_type |                                                 description                                                 | comment |                                       examples                                        |
+|---------------------|---------------|-------------------------------------------------------------------------------------------------------------|---------|---------------------------------------------------------------------------------------|
+| RT_Drivers          | table         | Returns the list of supported GDAL raster drivers.                                                          | NULL    | [SELECT RT_Drivers();]                                                                |
+| RT_Read             | table         | Reads a raster file and returns a table with the raster data.                                               | NULL    | [SELECT * FROM RT_Read('path/to/raster/file.tif');]                                   |
+| RT_Array2Cube       | scalar        | Transforms an array of numeric values into a databand column (BLOB).                                        | NULL    | [SELECT RT_Array2Cube(r.values, 'RAW', r.bands, r.cols, r.rows, r.no_data) FROM ...;] |
+| RT_CubeNeg          | scalar        | Negate the values in the datacube element-wise.                                                             | NULL    | [SELECT RT_CubeNeg(databand_1) FROM ...;]                                             |
+| RT_CubeAbs          | scalar        | Takes the absolute value of the values in the datacube element-wise.                                        | NULL    | [SELECT RT_CubeAbs(databand_1) FROM ...;]                                             |
+| RT_CubeSqrt         | scalar        | Takes the square root of the values in the datacube element-wise.                                           | NULL    | [SELECT RT_CubeSqrt(databand_1) FROM ...;]                                            |
+| RT_CubeLog          | scalar        | Takes the logarithm of the values in the datacube element-wise.                                             | NULL    | [SELECT RT_CubeLog(databand_1) FROM ...;]                                             |
+| RT_CubeExp          | scalar        | Takes the exponential of the values in the datacube element-wise.                                           | NULL    | [SELECT RT_CubeExp(databand_1) FROM ...;]                                             |
+| RT_CubeEqual        | scalar        | Return 1 where values in datacube_a are equal to datacube_b or a scalar value, 0 otherwise.                 | NULL    | [SELECT RT_CubeEqual(databand_1, 10) FROM ...;]                                       |
+| RT_CubeNotEqual     | scalar        | Return 1 where values in datacube_a are not equal to datacube_b or a scalar value, 0 otherwise.             | NULL    | [SELECT RT_CubeNotEqual(databand_1, 10) FROM ...;]                                    |
+| RT_CubeGreater      | scalar        | Return 1 where values in datacube_a are greater than datacube_b or a scalar value, 0 otherwise.             | NULL    | [SELECT RT_CubeGreater(databand_1, 10) FROM ...;]                                     |
+| RT_CubeGreaterEqual | scalar        | Return 1 where values in datacube_a are greater than or equal to datacube_b or a scalar value, 0 otherwise. | NULL    | [SELECT RT_CubeGreaterEqual(databand_1, 10) FROM ...;]                                |
+| RT_CubeLess         | scalar        | Return 1 where values in datacube_a are less than datacube_b or a scalar value, 0 otherwise.                | NULL    | [SELECT RT_CubeLess(databand_1, 10) FROM ...;]                                        |
+| RT_CubeLessEqual    | scalar        | Return 1 where values in datacube_a are less than or equal to datacube_b or a scalar value, 0 otherwise.    | NULL    | [SELECT RT_CubeLessEqual(databand_1, 10) FROM ...;]                                   |
+| RT_CubeAdd          | scalar        | Add the values in datacube_a to datacube_b or a scalar value element-wise.                                  | NULL    | [SELECT RT_CubeAdd(databand_1, 10) FROM ...;]                                         |
+| RT_CubeSubtract     | scalar        | Subtract datacube_b or a scalar value from the values in datacube_a element-wise.                           | NULL    | [SELECT RT_CubeSubtract(databand_1, 10) FROM ...;]                                    |
+| RT_CubeMultiply     | scalar        | Multiply the values in datacube_a by datacube_b or a scalar value element-wise.                             | NULL    | [SELECT RT_CubeMultiply(databand_1, 10) FROM ...;]                                    |
+| RT_CubeDivide       | scalar        | Divide the values in datacube_a by datacube_b or a scalar value element-wise.                               | NULL    | [SELECT RT_CubeDivide(databand_1, 10) FROM ...;]                                      |
+| RT_CubePow          | scalar        | Take the power of the values in datacube_a to datacube_b or a scalar value element-wise.                    | NULL    | [SELECT RT_CubePow(databand_1, 2) FROM ...;]                                          |
+| RT_Cube2ArrayInt32  | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_Cube2TypeUInt64  | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_Cube2TypeInt8    | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_Cube2ArrayFloat  | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_Cube2ArrayUInt32 | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_Cube2ArrayDouble | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_Cube2TypeUInt8   | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_Cube2ArrayInt64  | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_Cube2TypeUInt16  | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_Cube2TypeDouble  | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_Cube2TypeInt32   | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_Cube2TypeInt64   | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_Cube2ArrayInt16  | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_Cube2ArrayInt8   | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_Cube2ArrayUInt8  | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_CubeMod          | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_Cube2TypeFloat   | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_Cube2TypeInt16   | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_Cube2ArrayUInt16 | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_Cube2TypeUInt32  | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+| RT_Cube2ArrayUInt64 | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
 
 ### Overloaded Functions
 
 <div class="extension_functions_table"></div>
 
-This extension does not add any function overloads.
+| function_name | function_type | description | comment | examples |
+|---------------|---------------|-------------|---------|----------|
+| -             | scalar        | NULL        | NULL    | NULL     |
+| /             | scalar        | NULL        | NULL    | NULL     |
+| +             | scalar        | NULL        | NULL    | NULL     |
+| *             | scalar        | NULL        | NULL    | NULL     |
+| %             | scalar        | NULL        | NULL    | NULL     |
+| ^             | scalar        | NULL        | NULL    | NULL     |
 
 ### Added Types
 
 <div class="extension_types_table"></div>
 
-| type_name | type_size | logical_type | type_category | internal |
-|-----------|----------:|--------------|---------------|----------|
-| RT_BBOX   | 0         | STRUCT       | COMPOSITE     | true     |
+|  type_name  | type_size | logical_type | type_category | internal |
+|-------------|----------:|--------------|---------------|----------|
+| RT_BBOX     | 0         | STRUCT       | COMPOSITE     | true     |
+| RT_DATACUBE | 16        | BLOB         | NULL          | true     |
 
 ### Added Settings
 
