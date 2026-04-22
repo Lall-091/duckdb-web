@@ -52,6 +52,10 @@ ABORT;
 
 If you are not in an active transaction, the `ROLLBACK` and `ABORT` statements will fail.
 
+## Multi-Statement Transactions
+
+When multiple SQL statements are submitted together (e.g., separated by semicolons), they are executed within a single implicit transaction. If any statement fails, all preceding statements in the batch are rolled back. This also applies to `PRAGMA` commands that decompose into multiple internal operations, such as `COPY FROM DATABASE`.
+
 ## Isolation Level
 
 DuckDB's concurrency model guarantees snapshot isolation. Transactions that violate this isolation level are aborted.
