@@ -9,11 +9,16 @@ title: Querying Parquet Metadata
 
 ## Parquet Metadata
 
-The `parquet_metadata` function can be used to query the metadata contained within a Parquet file, which reveals various internal details of the Parquet file such as the statistics of the different columns. This can be useful for figuring out what kind of skipping is possible in Parquet files, or even to obtain a quick overview of what the different columns contain:
+The `parquet_metadata` function can be used to query the metadata contained within a Parquet file, which reveals various internal details of the Parquet file such as the statistics of the different columns. This can be useful for figuring out what kind of skipping is possible in Parquet files, or even to obtain a quick overview of what the different columns contain. The function supports glob patterns to query metadata across multiple files in parallel:
 
 ```sql
 SELECT *
 FROM parquet_metadata('test.parquet');
+```
+
+```sql
+SELECT *
+FROM parquet_metadata('data/*.parquet');
 ```
 
 Below is a table of the columns returned by `parquet_metadata`.
@@ -100,15 +105,18 @@ Below is a table of the columns returned by `parquet_file_metadata`.
 
 <div class="monospace_table"></div>
 
-| Field                       | Type    |
-| --------------------------- | ------- |
-| file_name                   | VARCHAR |
-| created_by                  | VARCHAR |
-| num_rows                    | BIGINT  |
-| num_row_groups              | BIGINT  |
-| format_version              | BIGINT  |
-| encryption_algorithm        | VARCHAR |
-| footer_signing_key_metadata | VARCHAR |
+| Field                       | Type      |
+| --------------------------- | --------- |
+| file_name                   | VARCHAR   |
+| created_by                  | VARCHAR   |
+| num_rows                    | BIGINT    |
+| num_row_groups              | BIGINT    |
+| format_version              | BIGINT    |
+| encryption_algorithm        | VARCHAR   |
+| footer_signing_key_metadata | VARCHAR   |
+| file_size_bytes             | UBIGINT   |
+| footer_size                 | UBIGINT   |
+| column_orders               | VARCHAR[] |
 
 ## Parquet Key-Value Metadata
 
@@ -128,6 +136,26 @@ Below is a table of the columns returned by `parquet_kv_metadata`.
 | file_name | VARCHAR |
 | key       | BLOB    |
 | value     | BLOB    |
+
+## Full Metadata
+
+The `parquet_full_metadata` function returns all metadata for a Parquet file in a single row, combining the results of `parquet_file_metadata`, `parquet_metadata`, `parquet_schema`, and `parquet_kv_metadata` as nested struct arrays:
+
+```sql
+SELECT *
+FROM parquet_full_metadata('test.parquet');
+```
+
+<div class="monospace_table"></div>
+
+| Field                 | Type                    |
+| --------------------- | ----------------------- |
+| parquet_file_metadata | STRUCT(...)[]           |
+| parquet_metadata      | STRUCT(...)[]           |
+| parquet_schema        | STRUCT(...)[]           |
+| parquet_kv_metadata   | STRUCT(...)[]           |
+
+Each struct array contains the same columns as the corresponding standalone function.
 
 ## Bloom Filters
 

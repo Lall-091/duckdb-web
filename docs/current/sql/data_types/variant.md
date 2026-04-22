@@ -80,4 +80,21 @@ SELECT variant_extract(data, 'name') AS name FROM events WHERE id = 4;
 
 ## Parquet Support
 
-DuckDB supports reading `VARIANT` types from [Parquet files]({% link docs/current/data/parquet/overview.md %}), including *shredding,* a technique that stores nested data as flat values for more efficient access.
+DuckDB supports reading and writing `VARIANT` types from [Parquet files]({% link docs/current/data/parquet/overview.md %}), including *shredding,* a technique that stores nested data as flat values for more efficient access.
+
+### Writing VARIANT to Parquet
+
+When writing `VARIANT` columns to Parquet, DuckDB can automatically shred (decompose) the variant data into typed columns based on the structure of the first row group. This auto-shredding improves read performance by enabling predicate pushdown and efficient column access.
+
+To explicitly provide a schema for shredding, use the `SHREDDING` copy option:
+
+```sql
+COPY events TO 'events.parquet' (
+    FORMAT parquet,
+    SHREDDING {'data': 'STRUCT(name VARCHAR, age INTEGER)'}
+);
+```
+
+### Reading Snowflake VARIANT from Parquet
+
+DuckDB can read shredded `VARIANT` Parquet files produced by Snowflake, automatically reconstructing the variant values from the shredded columns.
