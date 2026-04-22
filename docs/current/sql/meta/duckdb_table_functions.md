@@ -139,6 +139,18 @@ The `duckdb_extensions()` function provides metadata about the extensions availa
 | `install_mode` | The installation mode that was used to install the extension: `UNKNOWN`, `REPOSITORY`, `CUSTOM_PATH`, `STATICALLY_LINKED`, `NOT_INSTALLED`, `NULL`. | `VARCHAR` |
 | `installed_from` | Name of the repository the extension was installed from, e.g., `community` or `core_nightly`. The empty string denotes the `core` repository. | `VARCHAR` |
 
+## `duckdb_eviction_queues`
+
+The `duckdb_eviction_queues()` function provides introspection into the buffer pool eviction queues.
+
+| Column | Description | Type |
+|:-|:---|:-|
+| `queue_index` | The index of the eviction queue. | `BIGINT` |
+| `queue_type` | The type of the eviction queue (e.g., `BLOCK_AND_EXTERNAL_FILE`, `MANAGED_BUFFER`, `TINY_BUFFER`). | `VARCHAR` |
+| `approximate_size` | The approximate number of entries in the queue. | `BIGINT` |
+| `dead_nodes` | The number of dead (evicted) nodes in the queue. | `BIGINT` |
+| `total_insertions` | The total number of insertions into the queue. | `BIGINT` |
+
 ## `duckdb_functions`
 
 The `duckdb_functions()` function provides metadata about the functions (including macros) available in the DuckDB instance.
@@ -250,6 +262,16 @@ The `duckdb_prepared_statements()` function provides metadata about the [prepare
 | `statement` | The SQL statement. | `VARCHAR` |
 | `parameter_types` | The expected parameter types for the statement's parameters. Currently returns `UNKNOWN` for all parameters. | `VARCHAR[]` |
 | `result_types` | The types of the columns in the table returned by the prepared statement. | `VARCHAR[]` |
+
+## `duckdb_profiling_settings`
+
+The `duckdb_profiling_settings()` macro returns the current profiling-related settings from `duckdb_settings()`.
+
+| Column | Description | Type |
+|:-|:---|:-|
+| `name` | The name of the profiling setting. | `VARCHAR` |
+| `value` | The current value of the setting. | `VARCHAR` |
+| `description` | A description of the setting. | `VARCHAR` |
 
 ## `duckdb_schemas`
 
