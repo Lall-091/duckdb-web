@@ -94,9 +94,9 @@ Dates can also be manipulated with the [timestamp functions]({% link docs/curren
 
 <div class="nostroke_table"></div>
 
-| **Description** | Truncate to specified [precision]({% link docs/current/sql/functions/datepart.md %}). |
+| **Description** | Truncate to specified [precision]({% link docs/current/sql/functions/datepart.md %}). Always returns a `TIMESTAMP`, even when the input is a `DATE`. |
 | **Example** | `date_trunc('month', DATE '1992-03-07')` |
-| **Result** | `1992-03-01` |
+| **Result** | `1992-03-01 00:00:00` |
 | **Alias** | `datetrunc` |
 
 #### `dayname(date)`
