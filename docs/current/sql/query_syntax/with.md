@@ -342,6 +342,32 @@ ORDER BY length(path), path;
 | 1         | 8       | [1, 3, 8] |
 | 1         | 8       | [1, 5, 8] |
 
+### Accessing the Union Table with `recurring`
+
+Within the recursive term of a `WITH RECURSIVE` CTE, the CTE name (e.g., `counter`) refers to the rows produced by the *last iteration*. To access *all rows accumulated so far* (the union table), use the `recurring` schema prefix:
+
+```sql
+WITH RECURSIVE counter(i) AS (
+    SELECT 1
+        UNION ALL
+    SELECT i + 1
+    FROM counter
+    WHERE (SELECT max(i) FROM recurring.counter) < 5
+)
+SELECT *
+FROM counter;
+```
+
+| i |
+|--:|
+| 1 |
+| 2 |
+| 3 |
+| 4 |
+| 5 |
+
+Here, `recurring.counter` gives access to all rows accumulated across all previous iterations, while `counter` in the `FROM` clause only contains the rows from the most recent iteration. This is useful when termination conditions or calculations depend on the full accumulated result rather than just the previous iteration.
+
 ## Recursive CTEs with `USING KEY`
 
 > Deprecated DuckDB 1.5.0 deprecated the use of recursive `UNION`s for
@@ -375,7 +401,7 @@ ORDER BY length(path), path;
 
 In each iteration, a regular recursive CTE appends result rows to the union table, which ultimately defines the overall result of the CTE. In contrast, a CTE with `USING KEY` has the ability to update rows that have been placed in the union table in an earlier iteration: if the current iteration produces a row with key `k`, it replaces a row with the same key `k` in the union table (like a dictionary). If no such row exists in the union table yet, the new row is appended to the union table as usual.
 
-This allows a CTE to exercise fine-grained control over the union table contents. Avoiding the append-only behavior can lead to significantly smaller union table sizes. This helps query runtime, memory consumption, and makes it feasible to access the union table while the iteration is still ongoing (this is impossible for regular recursive CTEs): in a CTE `WITH RECURSIVE T(...) USING KEY ...`, table `T` denotes the rows added by the last iteration (as is usual for recursive CTEs), while table `recurring.T` denotes the union table built so far. References to `recurring.T` allow for the elegant and idiomatic translation of rather complex algorithms into readable SQL code.
+This allows a CTE to exercise fine-grained control over the union table contents. Avoiding the append-only behavior can lead to significantly smaller union table sizes. This helps query runtime, memory consumption, and makes it feasible to access the union table while the iteration is still ongoing. In a CTE `WITH RECURSIVE T(...) USING KEY ...`, table `T` denotes the rows added by the last iteration (as is usual for recursive CTEs), while table `recurring.T` denotes the [union table built so far](#accessing-the-union-table-with-recurring). References to `recurring.T` allow for the elegant and idiomatic translation of rather complex algorithms into readable SQL code.
 
 ### Example: `USING KEY`
 
