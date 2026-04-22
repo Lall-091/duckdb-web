@@ -90,6 +90,13 @@ SELECT * SIMILAR TO 'col.'
 FROM tbl;
 ```
 
+The `NOT` variants of these operators are also supported to exclude columns that match the pattern:
+
+```sql
+SELECT * NOT SIMILAR TO 'col.'
+FROM tbl;
+```
+
 ## `COLUMNS` Expression
 
 
@@ -167,6 +174,20 @@ WHERE greatest(UNPACK(COLUMNS(*) = 'a')); -- equivalent to: x = 'a' OR y = 'a'
 |--:|--:|
 | a | a |
 | a | b |
+
+### `COLUMNS` Expression in `DISTINCT ON`
+
+`COLUMNS` expressions can be used in [`DISTINCT ON`]({% link docs/current/sql/query_syntax/select.md %}#distinct-on-clause) clauses to specify distinct columns by pattern:
+
+```sql
+SELECT DISTINCT ON (COLUMNS('x|y')) *
+FROM (VALUES (1, 2, 'a'), (1, 2, 'b'), (3, 4, 'c')) t(x, y, z);
+```
+
+| x | y | z |
+|--:|--:|---|
+| 1 | 2 | a |
+| 3 | 4 | c |
 
 ### Regular Expressions in a `COLUMNS` Expression
 
