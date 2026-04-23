@@ -59,6 +59,7 @@ DuckDB offers several advanced SQL features and syntactic sugar to make SQL quer
 * [Specifying column names in the `JOIN` clause]({% link docs/current/sql/query_syntax/from.md %}#shorthands-in-the-join-clause)
 * [Using `VALUES` in the `JOIN` clause]({% link docs/current/sql/query_syntax/from.md %}#shorthands-in-the-join-clause)
 * [Using `VALUES` in the anchor part of common table expressions]({% link docs/current/sql/query_syntax/with.md %}#using-values)
+* [`SWITCH` statements as syntactic sugar for the `CASE` expression]({% link docs/current/sql/expressions/case.md %}#switch-expression)
 
 ## Literals and Identifiers
 

@@ -59,7 +59,7 @@ FROM integers;
 | 2 | NULL |
 | 3 | NULL |
 
-It is also possible to provide an individual expression after the `CASE` but before the `WHEN`. When this is done, the `CASE` expression is effectively transformed into a switch statement.
+It is also possible to provide an individual expression after the `CASE` but before the `WHEN`. When this is done, the `CASE` expression is effectively transformed into a `switch` statement.
 
 ```sql
 CREATE OR REPLACE TABLE integers AS SELECT unnest([1, 2, 3]) AS i;
@@ -86,7 +86,7 @@ The `SWITCH` expression is syntactic sugar for the `CASE` expression. It takes a
 
 ```sql
 CREATE OR REPLACE TABLE integers AS SELECT unnest([1, 2, 3]) AS i;
-SELECT i, switch(i, map {1: 'one', 2: 'two', 3: 'three'}) AS test
+SELECT i, SWITCH(i, MAP {1: 'one', 2: 'two', 3: 'three'}) AS test
 FROM integers;
 ```
 
@@ -99,7 +99,7 @@ FROM integers;
 A default value can be provided as the third argument, which is returned when none of the map keys match:
 
 ```sql
-SELECT i, switch(i, map {1: 'one', 2: 'two'}, 'other') AS test
+SELECT i, SWITCH(i, MAP {1: 'one', 2: 'two'}, 'other') AS test
 FROM integers;
 ```
 

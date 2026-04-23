@@ -45,7 +45,7 @@ ATTACH 'file.db' (ROW_GROUP_SIZE 2048);
 Attach the database `file.db` with WAL writes disabled for improved performance:
 
 ```sql
-ATTACH 'file.db' (RECOVERY_MODE NO_WAL_WRITES);
+ATTACH 'file.db' (RECOVERY_MODE no_wal_writes);
 ```
 
 Attach a SQLite database for reading and writing (see the [`sqlite` extension]({% link docs/current/core_extensions/sqlite.md %}) for more information):
@@ -176,7 +176,7 @@ Zero or more copy options may be provided within parentheses following the `ATTA
 | `STORAGE_VERSION`   | The version of the storage used.                                                                                            | `VARCHAR` | `v1.0.0`      |
 | `ENCRYPTION_KEY`    | The encryption key used for encrypting the database.                                                                        | `VARCHAR` | -             |
 | `ENCRYPTION_CIPHER` | The encryption cipher used for encrypting the database (`CBC`, `CTR` or `GCM`).                                             | `VARCHAR` | -             |
-| `RECOVERY_MODE`     | Recovery mode for the database. `NO_WAL_WRITES` disables WAL writes, improving performance at the cost of crash recovery.   | `VARCHAR` | -             |
+| `RECOVERY_MODE`     | Recovery mode for the database. `no_wal_writes` disables WAL writes, improving performance at the cost of crash recovery.   | `VARCHAR` | -             |
 
 ## `DETACH`
 

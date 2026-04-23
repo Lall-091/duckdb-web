@@ -358,7 +358,7 @@ Is equivalent to:
 
 ## Importing Data
 
-The `.import` command imports data from a file into a DuckDB table. It uses DuckDB's built-in reader functions (`read_csv`, `read_json`, `read_parquet`) and supports automatic schema detection. If the target table does not exist, it is automatically created.
+The `.import` command imports data from a file into a DuckDB table. It uses DuckDB's reader functions (`read_csv`, `read_json`, `read_parquet`) and supports automatic schema detection. If the target table does not exist, it is automatically created.
 
 The file format can be specified explicitly using `--csv`, `--json`, or `--parquet`. If no format is specified, the format is inferred from the file extension.
 
@@ -366,7 +366,7 @@ The file format can be specified explicitly using `--csv`, `--json`, or `--parqu
 .import data.csv my_table
 ```
 
-Additional parameters can be passed to the underlying reader function using `--⟨parameter⟩ ⟨value⟩` syntax:
+Additional parameters can be passed to the underlying reader function using `--⟨parameter⟩ ⟨value⟩{:.language-sql .highlight} syntax:
 
 ```sql
 .import data.csv my_table --delimiter "|" --header false

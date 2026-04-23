@@ -14,27 +14,27 @@ DuckDB's CLI uses a line-editing library based on [linenoise](https://github.com
 
 ## Moving
 
-|       Key       |                                 Action                                 |
-|-----------------|------------------------------------------------------------------------|
-| `Left`          | Move back a character                                                  |
-| `Right`         | Move forward a character                                               |
-| `Up`            | Move up a line. When on the first line, move to previous history entry |
-| `Down`          | Move down a line. When on last line, move to next history entry        |
-| `Home`          | Move to beginning of buffer                                            |
-| `End`           | Move to end of buffer                                                  |
-| `Ctrl`+`Left`   | Move back a word                                                       |
-| `Ctrl`+`Right`  | Move forward a word                                                    |
-| `Ctrl`+`A`      | Move to beginning of buffer                                            |
-| `Ctrl`+`B`      | Move back a character                                                  |
-| `Ctrl`+`E`      | Move to end of buffer                                                  |
-| `Ctrl`+`F`      | Move forward a character                                               |
-| `Alt`+`Left`    | Move back a word                                                       |
-| `Alt`+`Right`   | Move forward a word                                                    |
+| Key            | Action                                                                 |
+| -------------- | ---------------------------------------------------------------------- |
+| `Left`         | Move back a character                                                  |
+| `Right`        | Move forward a character                                               |
+| `Up`           | Move up a line. When on the first line, move to previous history entry |
+| `Down`         | Move down a line. When on last line, move to next history entry        |
+| `Home`         | Move to beginning of buffer                                            |
+| `End`          | Move to end of buffer                                                  |
+| `Ctrl`+`Left`  | Move back a word                                                       |
+| `Ctrl`+`Right` | Move forward a word                                                    |
+| `Ctrl`+`A`     | Move to beginning of buffer                                            |
+| `Ctrl`+`B`     | Move back a character                                                  |
+| `Ctrl`+`E`     | Move to end of buffer                                                  |
+| `Ctrl`+`F`     | Move forward a character                                               |
+| `Alt`+`Left`   | Move back a word                                                       |
+| `Alt`+`Right`  | Move forward a word                                                    |
 
 ## History
 
-|     Key    |            Action              |
-|------------|--------------------------------|
+| Key        | Action                         |
+| ---------- | ------------------------------ |
 | `Ctrl`+`P` | Move to previous history entry |
 | `Ctrl`+`N` | Move to next history entry     |
 | `Ctrl`+`R` | Search the history             |
@@ -46,8 +46,8 @@ DuckDB's CLI uses a line-editing library based on [linenoise](https://github.com
 
 ## Changing Text
 
-|        Key        | Action                                                   |
-|-------------------|----------------------------------------------------------|
+| Key               | Action                                                   |
+| ----------------- | -------------------------------------------------------- |
 | `Backspace`       | Delete previous character                                |
 | `Delete`          | Delete next character                                    |
 | `Ctrl`+`D`        | Delete next character. When buffer is empty, end editing |
@@ -67,25 +67,25 @@ DuckDB's CLI uses a line-editing library based on [linenoise](https://github.com
 
 ## Completing
 
-|      Key      |                          Action                        |
-|---------------|--------------------------------------------------------|
+| Key           | Action                                                 |
+| ------------- | ------------------------------------------------------ |
 | `Tab`         | Autocomplete. When autocompleting, cycle to next entry |
 | `Shift`+`Tab` | When autocompleting, cycle to previous entry           |
 | `Esc`+`Esc`   | When autocompleting, revert autocompletion             |
 
 ## Miscellaneous
 
-|    Key     |                           Action                                                   |
-|------------|------------------------------------------------------------------------------------|
-| `Enter`    | Execute query. If query is not complete, insert a newline at the end of the buffer |
-| `Ctrl`+`J` | Execute query. If query is not complete, insert a newline at the end of the buffer |
-| `Ctrl`+`C` | Cancel editing of current query                                                    |
-| `Ctrl`+`G` | Cancel editing of current query                                                    |
-| `Ctrl`+`L` | Clear screen                                                                       |
-| `Ctrl`+`O` | Cancel editing of current query                                                    |
-| `Ctrl`+`X` | Insert a newline after the cursor                                                  |
-| `Ctrl`+`Q`, then click | Move cursor to mouse click position                                          |
-| `Ctrl`+`Z` | Suspend CLI and return to shell, use `fg` to re-open                               |
+| Key                    | Action                                                                             |
+| ---------------------- | ---------------------------------------------------------------------------------- |
+| `Enter`                | Execute query. If query is not complete, insert a newline at the end of the buffer |
+| `Ctrl`+`J`             | Execute query. If query is not complete, insert a newline at the end of the buffer |
+| `Ctrl`+`C`             | Cancel editing of current query                                                    |
+| `Ctrl`+`G`             | Cancel editing of current query                                                    |
+| `Ctrl`+`L`             | Clear screen                                                                       |
+| `Ctrl`+`O`             | Cancel editing of current query                                                    |
+| `Ctrl`+`X`             | Insert a newline after the cursor                                                  |
+| `Ctrl`+`Q`, then click | Move cursor to mouse click position                                                |
+| `Ctrl`+`Z`             | Suspend CLI and return to shell, use `fg` to re-open                               |
 
 ## External Editor Mode
 
@@ -95,8 +95,6 @@ Use `.edit` or `\e` to open a query in an external text editor.
 * When used inside a multi-line command, it opens the current command in the editor.
 
 The editor is taken from the first set environment variable among `DUCKDB_EDITOR`, `EDITOR` or `VISUAL` (in that order). If none are set, `vi` is used.
-
-> This feature is only available in the linenoise-based CLI editor, which is supported on macOS, Linux and Windows.
 
 ## Using Read-Line
 
