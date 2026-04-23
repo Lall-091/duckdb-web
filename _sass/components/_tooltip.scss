@@ -129,9 +129,9 @@ table tbody tr:nth-last-child(-n+2) .tooltip:focus-within .tooltip-body {
     .tooltip:hover .tooltip-body,
     .tooltip:focus-visible .tooltip-body,
     .tooltip:focus-within .tooltip-body,
-    table tbody tr:last-child .tooltip:hover .tooltip-body,
-    table tbody tr:last-child .tooltip:focus-visible .tooltip-body,
-    table tbody tr:last-child .tooltip:focus-within .tooltip-body {
+    table tbody tr:nth-last-child(-n+2) .tooltip:hover .tooltip-body,
+    table tbody tr:nth-last-child(-n+2) .tooltip:focus-visible .tooltip-body,
+    table tbody tr:nth-last-child(-n+2) .tooltip:focus-within .tooltip-body {
         transform: translateY(0);
     }
 }
