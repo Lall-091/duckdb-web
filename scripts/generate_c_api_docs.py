@@ -221,7 +221,7 @@ def add_function(function_prototype, documentation, group):
     )
     function_name = extract_function_name(function_prototype_str)
     docs_str = '\n'.join(documentation) + '\n'
-    (docs_str, parameters) = extract_parameters_and_return_value(docs_str)
+    docs_str, parameters = extract_parameters_and_return_value(docs_str)
     docs_str = docs_str.replace(
         "**DEPRECATION NOTICE**:", "> Warning Deprecation notice."
     )
