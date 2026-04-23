@@ -276,6 +276,14 @@ COPY (
 );
 ```
 
+Write to a Parquet v2 file:
+
+```sql
+COPY tbl
+    TO 'result-v2.parquet'
+    (FORMAT parquet, PARQUET_VERSION 'V2');
+```
+
 Write a CSV file to an uncompressed Parquet file:
 
 ```sql

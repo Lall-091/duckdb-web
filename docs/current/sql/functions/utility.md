@@ -46,6 +46,7 @@ The functions below are difficult to categorize into specific function types and
 | [`md5_number_upper(string)`](#md5_number_upperstring) | Returns the upper 64-bit segment of the MD5 hash of the `string` as a `UBIGINT`. |
 | [`nextval('sequence_name')`](#nextvalsequence_name) | Return the following value of the sequence. |
 | [`nullif(a, b)`](#nullifa-b) | Return `NULL` if `a = b`, else return `a`. Equivalent to `CASE WHEN a = b THEN NULL ELSE a END`. |
+| [`parse_formatted_bytes(string)`](#parse_formatted_bytesstring) | Parse a human-readable byte size string (e.g., `'16 KiB'`) into a `UBIGINT` number of bytes. Throws an error on invalid input. |
 | [`pg_typeof(expression)`](#pg_typeofexpression) | Returns the lower case name of the data type of the result of the expression. For PostgreSQL compatibility. |
 | [`query(`*`query_string`*`)`](#queryquery_string) | Table function that parses and executes the query defined in *`query_string`*. Only constant strings are allowed. Warning: this function allows invoking arbitrary queries, potentially altering the database state. |
 | [`query_table(`*`tbl_name`*`)`](#query_tabletbl_name) | Table function that returns the table given in *`tbl_name`*. |
@@ -54,6 +55,7 @@ The functions below are difficult to categorize into specific function types and
 | [`read_text(source)`](#read_textsource) | Returns the content from `source` (a filename, a list of filenames, or a glob pattern) as a `VARCHAR`. The file content is first validated to be valid UTF-8. If `read_text` attempts to read a file with invalid UTF-8 an error is thrown suggesting to use `read_blob` instead. See the [`read_text` guide]({% link docs/current/guides/file_formats/read_file.md %}#read_text) for more details. |
 | [`sha1(string)`](#sha1string) | Returns a `VARCHAR` with the SHA-1 hash of the `string`. |
 | [`sha256(string)`](#sha256string) | Returns a `VARCHAR` with the SHA-256 hash of the `string`. |
+| [`sleep_ms(milliseconds)`](#sleep_msmilliseconds) | Pause execution for the specified number of milliseconds. Returns `NULL`. |
 | [`stats(expression)`](#statsexpression) | Returns a string with statistics about the expression. Expression can be a column, constant, or SQL expression. |
 | [`txid_current()`](#txid_current) | Returns the current transaction's identifier, a `BIGINT` value. It will assign a new one if the current transaction does not have one already. |
 | [`typeof(expression)`](#typeofexpression) | Returns the name of the data type of the result of the expression. |
@@ -301,6 +303,14 @@ The functions below are difficult to categorize into specific function types and
 | **Example** | `nullif(1+1, 2)` |
 | **Result** | `NULL` |
 
+#### `parse_formatted_bytes(string)`
+
+<div class="nostroke_table"></div>
+
+| **Description** | Parse a human-readable byte size string (e.g., `'16 KiB'`) into a `UBIGINT` number of bytes. Throws an error on invalid input. |
+| **Example** | `parse_formatted_bytes('1.5 GiB')` |
+| **Result** | `1610612736` |
+
 #### `pg_typeof(expression)`
 
 <div class="nostroke_table"></div>
@@ -364,6 +374,14 @@ The functions below are difficult to categorize into specific function types and
 | **Description** | Returns a `VARCHAR` with the SHA-256 hash of the `string`. |
 | **Example** | `sha256('🦆')` |
 | **Result** | `d7a5c5e0d1d94c32218539e7e47d4ba9c3c7b77d61332fb60d633dde89e473fb` |
+
+#### `sleep_ms(milliseconds)`
+
+<div class="nostroke_table"></div>
+
+| **Description** | Pause execution for the specified number of milliseconds. Returns `NULL`. |
+| **Example** | `sleep_ms(500)` |
+| **Result** | `NULL` |
 
 #### `stats(expression)`
 

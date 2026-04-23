@@ -29,6 +29,7 @@ All functions accept an optional set of [options](#options-for-regular-expressio
 | [`regexp_extract(string, pattern[, group = 0][, options])`](#regexp_extractstring-pattern-group--0-options) | If `string` contains the regexp `pattern`, returns the capturing group specified by optional parameter `group`; otherwise, returns the empty string. The `group` must be a constant value. If no `group` is given, it defaults to 0. A set of optional [`options`](#options-for-regular-expression-functions) can be set. |
 | [`regexp_extract(string, pattern, name_list[, options])`](#regexp_extractstring-pattern-name_list-options) | If `string` contains the regexp `pattern`, returns the capturing groups as a struct with corresponding names from `name_list`; otherwise, returns a struct with the same keys and empty strings as values. |
 | [`regexp_extract_all(string, regex[, group = 0][, options])`](#regexp_extract_allstring-regex-group--0-options) | Finds non-overlapping occurrences of `regex` in `string` and returns the corresponding values of `group`. |
+| [`regexp_extract_all(string, regex, name_list[, options])`](#regexp_extract_allstring-regex-name_list-options) | Finds non-overlapping occurrences of `regex` in `string` and returns the capturing groups as a list of structs with corresponding names from `name_list`. |
 | [`regexp_full_match(string, regex[, options])`](#regexp_full_matchstring-regex-options) | Returns `true` if the entire `string` matches the `regex`. |
 | [`regexp_matches(string, pattern[, options])`](#regexp_matchesstring-pattern-options) | Returns `true` if `string` contains the regexp `pattern`, `false` otherwise. |
 | [`regexp_replace(string, pattern, replacement[, options])`](#regexp_replacestring-pattern-replacement-options) | If `string` contains the regexp `pattern`, replaces the matching part with `replacement`. By default, only the first occurrence is replaced. A set of optional [`options`](#options-for-regular-expression-functions), including the global flag `g`, can be set. |
@@ -58,6 +59,14 @@ All functions accept an optional set of [options](#options-for-regular-expressio
 | **Description** | Finds non-overlapping occurrences of `regex` in `string` and returns the corresponding values of `group`. A set of optional [`options`](#options-for-regular-expression-functions) can be set. |
 | **Example** | `regexp_extract_all('Peter: 33, Paul:14', '(\w+):\s*(\d+)', 2)` |
 | **Result** | `[33, 14]` |
+
+#### `regexp_extract_all(string, regex, name_list[, options])`
+
+<div class="nostroke_table"></div>
+
+| **Description** | Finds non-overlapping occurrences of `regex` in `string` and returns the capturing groups as a list of structs with corresponding names from `name_list`. A set of optional [`options`](#options-for-regular-expression-functions) can be set. |
+| **Example** | `regexp_extract_all('Peter: 33, Paul: 14', '(\w+):\s*(\d+)', ['name', 'age'])` |
+| **Result** | `[{'name': Peter, 'age': 33}, {'name': Paul, 'age': 14}]` |
 
 #### `regexp_full_match(string, regex[, options])`
 

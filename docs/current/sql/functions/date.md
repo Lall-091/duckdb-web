@@ -40,6 +40,7 @@ Dates can also be manipulated with the [timestamp functions]({% link docs/curren
 | [`date_sub(part, startdate, enddate)`](#date_subpart-startdate-enddate)             | The signed length of the interval between `startdate` and `enddate`, truncated to whole multiples of [`part`]({% link docs/current/sql/functions/datepart.md %}).                                                                                           |
 | [`date_trunc(part, date)`](#date_truncpart-date)                                    | Truncate to specified [precision]({% link docs/current/sql/functions/datepart.md %}).                                                                                                                                                                       |
 | [`dayname(date)`](#daynamedate)                                                     | The (English) name of the weekday.                                                                                                                                                                                                                          |
+| [`days_in_month(date)`](#days_in_monthdate)                                         | The number of days in the month of the given date.                                                                                                                                                                                                          |
 | [`extract(part from date)`](#extractpart-from-date)                                 | Get [subfield]({% link docs/current/sql/functions/datepart.md %}) from a date.                                                                                                                                                                              |
 | [`greatest(date, date)`](#greatestdate-date)                                        | The later of two dates.                                                                                                                                                                                                                                     |
 | [`isfinite(date)`](#isfinitedate)                                                   | Returns true if the date is finite, false otherwise.                                                                                                                                                                                                        |
@@ -93,9 +94,9 @@ Dates can also be manipulated with the [timestamp functions]({% link docs/curren
 
 <div class="nostroke_table"></div>
 
-| **Description** | Truncate to specified [precision]({% link docs/current/sql/functions/datepart.md %}). |
+| **Description** | Truncate to specified [precision]({% link docs/current/sql/functions/datepart.md %}). Always returns a `TIMESTAMP`, even when the input is a `DATE`. |
 | **Example** | `date_trunc('month', DATE '1992-03-07')` |
-| **Result** | `1992-03-01` |
+| **Result** | `1992-03-01 00:00:00` |
 | **Alias** | `datetrunc` |
 
 #### `dayname(date)`
@@ -105,6 +106,14 @@ Dates can also be manipulated with the [timestamp functions]({% link docs/curren
 | **Description** | The (English) name of the weekday. |
 | **Example** | `dayname(DATE '1992-09-20')` |
 | **Result** | `Sunday` |
+
+#### `days_in_month(date)`
+
+<div class="nostroke_table"></div>
+
+| **Description** | The number of days in the month of the given date. |
+| **Example** | `days_in_month(DATE '1992-02-15')` |
+| **Result** | `29` |
 
 #### `extract(part from date)`
 

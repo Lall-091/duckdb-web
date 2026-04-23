@@ -108,6 +108,7 @@ Apart from the database associated at startup, the list also includes databases 
 | `internal` | `true` indicates a system or built-in database. `false` indicates a user-defined database. | `BOOLEAN` |
 | `type` | The type indicates the type of RDBMS implemented by the attached database. For DuckDB databases, that value is `duckdb`. | `VARCHAR` |
 | `readonly` | Denotes whether the database is read-only. | `BOOLEAN` |
+| `options` | The options used in the `ATTACH` statement, as a map of option names to their string values. | `MAP(VARCHAR, VARCHAR)` |
 
 ## `duckdb_dependencies`
 
@@ -149,7 +150,7 @@ The `duckdb_functions()` function provides metadata about the functions (includi
 | `database_oid` | Internal identifier of the database containing the index. | `BIGINT` |
 | `schema_name` | The SQL name of the schema where the function resides. | `VARCHAR` |
 | `function_name` | The SQL name of the function. | `VARCHAR` |
-| `function_type` | The function kind. Value is one of: `table`,`scalar`,`aggregate`,`pragma`,`macro`| `VARCHAR` |
+| `function_type` | The function kind. Value is one of: `table`, `scalar`, `aggregate`, `pragma`, `macro`, `table_macro` | `VARCHAR` |
 | `description` | Description of this function (always `NULL`)| `VARCHAR` |
 | `comment` | A comment created by the [`COMMENT ON` statement]({% link docs/current/sql/statements/comment_on.md %}). | `VARCHAR` |
 | `tags` | A map of string key–value pairs. | `MAP(VARCHAR, VARCHAR)` |
@@ -250,6 +251,16 @@ The `duckdb_prepared_statements()` function provides metadata about the [prepare
 | `statement` | The SQL statement. | `VARCHAR` |
 | `parameter_types` | The expected parameter types for the statement's parameters. Currently returns `UNKNOWN` for all parameters. | `VARCHAR[]` |
 | `result_types` | The types of the columns in the table returned by the prepared statement. | `VARCHAR[]` |
+
+## `duckdb_profiling_settings`
+
+The `duckdb_profiling_settings()` macro returns the current profiling-related settings from `duckdb_settings()`.
+
+| Column | Description | Type |
+|:-|:---|:-|
+| `name` | The name of the profiling setting. | `VARCHAR` |
+| `value` | The current value of the setting. | `VARCHAR` |
+| `description` | A description of the setting. | `VARCHAR` |
 
 ## `duckdb_schemas`
 

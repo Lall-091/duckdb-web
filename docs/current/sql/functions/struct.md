@@ -24,6 +24,7 @@ title: Struct Functions
 | [`struct_pack(name := any, ...)`](#struct_packname--any-) | Create a `STRUCT` containing the argument values. The entry name will be the bound variable name. |
 | [`struct_position(struct, entry)`](#struct_positionstruct-entry) | Return the index of the entry within the `STRUCT` (1-based), or `NULL` if not found. |
 | [`struct_update(struct, name := any, ...)`](#struct_updatestruct-name--any-) | Add or update field(s) of an existing `STRUCT`. |
+| [`struct_values(struct)`](#struct_valuesstruct) | Return the values of a `STRUCT` as an unnamed `STRUCT` (tuple). |
 
 #### `struct.entry`
 
@@ -130,3 +131,11 @@ title: Struct Functions
 | **Description** | Add or update field(s) of an existing `STRUCT`. |
 | **Example** | `struct_update({'a': 1, 'b': 2}, b := 3, c := 4)` |
 | **Result** | `{'a': 1, 'b': 3, 'c': 4}` |
+
+#### `struct_values(struct)`
+
+<div class="nostroke_table"></div>
+
+| **Description** | Return the values of a `STRUCT` as an unnamed `STRUCT` (tuple). |
+| **Example** | `struct_values({'a': 1, 'b': 2, 'c': 3})` |
+| **Result** | `(1, 2, 3)` |

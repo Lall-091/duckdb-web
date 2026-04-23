@@ -34,6 +34,7 @@ The `EXPLAIN [ANALYZE]` statement allows exporting to several formats:
 * `graphviz` – produces a DOT output, which can be rendered with [Graphviz](https://graphviz.org/)
 * `html` – produces an HTML output, which can be rendered with [treeflex](https://dumptyd.github.io/treeflex/)
 * `json` – produces a JSON output
+* `mermaid` – produces a [Mermaid](https://mermaid.js.org/) flowchart
 
 To specify a format, use the `FORMAT` tag:
 
