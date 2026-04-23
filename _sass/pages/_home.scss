@@ -594,11 +594,19 @@ body.landing{
 				#svg-layer-mobile{ display: none; }
 				@media (max-width: 768px){
 					top: 0;
-					aspect-ratio: 395 / 593;
-					max-width: 395px;
+					left: 0;
+					transform: none;
+					width: 100%;
+					max-width: none;
+					aspect-ratio: auto;
+					height: 100%;
 					#svg-layer{ display: none; }
 					#snake-canvas{ display: none; }
-					#svg-layer-mobile{ display: block; }
+					#svg-layer-mobile{
+						display: block;
+						width: 100%;
+						height: auto;
+					}
 				}
 			}
 		}
@@ -1038,9 +1046,6 @@ html.darkmode body.landing section.welcome .hero-bg {
 
 @media only screen and (max-width: 660px) {
 	body.landing{
-		section.welcome .hero-content h1{
-			font-size: 38px;
-		}
 		section.whyduckdb .icon-grid{
 			--icon-grid-columns: 2;
 		}
