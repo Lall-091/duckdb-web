@@ -11,7 +11,9 @@ excerpt: ""
 pill: "DuckDB: Up and Running"
 ---
 
-<img src="/images/library/duckdb-up-and-running.jpg" alt="DuckDB: Up and Running – Book Cover" width="300" />
+<div class="graphics-box">
+    <img src="/images/library/duckdb-up-and-running.jpg" alt="DuckDB: Up and Running – Book Cover" width="300" />
+</div>
 
 |-------|-------|
 | **Goodreads** | [DuckDB: Up and Running](https://www.goodreads.com/book/show/222286256-duckdb) |

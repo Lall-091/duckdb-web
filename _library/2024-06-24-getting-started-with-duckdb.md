@@ -11,7 +11,9 @@ excerpt: ""
 pill: "Getting Started with DuckDB"
 ---
 
-<img src="/images/library/getting-started-with-duckdb.jpg" alt="Getting Started with DuckDB – Book Cover" width="300" />
+<div class="graphics-box">
+    <img src="/images/library/getting-started-with-duckdb.jpg" alt="Getting Started with DuckDB – Book Cover" width="300" />
+</div>
 
 |-------|-------|
 | **Goodreads** | [Getting Started with DuckDB](https://www.goodreads.com/book/show/157532594-getting-started-with-duckdb) |

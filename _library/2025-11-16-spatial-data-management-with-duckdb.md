@@ -11,7 +11,9 @@ excerpt: ""
 pill: "Spatial Data Management with DuckDB"
 ---
 
-<img src="/images/library/spatial-data-management-with-duckdb.png" alt="Spatial Data Management with DuckDB – Book Cover" width="300" />
+<div class="graphics-box">
+    <img src="/images/library/spatial-data-management-with-duckdb.png" alt="Spatial Data Management with DuckDB – Book Cover" width="300" />
+</div>
 
 |-------|-------|
 | **Goodreads** | [Spatial Data Management with DuckDB](http://goodreads.com/book/show/244019490-spatial-data-management-with-duckdb) |
