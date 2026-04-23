@@ -4,7 +4,7 @@ title: DuckDB Design Manual
 description: "DuckDB Design Manual: Explore DuckDB’s visual identity, logo usage, color system, and accessibility standards. Download official assets and learn how to maintain a consistent brand across all platforms."
 body_class: design
 max_page_width: small
-toc: false
+toc: true
 redirect_from:
 - /design
 - /branding
@@ -22,103 +22,114 @@ redirect_from:
 
 <section class="logo_packages">
 	<div class="wrap">
-		<h2 class="headline-2">Logo Usage</h2>
-		
-		<div class="usage-example">
-			<img src="/images/designmanual/DuckDB_inline-lightmode.svg" style="width: 220px;">
-		</div>
+		<h2 class="headline-2" id="logo-usage">Logo Usage</h2>
+
 		<p class="example-description">Use for web headers, presentations, and horizontal layouts.</p>
-		
-		<div class="usage-example mt-5">
-			<img src="/images/designmanual/DuckDB_stack-lightmode.svg" style="width: 142px;">
+		<div class="logo-pair">
+			<div class="logo-pair__item">
+				<div class="usage-example">
+					<img src="/images/designmanual/DuckDB_inline-lightmode.svg" style="width: 220px;">
+				</div>
+				<p class="logo-pair__caption">Light mode</p>
+			</div>
+			<div class="logo-pair__item">
+				<div class="usage-example usage-example--dark">
+					<img src="/images/designmanual/DuckDB_inline-darkmode.svg" style="width: 220px;">
+				</div>
+				<p class="logo-pair__caption">Dark mode</p>
+			</div>
 		</div>
-		<p class="example-description">Use in square or portrait spaces – mobile screens, posters, narrow sidebars.</p>
-		
-		<div class="usage-example mt-5">
-			<img src="/images/designmanual/DuckDB_icon-lightmode.svg" style="width: 62px;">
+
+		<p class="example-description mt-5">Use in square or portrait spaces — mobile screens, posters, narrow sidebars.</p>
+		<div class="logo-pair">
+			<div class="logo-pair__item">
+				<div class="usage-example">
+					<img src="/images/designmanual/DuckDB_stack-lightmode.svg" style="width: 142px;">
+				</div>
+				<p class="logo-pair__caption">Light mode</p>
+			</div>
+			<div class="logo-pair__item">
+				<div class="usage-example usage-example--dark">
+					<img src="/images/designmanual/DuckDB_stack-darkmode.svg" style="width: 142px;">
+				</div>
+				<p class="logo-pair__caption">Dark mode</p>
+			</div>
 		</div>
-		<p class="example-description">Use for favicons, app tiles, and profile images below 40px height.</p>
-		
-		<div class="usage-example mt-5 p-0">
-			<img src="/images/designmanual/DuckDB_inline-lightmode_spacing.svg" style="width: 280px;">
+
+		<p class="example-description mt-5">Use for favicons, app tiles, and profile images below 40px height.</p>
+		<div class="logo-pair">
+			<div class="logo-pair__item">
+				<div class="usage-example">
+					<img src="/images/designmanual/DuckDB_icon-lightmode.svg" style="width: 62px;">
+				</div>
+				<p class="logo-pair__caption">Light mode</p>
+			</div>
+			<div class="logo-pair__item">
+				<div class="usage-example usage-example--dark">
+					<img src="/images/designmanual/DuckDB_icon-darkmode.svg" style="width: 62px;">
+				</div>
+				<p class="logo-pair__caption">Dark mode</p>
+			</div>
 		</div>
-		<p class="example-description">Maintain clearspace equal to the height of “D” on all sides. Minimum width: 120px digital, 25mm print.</p>
-		
-		<div class="usage-example mt-5">
-			<img src="/images/designmanual/dont.svg">
+
+		<p class="example-description mt-5">Maintain clearspace equal to the height of “D” on all sides.</p>
+		<div class="usage-example usage-example--clearspace mt-3">
+			<img src="/images/designmanual/DuckDB-clearspace.svg" style="width: 280px;">
 		</div>
-		<p class="example-description">Do not stretch, rotate, recolor outside brand palette, apply effects, or place on low-contrast backgrounds.</p>
+		<p class="logo-pair__caption">Minimum width: 120px digital, 25mm print.</p>
+
+		<h2 class="headline-2 mt-6" id="light--dark-mode">Light & Dark Mode</h2>
+		<p>Use lightmode logos (dark elements on yellow/transparent) on white and light backgrounds. Use darkmode logos (yellow elements on dark circle) on black, charcoal, and dark backgrounds to maintain contrast.</p>
+
+		<h2 class="headline-2 mt-6" id="colors">Colors</h2>
+		<p>DuckDB’s color system creates visual context: yellow for core brand identity, with secondary colors that differentiate product areas. </p>
+		<p>Use primary color for web headers, presentations, and horizontal layouts. Secondary colors establish visual hierarchy, categorize content, and guide navigation while maintaining brand cohesion. Use for feature differentiation, status indicators, data visualization, and interface elements.</p>
 		
-		<h3 class="headline-2 mt-6">Light & Dark Mode</h3>
-		<p>Use lightmode logos (black circle, yellow logo element, black type) on white and light backgrounds. Use darkmode logos (yellow circle, black logo element, white type) on black, charcoal, and dark backgrounds to maintain contrast.</p>
-		
-		<h2 class="headline-2 mt-6">Colors</h2>
-		<p>DuckDB’s color system creates visual context: yellow for core brand identity, with secondary colors that differentiate product areas.</p>
-		
-		<h3 class="headline-3 mt-6">Primary Colors</h3>
 		<div class="color-cards mt-4 mb-4">
-			<div class="color-card color-card--main p-3" style="color: #000; background-color: #fff100;">
-				<strong>DuckDB Yellow</strong><br/>
-				HEX: <span class="color-code">#fff100</span><br/>
-				RGB: 255, 241, 0<br/>
-				CMYK: 6, 0, 87, 0<br/>
-				Pantone: Process Yellow C
+			<div class="color-card" style="color: #000; background-color: #fff100; border-color: #eddd0c;">
+				<span class="color-card__category">Primary</span>
+				<strong class="color-card__name">Lemon Yellow</strong>
+				<dl class="color-card__info">
+					<dt>HEX:</dt><dd><span class="color-code">#FFF100</span></dd>
+					<dt>RGB:</dt><dd>255, 241, 0</dd>
+					<dt>CMYK:</dt><dd>6, 0, 87, 0</dd>
+					<dt>Pantone:</dt><dd>102 C</dd>
+				</dl>
+			</div>
+			<div class="color-card" style="background-color: #ff6900; color: #fff; border-color: #cc5400;">
+				<span class="color-card__category">Secondary</span>
+				<strong class="color-card__name">Hot Orange</strong>
+				<dl class="color-card__info">
+					<dt>HEX:</dt><dd><span class="color-code">#FF6900</span></dd>
+					<dt>RGB:</dt><dd>255, 105, 0</dd>
+					<dt>CMYK:</dt><dd>0, 69, 94, 0</dd>
+					<dt>Pantone:</dt><dd>021 C</dd>
+				</dl>
+			</div>
+			<div class="color-card" style="background-color: #7d66ff; color: #fff; border-color: #6a58da;">
+				<span class="color-card__category">Secondary</span>
+				<strong class="color-card__name">Medium Slate Blue</strong>
+				<dl class="color-card__info">
+					<dt>HEX:</dt><dd><span class="color-code">#7D66FF</span></dd>
+					<dt>RGB:</dt><dd>125, 102, 255</dd>
+					<dt>CMYK:</dt><dd>70, 66, 0, 0</dd>
+					<dt>Pantone:</dt><dd>2665 C</dd>
+				</dl>
+			</div>
+			<div class="color-card" style="background-color: #2eafff; color: #fff; border-color: #478db8;">
+				<span class="color-card__category">Secondary</span>
+				<strong class="color-card__name">Maya Blue</strong>
+				<dl class="color-card__info">
+					<dt>HEX:</dt><dd><span class="color-code">#2EAFFF</span></dd>
+					<dt>RGB:</dt><dd>46, 175, 255</dd>
+					<dt>CMYK:</dt><dd>82, 10, 0, 0</dd>
+					<dt>Pantone:</dt><dd>299 C</dd>
+				</dl>
 			</div>
 		</div>
-		
-		<p>Use for logos, primary CTAs, and key brand applications.</p>
-		
-		<h3 class="headline-3 mt-6">Secondary Colors</h3>
-		<div class="color-cards mt-4 mb-4">
-			<div class="color-card p-3" style="background-color: #7d66ff; color: #fff;">
-				<strong>Purple</strong><br/>
-				HEX: <span class="color-code">#7d66ff</span><br/>
-				RGB: 125, 102, 255
-			</div>
-			<div class="color-card p-3" style="background-color: #ff6900; color: #fff;">
-				<strong>Orange</strong><br/>
-				HEX: <span class="color-code">#ff6900</span><br/>
-				RGB: 255, 105, 0
-			</div>
-			<div class="color-card p-3" style="background-color: #2eafff; color: #fff;">
-				<strong>Blue</strong><br/>
-				HEX: <span class="color-code">#2eafff</span><br/>
-				RGB: 46, 175, 255
-			</div>
-			<div class="color-card p-3" style="background-color: #00c770; color: #fff;">
-				<strong>Green</strong><br/>
-				HEX: <span class="color-code">#00c770</span><br/>
-				RGB: 0, 199, 112
-			</div>
-		</div>
-		
-		<p>Secondary colors establish visual hierarchy, categorize content, and guide navigation while maintaining brand cohesion. Use for feature differentiation, status indicators, data visualization, and interface elements.</p>
-		
-		<h3 class="headline-3 mt-6">Accessibility</h3>
-		
-		<p>All text must meet <a href="https://www.w3.org/WAI/WCAG2AA-Conformance">WCAG AA standards</a>: 4.5:1 for normal text, 3:1 for large text (≥18pt or ≥14pt bold).</p>
-		
-		<h4 class="mt-5">Approved Combinations</h4>
-		<p>White text on all secondary color backgrounds meets AA standards. Do not use colored text on white backgrounds for body copy.</p>
-		
-		<h2 class="headline-2 mt-6">Visual Style</h2>
-		<p>DuckDB’s visual identity balances technical precision with clear design. Drawing from railroad diagram aesthetics used in SQL documentation, the system uses structured graphics – curved connectors, rounded containers, junction points – to reflect systematic data operations.</p>
-		
-		<div class="usage-example mt-5 p-0" style="background: transparent">
-			<img src="/images/designmanual/duckdb-visual-style.svg">
-		</div>
-		
-		<h3 class="headline-3 mt-6">Graphic Language</h3>
-		<p>DuckDB’s visual system draws from railroad diagrams – structured syntax diagrams used in technical documentation. Use curved connectors, branching paths, and junction points as graphic elements to reinforce systematic database operations.</p>
-		
-		<h3 class="headline-3 mt-6">Iconography</h3>
-		<p>Use simple, geometric icons with railroad diagram influences – rounded rectangles, directional arrows, junction points. Maintain consistent stroke weights (2–3px) and rounded terminals. Icons represent database concepts, file types, and workflow states.</p>
-		
-		<h2 class="headline-2 mt-6">Text & Code Display</h2>
-		<p>Present code in dark terminal-style blocks (<span class="color-code">#1e1e1e</span> or <span class="color-code">#000000</span>) with syntax highlighting: yellow for keywords, blue for functions, orange for strings, purple for variables. Maintain generous padding and ensure 4.5:1 contrast for all text.</p>
-		
-		<h3 class="headline-3 mt-6" id="color-palette">Color Palette</h3>
-		
+
+		<h3 class="headline-3 mt-6" id="color-palette">Syntax Highlighting for CLI & Docs</h3>
+
 		<table class="syntax-highlight-table mt-4">
 			<thead>
 				<tr>
@@ -152,9 +163,9 @@ redirect_from:
 				</tr>
 				<tr>
 					<td>Keyword</td>
-					<td><span class="color-dot" style="background-color: #005fff;"></span></td>
-					<td>#005fff</td>
-					<td>DodgerBlue2</td>
+					<td><span class="color-dot" style="background-color: #5fafff;"></span></td>
+					<td>#5fafff</td>
+					<td>SteelBlue1</td>
 					<td><span class="color-dot" style="background-color: #5fafff;"></span></td>
 					<td>#5fafff</td>
 					<td>SteelBlue1</td>
@@ -199,6 +210,54 @@ redirect_from:
 		</table>
 
 		<p>We provide the <a href="https://en.wikipedia.org/wiki/X11_color_names">X11 color names</a> used in our <a href="({% link docs/current/clients/cli/overview.md %})">command line client</a>.</p>
+
+		<h2 class="headline-2 mt-6" id="accessibility">Accessibility</h2>
+		<p>All text must meet <a href="https://www.w3.org/WAI/WCAG2AA-Conformance">WCAG AA standards</a>: 4.5:1 for normal text, 3:1 for large text (≥18pt or ≥14pt bold).</p>
+
+		<p class="title-1 mt-5">Approved Combinations:</p>
+		<p>White text on all secondary color backgrounds meets AA standards. Do not use colored text on white backgrounds for body copy.</p>
+
+		<h2 class="headline-2 mt-6" id="visual-style">Visual Style</h2>
+		<p>DuckDB’s visual identity balances technical precision with clear design. Drawing from railroad diagram aesthetics used in SQL documentation, the system uses structured graphics — curved connectors, rounded containers, junction points — to reflect systematic data operations.</p>
+
+		<img class="visual-style-image mt-5" src="/images/designmanual/duckdb-visual-style.svg" alt="">
+
+
+		<h3 class="headline-3 mt-6" id="graphic-language">Graphic Language</h3>
+		<p>DuckDB’s visual system draws from railroad diagrams — structured syntax diagrams used in technical documentation. Use curved connectors, branching paths, and junction points as graphic elements to reinforce systematic database operations.</p>
+
+		<h3 class="headline-3 mt-6" id="iconography">Iconography</h3>
+		<p>Use simple, geometric icons with railroad diagram influences — rounded rectangles, directional arrows, junction points. Maintain consistent stroke weights (2–3px) and rounded terminals. Icons represent database concepts, file types, and workflow states.</p>
+
+		<h3 class="headline-3 mt-6" id="text--code-display">Text & Code Display</h3>
+		<p>Present code in dark terminal-style blocks (<span class="color-code">#1e1e1e</span> or <span class="color-code">#000000</span>) with syntax highlighting: yellow for keywords, blue for functions, orange for strings, purple for variables. Maintain generous padding and ensure 4.5:1 contrast for all text.</p>
+
+		<h2 class="headline-2 mt-6" id="logo-donts">Logo Don’ts</h2>
+		<p>Do not stretch, rotate, recolor outside brand palette, apply effects, or place on low-contrast backgrounds.</p>
+
+		<div class="logo-donts mt-4">
+			<div class="logo-donts__item">
+				<div class="usage-example logo-donts__tile">
+					<img src="/images/designmanual/dont-recolor.svg" style="width: 165px;">
+					<svg class="icon logo-donts__mark" aria-hidden="true"><use href="#x-circle"></use></svg>
+				</div>
+				<p class="logo-pair__caption">No recoloring</p>
+			</div>
+			<div class="logo-donts__item">
+				<div class="usage-example logo-donts__tile">
+					<img src="/images/designmanual/dont-rotate.svg" style="width: 165px;">
+					<svg class="icon logo-donts__mark" aria-hidden="true"><use href="#x-circle"></use></svg>
+				</div>
+				<p class="logo-pair__caption">No rotating</p>
+			</div>
+			<div class="logo-donts__item">
+				<div class="usage-example logo-donts__tile">
+					<img src="/images/designmanual/dont-stretch.svg" style="width: 91px;">
+					<svg class="icon logo-donts__mark" aria-hidden="true"><use href="#x-circle"></use></svg>
+				</div>
+				<p class="logo-pair__caption">No stretching</p>
+			</div>
+		</div>
 
 	</div>
 </section>

@@ -4,7 +4,6 @@ import re
 import json
 from textwrap import shorten
 
-
 skipped_files = [
     'docs/current',
     'docs/1.3',
