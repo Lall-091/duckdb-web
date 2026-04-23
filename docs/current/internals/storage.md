@@ -42,6 +42,10 @@ After this, `mydata.old.db` will remain in the old format, `mydata.new.db` will 
 
 Check [`EXPORT` documentation]({% link docs/current/sql/statements/export.md %}) for more details on the syntax.
 
+### Default Storage Version
+
+By default, DuckDB versions v1.0 to v1.5 create a DuckDB database file with [version 64](#storage-version-table), corresponding to v1.0.0. To use newer storage, set an [explicit storage version](#explicit-storage-versions).
+
 ### Explicit Storage Versions
 
 [DuckDB v1.2.0 introduced the `STORAGE_VERSION` option]({% post_url 2025-02-05-announcing-duckdb-120 %}#explicit-storage-versions), which allows explicitly specifying the storage version.
