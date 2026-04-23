@@ -11,7 +11,9 @@ excerpt: ""
 pill: "DuckDB in Action"
 ---
 
-<img src="/images/library/duckdb-in-action.jpg" alt="DuckDB in Action – Book Cover" width="300" />
+<div class="graphics-box">
+    <img src="/images/library/duckdb-in-action.jpg" alt="DuckDB in Action – Book Cover" width="300" />
+</div>
 
 |-------|-------|
 | **Goodreads** | [DuckDB in Action](https://www.goodreads.com/book/show/210225037-duckdb-in-action) |
