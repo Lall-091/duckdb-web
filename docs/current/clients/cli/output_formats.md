@@ -106,6 +106,43 @@ col_1|col_2
 10|20
 ```
 
+## Paging
+
+The CLI supports paging for large result sets using the `.pager` command. When enabled, results that exceed the terminal size are displayed in a pager (such as `less`) for easier navigation.
+
+The pager has three modes:
+
+* `automatic` (default) – The pager is triggered when the result exceeds the row or column threshold.
+* `on` – The pager is always used for output.
+* `off` – The pager is disabled.
+
+```sql
+.pager on
+```
+
+```sql
+.pager off
+```
+
+```sql
+.pager automatic
+```
+
+In automatic mode, the thresholds for triggering the pager can be configured:
+
+```sql
+.pager set_row_threshold 50
+.pager set_column_threshold 5
+```
+
+A custom pager command can be set by passing it as an argument:
+
+```sql
+.pager less -RS
+```
+
+The default pager command can also be configured via the `DUCKDB_PAGER` or `PAGER` environment variables.
+
 ## `duckbox` Mode
 
 By default, DuckDB renders query results in `duckbox` mode, which is a feature-rich ASCII-art style output format.

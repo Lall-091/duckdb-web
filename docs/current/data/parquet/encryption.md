@@ -44,27 +44,29 @@ SELECT *
 FROM read_parquet('tbl.parquet', encryption_config = {footer_key: 'key256'});
 ```
 
+## Interoperability
+
+DuckDB can read uniformly encrypted Parquet files written by the Arrow C++ API (e.g., via PyArrow), as long as the same encryption key is used for both the footer and all columns.
+
 ## Limitations
 
 DuckDB's Parquet encryption currently has the following limitations.
 
-1. It is not compatible with the encryption of, e.g., PyArrow, until the missing details are implemented.
+DuckDB encrypts the footer and all columns using the `footer_key`. The Parquet specification allows encryption of individual columns with different keys, e.g.:
 
-2. DuckDB encrypts the footer and all columns using the `footer_key`. The Parquet specification allows encryption of individual columns with different keys, e.g.:
+```sql
+COPY tbl TO 'tbl.parquet'
+    (ENCRYPTION_CONFIG {
+        footer_key: 'key256',
+        column_keys: {key256: ['col0', 'col1']}
+    });
+```
 
-   ```sql
-   COPY tbl TO 'tbl.parquet'
-       (ENCRYPTION_CONFIG {
-           footer_key: 'key256',
-           column_keys: {key256: ['col0', 'col1']}
-       });
-   ```
+However, this is unsupported at the moment and will cause an error to be thrown (for now):
 
-   However, this is unsupported at the moment and will cause an error to be thrown (for now):
-
-   ```console
-   Not implemented Error: Parquet encryption_config column_keys not yet implemented
-   ```
+```console
+Not implemented Error: Parquet encryption_config column_keys not yet implemented
+```
 
 ## Performance Implications
 

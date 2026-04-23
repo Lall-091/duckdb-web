@@ -87,7 +87,7 @@ The CLI supports all of DuckDB's rich [SQL syntax]({% link docs/current/sql/intr
 
 ### Editor Features
 
-The CLI supports [autocompletion]({% link docs/current/clients/cli/autocomplete.md %}), and has sophisticated [editor features]({% link docs/current/clients/cli/editing.md %}) and [syntax highlighting]({% link docs/current/clients/cli/syntax_highlighting.md %}) on certain platforms.
+The CLI supports [autocompletion]({% link docs/current/clients/cli/autocomplete.md %}), and has sophisticated [editor features]({% link docs/current/clients/cli/editing.md %}) and [syntax highlighting]({% link docs/current/clients/cli/syntax_highlighting.md %}) on macOS, Linux and Windows.
 
 ### Exiting the CLI
 
@@ -127,6 +127,12 @@ One important option accepted by `.open` is the `--readonly` flag. This disallow
 
 ```text
 .open --readonly preexisting.duckdb
+```
+
+The `--sql` option allows setting the database path using a SQL expression:
+
+```text
+.open --sql "getenv('MY_DB_PATH')"
 ```
 
 #### Output Formats

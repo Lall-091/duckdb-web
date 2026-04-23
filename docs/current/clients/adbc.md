@@ -32,6 +32,15 @@ Set of functions that operate on a database.
 | `DatabaseInit` | Finish setting options and initialize the database. | `(AdbcDatabase *database, AdbcError *error)` | `AdbcDatabaseInit(&adbc_database, &adbc_error)` |
 | `DatabaseRelease` | Destroy the database. | `(AdbcDatabase *database, AdbcError *error)` | `AdbcDatabaseRelease(&adbc_database, &adbc_error)` |
 
+#### Database Options
+
+| Option | Description |
+|:-------|:------------|
+| `driver` | Path to the DuckDB shared library (`libduckdb.so`, `libduckdb.dylib`, or `duckdb.dll`). |
+| `entrypoint` | Entry point function name. Must be `duckdb_adbc_init`. |
+| `path` | Path to a DuckDB database file. If not set, an in-memory database is created. |
+| `uri` | Alternative to `path`. Accepts plain paths or `file:` URIs (e.g., `file:test.db`, `file:///absolute/path.db`). Takes precedence over `path` if both are set. |
+
 ### Connection
 
 A set of functions that create and destroy a connection to interact with a database.
@@ -47,9 +56,23 @@ A set of functions that retrieve metadata about the database. In general, these 
 
 | Function name | Description | Arguments | Example |
 |:---|:-|:---|:----|
+| `ConnectionGetInfo` | Get metadata about the driver and database. | `(AdbcConnection*, const uint32_t*, size_t, ArrowArrayStream*, AdbcError*)` | `AdbcConnectionGetInfo(&adbc_connection, NULL, 0, &arrow_stream, &adbc_error)` |
 | `ConnectionGetObjects` | Get a hierarchical view of all catalogs, database schemas, tables and columns. | `(AdbcConnection*, int, const char*, const char*, const char*, const char**, const char*, ArrowArrayStream*, AdbcError*)` | `AdbcDatabaseInit(&adbc_database, &adbc_error)` |
 | `ConnectionGetTableSchema` | Get the Arrow schema of a table. | `(AdbcConnection*, const char*, const char*, const char*, ArrowSchema*, AdbcError*)` | `AdbcDatabaseRelease(&adbc_database, &adbc_error)` |
 | `ConnectionGetTableTypes` | Get a list of table types in the database. | `(AdbcConnection*, ArrowArrayStream*, AdbcError*)` | `AdbcDatabaseNew(&adbc_database, &adbc_error)` |
+
+The `ConnectionGetInfo` function supports the following info codes:
+
+<div class="monospace_table"></div>
+
+| Info code | Constant | Description |
+|----------:|:---------|:------------|
+| 0 | `ADBC_INFO_VENDOR_NAME` | Database vendor name (`duckdb`). |
+| 1 | `ADBC_INFO_VENDOR_VERSION` | Database version. |
+| 100 | `ADBC_INFO_DRIVER_NAME` | Driver name. |
+| 101 | `ADBC_INFO_DRIVER_VERSION` | Driver version. |
+| 102 | `ADBC_INFO_DRIVER_ARROW_VERSION` | Arrow library version. |
+| 103 | `ADBC_INFO_DRIVER_ADBC_VERSION` | ADBC specification version supported by the driver (as an integer, e.g., `1001000` for 1.1.0). |
 
 A set of functions with transaction semantics for the connection. By default, all connections start with auto-commit mode on, but this can be turned off via the ConnectionSetOption function.
 
@@ -84,6 +107,28 @@ Functions related to binding, used for bulk insertion or in prepared statements.
 | Function name | Description | Arguments | Example |
 |:---|:-|:---|:----|
 | `StatementBindStream` |  Bind Arrow Stream. This can be used for bulk inserts or prepared statements. | `(AdbcStatement*, ArrowArrayStream*, AdbcError*)` | `StatementBindStream(&adbc_statement, &input_data, &adbc_error)` |
+
+#### Ingestion Modes
+
+When ingesting data via `StatementBindStream`, the ingestion mode can be set using `ADBC_INGEST_OPTION_MODE`:
+
+| Mode | Constant | Description |
+|:-----|:---------|:------------|
+| Create | `ADBC_INGEST_OPTION_MODE_CREATE` | Create a new table (error if the table already exists). This is the default. |
+| Append | `ADBC_INGEST_OPTION_MODE_APPEND` | Append to an existing table (error if the table does not exist). |
+| Replace | `ADBC_INGEST_OPTION_MODE_REPLACE` | Drop the existing table and create a new one. |
+| Create or Append | `ADBC_INGEST_OPTION_MODE_CREATE_APPEND` | Create a new table if it does not exist, otherwise append to it. |
+
+`StatementExecuteQuery` returns the number of rows affected through its `rows_affected` output parameter.
+
+#### Ingestion Options
+
+| Option | Description |
+|:-------|:------------|
+| `adbc.ingest.target_table` | The target table name for ingestion. |
+| `adbc.ingest.target_catalog` | The target catalog (attached database) for ingestion. When set without `adbc.ingest.target_db_schema`, the schema defaults to `main`. |
+| `adbc.ingest.target_db_schema` | The target schema for ingestion. |
+| `adbc.ingest.temporary` | Set to `enabled` to create a temporary table. Incompatible with `target_catalog` and `target_db_schema`. |
 
 ## Setting Up the DuckDB ADBC Driver
 

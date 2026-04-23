@@ -76,6 +76,8 @@ EXPLAIN
 
 Note that the query is not actually executed – therefore, we can only see the estimated cardinality (`EC`) for each operator, which is calculated by using the statistics of the base tables and applying heuristics for each operator.
 
+Table scan operators display the fully qualified table name including catalog and schema (e.g., `memory.myschema.mytable`).
+
 ## Additional Explain Settings
 
 The `EXPLAIN` statement supports additional settings that can be used to control the output. The following settings are available:

@@ -25,14 +25,16 @@ Dot commands are available in the DuckDB CLI client. To use one of these command
 | `.constant ⟨COLOR⟩`{:.language-sql .highlight}                        | Sets the syntax highlighting color used for constant values                                                                                                                |
 | `.constantcode ⟨CODE⟩`{:.language-sql .highlight}                     | Sets the syntax highlighting terminal code used for constant values                                                                                                        |
 | `.databases`{:.language-sql .highlight}                               | List names and files of attached databases                                                                                                                                 |
+| `.dump ⟨TABLE⟩`{:.language-sql .highlight}                            | Render database content as SQL. `TABLE` is a [`LIKE` pattern]({% link docs/current/sql/functions/pattern_matching.md %}) for the tables to dump                            |
 | `.echo ⟨on/off⟩`{:.language-sql .highlight}                           | Turn command echo `on` or `off`                                                                                                                                            |
 | `.exit ⟨CODE⟩`{:.language-sql .highlight}                             | Exit this program with return-code `CODE`                                                                                                                                  |
 | `.headers ⟨on/off⟩`{:.language-sql .highlight}                        | Turn display of headers `on` or `off`. Does not apply to duckbox mode                                                                                                      |
-| `.help ⟨-all⟩ ⟨PATTERN⟩`{:.language-sql .highlight}                   | Show help text for `PATTERN`                                                                                                                                               |
+| `.help ⟨-all⟩ ⟨PATTERN⟩`{:.language-sql .highlight}                   | Show help text for `PATTERN`. Use `.help shortcuts` to display keyboard shortcuts                                                                                          |
 | `.highlight ⟨on/off⟩`{:.language-sql .highlight}                      | Toggle syntax highlighting in the shell `on` / `off`. See the [query syntax highlighting section](#configuring-the-query-syntax-highlighter) for more details              |
 | `.highlight_colors ⟨COMPONENT⟩ ⟨COLOR⟩`{:.language-sql .highlight}    | Configure the color of each component in (duckbox only). See the [result syntax highlighting section](#configuring-the-query-syntax-highlighter) for more details          |
+| `.highlight_mode ⟨mixed/dark/light⟩`{:.language-sql .highlight}       | Toggle the highlight mode. See the [dark/light mode section]({% link docs/current/clients/cli/friendly_cli.md %}#darklight-mode) for details                               |
 | `.highlight_results ⟨on/off⟩`{:.language-sql .highlight}              | Toggle highlighting in result tables `on` / `off` (duckbox only). See the [result syntax highlighting section](#configuring-the-query-syntax-highlighter) for more details |
-| `.import ⟨FILE⟩ ⟨TABLE⟩`{:.language-sql .highlight}                   | Import data from `FILE` into `TABLE`                                                                                                                                       |
+| `.import ⟨FILE⟩ ⟨TABLE⟩`{:.language-sql .highlight}                   | Import data from `FILE` into `TABLE`. Supports `--csv`, `--json`, `--parquet` options                                                                                     |
 | `.indexes ⟨TABLE⟩`{:.language-sql .highlight}                         | Show names of indexes                                                                                                                                                      |
 | `.keyword ⟨COLOR⟩`{:.language-sql .highlight}                         | Sets the syntax highlighting color used for keywords                                                                                                                       |
 | `.keywordcode ⟨CODE⟩`{:.language-sql .highlight}                      | Sets the syntax highlighting terminal code used for keywords                                                                                                               |
@@ -45,8 +47,9 @@ Dot commands are available in the DuckDB CLI client. To use one of these command
 | `.multiline`{:.language-sql .highlight}                               | Set multi-line mode (default)                                                                                                                                              |
 | `.nullvalue ⟨STRING⟩`{:.language-sql .highlight}                      | Use `STRING` in place of `NULL` values. Default: `NULL`                                                                                                                    |
 | `.once ⟨OPTIONS⟩ ⟨FILE⟩`{:.language-sql .highlight}                   | Output for the next SQL command only to `FILE`                                                                                                                             |
-| `.open ⟨OPTIONS⟩ ⟨FILE⟩`{:.language-sql .highlight}                   | Close existing database and reopen `FILE`                                                                                                                                  |
+| `.open ⟨OPTIONS⟩ ⟨FILE⟩`{:.language-sql .highlight}                   | Close existing database and reopen `FILE`. Options: `--new`, `--nofollow`, `--readonly`, `--sql`                                                                           |
 | `.output ⟨FILE⟩`{:.language-sql .highlight}                           | Send output to `FILE` or `stdout` if `FILE` is omitted                                                                                                                     |
+| `.pager ⟨OPTIONS⟩`{:.language-sql .highlight}                         | Control pager usage for output. See the [paging section]({% link docs/current/clients/cli/output_formats.md %}#paging) for details                                         |
 | `.print ⟨STRING...⟩`{:.language-sql .highlight}                       | Print literal `STRING`                                                                                                                                                     |
 | `.progress_bar ⟨COMPONENT⟩ `{:.language-sql .highlight}               | Set the progress bar component styles                                                                                                                                      |
 | `.prompt ⟨OPTIONS⟩ ⟨CONTINUE⟩`{:.language-sql .highlight}             | Replace the standard prompts                                                                                                                                               |
@@ -59,8 +62,9 @@ Dot commands are available in the DuckDB CLI client. To use one of these command
 | `.shell ⟨CMD⟩ ⟨ARGS...⟩`{:.language-sql .highlight}                   | Run `CMD` with `ARGS...` in a system shell                                                                                                                                 |
 | `.show`{:.language-sql .highlight}                                    | Show the current values for various settings                                                                                                                               |
 | `.singleline`{:.language-sql .highlight}                              | Set single-line mode                                                                                                                                                       |
+| `.startup_text ⟨none/version/all⟩`{:.language-sql .highlight}         | Controls the start-up text displayed when launching the CLI. Set this as the first line in `~/.duckdbrc`                                                                   |
 | `.system ⟨CMD⟩ ⟨ARGS...⟩`{:.language-sql .highlight}                  | Run `CMD` with `ARGS...` in a system shell                                                                                                                                 |
-| `.tables ⟨TABLE⟩`{:.language-sql .highlight}                          | List names of tables [matching `LIKE` pattern]({% link docs/current/sql/functions/pattern_matching.md %}) `TABLE`                                                          |
+| `.tables ⟨TABLE⟩`{:.language-sql .highlight}                          | List tables [matching `LIKE` pattern]({% link docs/current/sql/functions/pattern_matching.md %}) `TABLE` with column names, types and row counts, grouped by database and schema |
 | `.timer ⟨on/off⟩`{:.language-sql .highlight}                          | Turn SQL timer `on` or `off`. SQL statements separated by `;` but _not_ separated via newline are measured together                                                        |
 | `.width ⟨NUM1⟩ ⟨NUM2⟩ ...`{:.language-sql .highlight}                 | Set minimum column widths for columnar output                                                                                                                              |
 
@@ -177,6 +181,26 @@ The `.schema` command will show all of the SQL statements used to define the sch
 CREATE TABLE fliers (animal VARCHAR);
 CREATE TABLE swimmers (animal VARCHAR);
 CREATE TABLE walkers (animal VARCHAR);
+```
+
+## Dumping Database Content as SQL
+
+The `.dump` command renders the database content as SQL statements, including both schema definitions and data. This is useful for creating backups or migrating data.
+
+```sql
+.dump
+```
+
+An optional `TABLE` argument filters the output using a [`LIKE` pattern]({% link docs/current/sql/functions/pattern_matching.md %}#like). Multiple patterns can be provided as additional arguments.
+
+```sql
+.dump %swim%
+```
+
+The `--newlines` option allows unescaped newline characters in the output:
+
+```sql
+.dump --newlines
 ```
 
 ## Progress Bar
@@ -332,32 +356,30 @@ Is equivalent to:
 
 > Tip Avoid using shorthands in SQL scripts to improve readability and ensure that the scripts are future-proof.
 
-## Importing Data from CSV
+## Importing Data
 
-> Deprecated This feature is only included for compatibility reasons and may be removed in the future.
-> Use the [`read_csv` function or the `COPY` statement]({% link docs/current/data/csv/overview.md %}) to load CSV files.
+The `.import` command imports data from a file into a DuckDB table. It uses DuckDB's reader functions (`read_csv`, `read_json`, `read_parquet`) and supports automatic schema detection. If the target table does not exist, it is automatically created.
 
-DuckDB supports [SQL syntax to directly query or import CSV files]({% link docs/current/data/csv/overview.md %}), but the CLI-specific commands may be used to import a CSV instead if desired. The `.import` command takes two arguments and also supports several options. The first argument is the path to the CSV file, and the second is the name of the DuckDB table to create. Since DuckDB requires stricter typing than SQLite (upon which the DuckDB CLI is based), the destination table must be created before using the `.import` command. To automatically detect the schema and create a table from a CSV, see the [`read_csv` examples in the import docs]({% link docs/current/data/csv/overview.md %}).
-
-In this example, a CSV file is generated by changing to CSV mode and setting an output file location:
+The file format can be specified explicitly using `--csv`, `--json`, or `--parquet`. If no format is specified, the format is inferred from the file extension.
 
 ```sql
-.mode csv
-.output import_example.csv
-SELECT 1 AS col_1, 2 AS col_2 UNION ALL SELECT 10 AS col1, 20 AS col_2;
+.import data.csv my_table
 ```
 
-Now that the CSV has been written, a table can be created with the desired schema and the CSV can be imported. The output is reset to the terminal to avoid continuing to edit the output file specified above. The `--skip N` option is used to ignore the first row of data since it is a header row and the table has already been created with the correct column names.
+Additional parameters can be passed to the underlying reader function using `--⟨parameter⟩ ⟨value⟩{:.language-sql .highlight} syntax:
 
 ```sql
-.mode csv
-.output
-CREATE TABLE test_table (col_1 INTEGER, col_2 INTEGER);
-.import import_example.csv test_table --skip 1
+.import data.csv my_table --delimiter "|" --header false
 ```
 
-Note that the `.import` command utilizes the current `.mode` and `.separator` settings when identifying the structure of the data to import. The `--csv` option can be used to override that behavior.
+To import a JSON file:
 
 ```sql
-.import import_example.csv test_table --skip 1 --csv
+.import data.json my_table --json
+```
+
+To import a Parquet file:
+
+```sql
+.import data.parquet my_table
 ```

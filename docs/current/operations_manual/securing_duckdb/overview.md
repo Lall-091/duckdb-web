@@ -176,6 +176,15 @@ SET lock_configuration = true;
 
 This prevents any configuration settings from being modified from that point onwards.
 
+To allow specific settings to remain configurable even when `lock_configuration` is enabled, use the `allowed_configs` option:
+
+```sql
+SET allowed_configs = ['memory_limit', 'threads'];
+SET lock_configuration = true;
+```
+
+With this configuration, `memory_limit` and `threads` can still be changed, while all other settings are locked.
+
 ## Secrets
 
 [Secrets]({% link docs/current/configuration/secrets_manager.md %}) are used to manage credentials to log into third party services like AWS or Azure. DuckDB can show a list of secrets using the `duckdb_secrets()` table function. This will redact any sensitive information such as security keys by default. The `allow_unredacted_secrets` option can be set to show all information contained within a security key. It is recommended not to turn on this option if you are running untrusted SQL input.

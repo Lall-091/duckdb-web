@@ -152,6 +152,12 @@ To change the default location where DuckDB stores its extensions, use the `exte
 SET extension_directory = '/path/to/your/extension/directory';
 ```
 
+To specify multiple directories for loading extensions (e.g., for package managers or air-gapped environments), use the `extension_directories` option:
+
+```sql
+SET extension_directories = ['/usr/lib/duckdb/extensions', '/opt/duckdb/extensions'];
+```
+
 Note that setting the value of the `home_directory` configuration option has no effect on the location of the extensions.
 
 ## Uninstalling Extensions

@@ -6,8 +6,26 @@ redirect_from:
 title: Friendly CLI
 ---
 
-Along with our [Friendly SQL]({% link docs/current/sql/dialect/friendly_sql.md %}), we provice 
+Along with our [Friendly SQL]({% link docs/current/sql/dialect/friendly_sql.md %}), we provide
 **friendly CLI** features.
+
+## Dark/Light Mode
+
+The CLI automatically detects whether the terminal is using a dark or light background and adjusts syntax highlighting colors accordingly. The mode can also be set manually using the `.highlight_mode` command:
+
+```sql
+.highlight_mode dark
+```
+
+```sql
+.highlight_mode light
+```
+
+To use a mix of colors suitable for both dark and light backgrounds:
+
+```sql
+.highlight_mode mixed
+```
 
 ## 8-Bit Colors
 

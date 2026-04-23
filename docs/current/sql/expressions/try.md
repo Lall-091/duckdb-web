@@ -92,7 +92,7 @@ SELECT TRY(a::INTEGER) AS x FROM cte;
 
 ## Limitations
 
-`TRY` cannot be used in combination with a volatile function or with a [scalar subquery]({% link docs/current/sql/expressions/subqueries.md %}#scalar-subquery).
+`TRY` cannot be used in combination with a volatile function, an aggregate function, or a [scalar subquery]({% link docs/current/sql/expressions/subqueries.md %}#scalar-subquery).
 For example:
 
 ```sql

@@ -19,7 +19,7 @@ This section describes functions and operators for examining and manipulating [`
 |:--|:-------|
 | [`arg1 || arg2`](#arg1--arg2) | Concatenates two strings, lists, or blobs. Any `NULL` input results in `NULL`. See also [`concat(arg1, arg2, ...)`]({% link docs/current/sql/functions/text.md %}#concatvalue-) and [`list_concat(list1, list2, ...)`]({% link docs/current/sql/functions/list.md %}#list_concatlist_1--list_n). |
 | [`base64(blob)`](#to_base64blob) | Alias for `to_base64`. |
-| [`decode(blob)`](#decodeblob) | Converts `blob` to `VARCHAR`. Fails if `blob` is not valid UTF-8. |
+| [`decode(blob[, on_error])`](#decodeblob-on_error) | Converts `blob` to `VARCHAR`. The optional `on_error` parameter controls handling of invalid UTF-8: `'strict'` (default, throws error), `'replace'` (replaces invalid characters with `?`), or `'ignore'` (removes invalid characters). |
 | [`encode(string)`](#encodestring) | Converts the `string` to `BLOB`. Converts UTF-8 characters into literal encoding. |
 | [`from_base64(string)`](#from_base64string) | Converts a base64 encoded `string` to a character string (`BLOB`). |
 | [`from_binary(value)`](#unbinvalue) | Alias for `unbin`. |
@@ -51,13 +51,15 @@ This section describes functions and operators for examining and manipulating [`
 | **Example 3** | `'\xAA'::BLOB || '\xBB'::BLOB` |
 | **Result** | `\xAA\xBB` |
 
-#### `decode(blob)`
+#### `decode(blob[, on_error])`
 
 <div class="nostroke_table"></div>
 
-| **Description** | Converts `blob` to `VARCHAR`. Fails if `blob` is not valid UTF-8. |
+| **Description** | Converts `blob` to `VARCHAR`. The optional `on_error` parameter controls handling of invalid UTF-8: `'strict'` (default, throws error), `'replace'` (replaces invalid characters with `?`), or `'ignore'` (removes invalid characters). |
 | **Example** | `decode('\xC3\xBC'::BLOB)` |
 | **Result** | `ü` |
+| **Example** | `decode('\xAA'::BLOB, 'replace')` |
+| **Result** | `?` |
 
 #### `encode(string)`
 
