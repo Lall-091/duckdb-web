@@ -757,9 +757,13 @@
 		padding: 55px 15px;
 	}
 	body.landing section.welcome{
-		padding: 90px 15px 55px 15px;
+		padding: 120px 15px 55px 15px;
 	}
-
+	
+	body.landing section.welcome .hero-protocol-boxes{
+		margin-top: 140px;
+	}
+	
 	body.landing .boxlayout .box:last-child {
 		margin-bottom: 0;
 	}
