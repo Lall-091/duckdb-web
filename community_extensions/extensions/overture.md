@@ -50,10 +50,10 @@ docs:
 
     Works in both native DuckDB and DuckDB-WASM.
 
-extension_star_count: 2
-extension_star_count_pretty: 2
-extension_download_count: 295
-extension_download_count_pretty: 295
+extension_star_count: 3
+extension_star_count_pretty: 3
+extension_download_count: 348
+extension_download_count_pretty: 348
 image: '/images/community_extensions/social_preview/preview_community_extension_overture.png'
 layout: community_extension_doc
 ---

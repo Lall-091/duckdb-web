@@ -107,10 +107,10 @@ docs:
 
     For detailed documentation, security specification, and setup instructions, visit the [extension repository](https://github.com/dforsber/boilstream-extension).
 
-extension_star_count: 8
-extension_star_count_pretty: 8
-extension_download_count: 784
-extension_download_count_pretty: 784
+extension_star_count: 9
+extension_star_count_pretty: 9
+extension_download_count: 794
+extension_download_count_pretty: 794
 image: '/images/community_extensions/social_preview/preview_community_extension_boilstream.png'
 layout: community_extension_doc
 ---
