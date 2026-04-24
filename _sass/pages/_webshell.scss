@@ -116,6 +116,18 @@ body.layout_webshell {
 			height: 38px;
 			background-size: auto 38px;
 		}
+
+		/* Shared mobile styles add margin-right to .options — drop it here so
+		   the options row sits flush with the 20px .headercontent padding. */
+		header .headerline .headercontent .options {
+			margin-right: 0;
+		}
+
+		/* Mobile submenu (Datasets): tap-to-toggle via .submenu-open on the
+		   outer nav item, driven by the inline script in index.html. */
+		header .headerline .headercontent .landingmenu nav .submenu-open .submenuwrap {
+			display: block;
+		}
 	}
 }
 
