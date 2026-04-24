@@ -400,11 +400,12 @@ CALL pg_clear_cache();
 
 > Deprecated The old `postgres_attach` function is deprecated. It is recommended to switch over to the new `ATTACH` syntax.
 
-## Working with hstore columns
+## Working with hstore Columns
 
-DuckDB will return data from [hstore](https://www.postgresql.org/docs/current/hstore.html) columns as `varchar` of their text representation, like `key=>value, foo=>bar`.
+DuckDB will return data from [hstore](https://www.postgresql.org/docs/current/hstore.html) columns as `VARCHAR` of their text representation, like `key=>value, foo=>bar`.
 You can use the `postgres_hstore_get` function to read the value for a given key, or `postgres_hstore_to_json` to convert the whole set of key/value pairs to JSON for further processing.
-```
+
+```sql
 SELECT postgres_hstore_get('a=>b, c=>d', 'a');
 -- b
 
