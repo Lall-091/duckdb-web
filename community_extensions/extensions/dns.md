@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: dns
   description: The DNS Extension enables DNS lookups and reverse DNS lookups from within DuckDB
-  version: 0.4.1
+  version: 0.4.2
   language: Rust
   build: cargo
   license: MIT
@@ -19,7 +19,7 @@ extension:
 
 repo:
   github: tobilg/duckdb-dns
-  ref: c59f5b0fc208b2f8a5b65ced3dfaf8d3a5deefa8
+  ref: 5103550383cb70ca6279bbcfe68cb6e3c15a28c6
 
 docs:
   hello_world: |
@@ -298,8 +298,8 @@ docs:
 
 extension_star_count: 16
 extension_star_count_pretty: 16
-extension_download_count: 775
-extension_download_count_pretty: 775
+extension_download_count: 876
+extension_download_count_pretty: 876
 image: '/images/community_extensions/social_preview/preview_community_extension_dns.png'
 layout: community_extension_doc
 ---

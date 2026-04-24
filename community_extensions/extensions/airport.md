@@ -24,12 +24,12 @@ extension:
 repo:
   andium: dc0cf5a12cbe32412e7fedf1b0a07f0e34150473
   github: query-farm/airport
-  ref: 19eae3a57b2a074c695cbde2e095d4ef8f8a2dd9
+  ref: 49d97c8e2c84e5dcc75dbca16ff80d8f56e028ce
 
 extension_star_count: 332
 extension_star_count_pretty: 332
-extension_download_count: 1185
-extension_download_count_pretty: 1.2k
+extension_download_count: 1381
+extension_download_count_pretty: 1.4k
 image: '/images/community_extensions/social_preview/preview_community_extension_airport.png'
 layout: community_extension_doc
 ---

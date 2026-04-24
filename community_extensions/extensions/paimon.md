@@ -58,10 +58,10 @@ docs:
 
     For more information, visit the [extension repository](https://github.com/polardb/duckdb-paimon).
 
-extension_star_count: 24
-extension_star_count_pretty: 24
-extension_download_count: 644
-extension_download_count_pretty: 644
+extension_star_count: 25
+extension_star_count_pretty: 25
+extension_download_count: 643
+extension_download_count_pretty: 643
 image: '/images/community_extensions/social_preview/preview_community_extension_paimon.png'
 layout: community_extension_doc
 ---
