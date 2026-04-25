@@ -257,7 +257,7 @@ CRS identifiers in DuckDB are always strings. `OGC:CRS84` is the identifier for 
 
 By default, only a handful of common CRSs are registered as known, but extensions can also register additional known CRSs. In particular, the `spatial` extension registers over 7000 CRSs from the [EPSG Geodetic Parameter Dataset](https://epsg.org/home.html), which is arguably the most widely used database of coordinate reference systems. 
 
-You can list all available CRSs known to DuckDB using the `duckdb_coordinate_systems()` function:
+You can list all available CRSs known to DuckDB using the [`duckdb_coordinate_systems()`](({% link docs/current/sql/meta/duckdb_table_functions.md %}#duckdb_coordinate_systems) function:
 
 ```sql
 SELECT * FROM duckdb_coordinate_systems();
