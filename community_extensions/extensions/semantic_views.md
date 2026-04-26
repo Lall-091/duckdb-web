@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: semantic_views
   description: "Semantic views -- a declarative layer for dimensions, metrics, and relationships"
-  version: 0.6.0
+  version: 0.7.0
   language: Rust
   build: cargo
   license: MIT
@@ -19,7 +19,7 @@ extension:
 
 repo:
   github: anentropic/duckdb-semantic-views
-  ref: 6789337cd00c94a01a67b557af9ab0c295eff6a7
+  ref: 9cc07b74723bcb2977f4b84821e58867cefc2627
 
 docs:
   hello_world: |
@@ -45,8 +45,8 @@ docs:
 
 extension_star_count: 4
 extension_star_count_pretty: 4
-extension_download_count: 424
-extension_download_count_pretty: 424
+extension_download_count: 415
+extension_download_count_pretty: 415
 image: '/images/community_extensions/social_preview/preview_community_extension_semantic_views.png'
 layout: community_extension_doc
 ---
@@ -90,6 +90,7 @@ LOAD {{ page.extension.name }};
 | get_ddl                                      | scalar        | NULL        | NULL    |          |
 | list_semantic_views                          | table         | NULL        | NULL    |          |
 | list_terse_semantic_views                    | table         | NULL        | NULL    |          |
+| read_yaml_from_semantic_view                 | scalar        | NULL        | NULL    |          |
 | semantic_view                                | table         | NULL        | NULL    |          |
 | show_columns_in_semantic_view                | table         | NULL        | NULL    |          |
 | show_semantic_dimensions                     | table         | NULL        | NULL    |          |
@@ -97,6 +98,8 @@ LOAD {{ page.extension.name }};
 | show_semantic_dimensions_for_metric          | table         | NULL        | NULL    |          |
 | show_semantic_facts                          | table         | NULL        | NULL    |          |
 | show_semantic_facts_all                      | table         | NULL        | NULL    |          |
+| show_semantic_materializations               | table         | NULL        | NULL    |          |
+| show_semantic_materializations_all           | table         | NULL        | NULL    |          |
 | show_semantic_metrics                        | table         | NULL        | NULL    |          |
 | show_semantic_metrics_all                    | table         | NULL        | NULL    |          |
 

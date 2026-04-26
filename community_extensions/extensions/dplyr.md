@@ -121,10 +121,10 @@ docs:
 
     For more information, visit the [GitHub repository](https://github.com/mrchypark/libdplyr).
 
-extension_star_count: 12
-extension_star_count_pretty: 12
-extension_download_count: 3
-extension_download_count_pretty: 3
+extension_star_count: 13
+extension_star_count_pretty: 13
+extension_download_count: 98
+extension_download_count_pretty: 98
 image: '/images/community_extensions/social_preview/preview_community_extension_dplyr.png'
 layout: community_extension_doc
 ---

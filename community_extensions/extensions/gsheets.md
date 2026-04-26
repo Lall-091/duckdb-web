@@ -70,10 +70,10 @@ docs:
     The DuckDB GSheets Extension allows reading and writing of data in Google Sheets from DuckDB.
     For detailed setup and usage instructions, visit the docs at [duckdb-gsheets.com](https://duckdb-gsheets.com).
 
-extension_star_count: 340
-extension_star_count_pretty: 340
-extension_download_count: 36654
-extension_download_count_pretty: 36.7k
+extension_star_count: 341
+extension_star_count_pretty: 341
+extension_download_count: 36516
+extension_download_count_pretty: 36.5k
 image: '/images/community_extensions/social_preview/preview_community_extension_gsheets.png'
 layout: community_extension_doc
 ---
