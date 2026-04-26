@@ -26,10 +26,10 @@ repo:
   github: query-farm/airport
   ref: 49d97c8e2c84e5dcc75dbca16ff80d8f56e028ce
 
-extension_star_count: 332
-extension_star_count_pretty: 332
-extension_download_count: 1381
-extension_download_count_pretty: 1.4k
+extension_star_count: 331
+extension_star_count_pretty: 331
+extension_download_count: 1647
+extension_download_count_pretty: 1.6k
 image: '/images/community_extensions/social_preview/preview_community_extension_airport.png'
 layout: community_extension_doc
 ---

@@ -36,8 +36,8 @@ docs:
 
 extension_star_count: 0
 extension_star_count_pretty: 0
-extension_download_count: 321
-extension_download_count_pretty: 321
+extension_download_count: 328
+extension_download_count_pretty: 328
 image: '/images/community_extensions/social_preview/preview_community_extension_lastra.png'
 layout: community_extension_doc
 ---
