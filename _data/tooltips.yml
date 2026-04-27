@@ -11,3 +11,9 @@ support_tier_primary: >-
 
 support_tier_secondary: >-
     Secondary clients receive new features but are not covered by community support.
+
+support_tier_primary_extension: >-
+    Primary clients are covered by community support.
+
+support_tier_secondary_extension: >-
+    Secondary extensions are supported on a best-effort basis.
