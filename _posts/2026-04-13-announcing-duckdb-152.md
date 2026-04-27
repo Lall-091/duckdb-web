@@ -50,7 +50,6 @@ Using the file storage feature, you can turn your browser session into workbench
 The new shell comes with a few built-in datasets: you're welcome to try them out and experiment.
 Your old links to `shell.duckdb.org` should still work but if you experience any problems, please submit an issue in the [`duckdb-web` repository](https://github.com/duckdb/duckdb-wasm).
 
-
 ## Benchmarks
 
 We benchmarked DuckDB using the Linux v7 kernel on an [r8gd.8xlarge](https://instances.vantage.sh/aws/ec2/r8gd.8xlarge?currency=USD) instance with 32 vCPUs, 256 GiB RAM, and an NVMe SSD.
@@ -61,7 +60,7 @@ We noticed that the composite TPC-H score shows a **~10% improvement**, jumping 
 
 This quarter, we have quite a few exciting events lined up.
 
-**DuckCon #7.** On June 24, we'll host our next user conference, [DuckCon #7]({% link _events/2026-06-24-duckcon7.html %}), in Amsterdam's beautiful [Royal Tropical Institute](https://www.kit.nl/about-us/). If you have been building cool things with DuckDB, consider submitting a talk by April 22. Registrations are also open – and free!
+**DuckCon #7.** On June 24, we'll host our next user conference, [DuckCon #7]({% link _events/2026-06-24-duckcon7.html %}), in Amsterdam's beautiful [Royal Tropical Institute](https://www.kit.nl/about-us/).
 
 **AI Council Talk.** On May 12, DuckDB co-creator Hannes Mühleisen will give a talk at AI Council 2026 titled [“Super-Secret Next Big Thing for DuckDB”]({% link _library/2026-05-12-super-secret-next-big-thing-for-duckdb.md %}). Well, at this point, we cannot tell you more than he will present the super-secret next big thing for DuckDB. But, if you cannot make it, don't worry: we'll publish the presentation afterwards.
 

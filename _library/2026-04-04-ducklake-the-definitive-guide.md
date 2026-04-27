@@ -12,7 +12,7 @@ pill: "DuckLake: The Definitive Guide"
 ---
 
 <div class="graphics-box">
-    <img src="{% link images/library/ducklake-the-definitive-guide.svg %}" alt="DuckLake: The Definitive Guide – Book Cover" width="700" />
+    <img src="{% link images/library/ducklake-the-definitive-guide.png %}" alt="DuckLake: The Definitive Guide – Book Cover" width="300" />
 </div>
 
 |-------|-------|
