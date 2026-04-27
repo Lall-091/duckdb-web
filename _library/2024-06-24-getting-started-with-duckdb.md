@@ -12,7 +12,7 @@ pill: "Getting Started with DuckDB"
 ---
 
 <div class="graphics-box">
-    <img src="/images/library/getting-started-with-duckdb.jpg" alt="Getting Started with DuckDB – Book Cover" width="300" />
+    <img src="{% link images/library/getting-started-with-duckdb.jpg %}" alt="Getting Started with DuckDB – Book Cover" width="300" />
 </div>
 
 |-------|-------|

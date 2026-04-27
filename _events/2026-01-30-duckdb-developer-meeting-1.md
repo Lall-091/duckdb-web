@@ -10,7 +10,7 @@ tags: ["meetup"]
 venue: "Pakhuis de Zwijger, Amsterdam"
 ---
 
-<img src="/images/events/duckdb-developer-meeting-1-splashscreen.svg"
+<img src="{% link images/events/duckdb-developer-meeting-1-splashscreen.svg %}"
      alt="DuckDB Developer Meeting #1 splashscreen"
      width="680"
      />

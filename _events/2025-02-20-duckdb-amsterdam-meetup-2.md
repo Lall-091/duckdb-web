@@ -10,7 +10,7 @@ tags: ["meetup"]
 venue: "Xebia, Amsterdam"
 ---
 
-<img src="/images/events/thumbs/duckdb-amsterdam-meetup-2.svg"
+<img src="{% link images/events/thumbs/duckdb-amsterdam-meetup-2.svg %}"
      alt="DuckDB Amsterdam Meetup Splashscreen"
      width="680"
      />

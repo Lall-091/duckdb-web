@@ -10,7 +10,7 @@ tags: ["meetup"]
 venue: "Dorint Kurfürstendamm Berlin, Opéra room, 2nd floor"
 ---
 
-<img src="/images/events/thumbs/duckdb-berlin-meetup.svg"
+<img src="{% link images/events/thumbs/duckdb-berlin-meetup.svg %}"
      alt="DuckDB Berlin Meetup Splashscreen"
      width="680"
      />

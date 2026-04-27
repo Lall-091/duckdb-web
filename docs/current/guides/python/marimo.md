@@ -44,7 +44,7 @@ cells in one of three ways:
 2. Convert any empty cell to SQL via the cell menu
 3. Hit the SQL button at the bottom of your notebook
 
-<img src="/images/guides/marimo/marimo-sql-button.png"/>
+<img src="{% link images/guides/marimo/marimo-sql-button.png %}"/>
 
 In marimo, SQL cells give the appearance of writing SQL while being serialized as standard Python code using the `mo.sql()` function, which keeps your notebook as pure Python code without requiring special syntax or magic commands.
 
@@ -74,7 +74,7 @@ marimo automatically discovers the connection and lets you select it in the SQL 
 
 <div align="center">
   <figure>
-    <img src="/images/guides/marimo/marimo-custom-connection.png"/>
+    <img src="{% link images/guides/marimo/marimo-custom-connection.png %}"/>
     <figcaption>Custom connection</figcaption>
   </figure>
 </div>
@@ -86,7 +86,7 @@ marimo introspects connections and displays the database, schemas, tables, and c
 
 <div align="center">
   <figure>
-    <img src="/images/guides/marimo/marimo-datasource-discovery.png"/>
+    <img src="{% link images/guides/marimo/marimo-datasource-discovery.png %}"/>
     <figcaption>Data Sources Panel</figcaption>
   </figure>
 </div>
@@ -113,7 +113,7 @@ Defining a non-private (non-underscored) output variable in the SQL cell allows 
 
 <div align="center">
   <figure>
-    <img src="/images/guides/marimo/marimo-sql-result.png"/>
+    <img src="{% link images/guides/marimo/marimo-sql-result.png %}"/>
     <figcaption>Reference the SQL result in Python</figcaption>
   </figure>
 </div>
@@ -138,7 +138,7 @@ SELECT * FROM random_data;
 Interacting with UI elements, like a slider, makes your data more tangible.
 
 <div align="center">
-  <img src="/images/guides/marimo/marimo-reactive-sql.gif"/>
+  <img src="{% link images/guides/marimo/marimo-reactive-sql.gif %}"/>
 </div>
 
 

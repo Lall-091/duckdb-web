@@ -12,7 +12,7 @@ redirect_from:
   - 2024/10/17/duckdb-amsterdam-meetup-1
 ---
 
-<img src="/images/events/thumbs/duckdb-amsterdam-meetup-1.svg"
+<img src="{% link images/events/thumbs/duckdb-amsterdam-meetup-1.svg %}"
      alt="DuckDB Amsterdam Meetup Splashscreen"
      width="680"
      />

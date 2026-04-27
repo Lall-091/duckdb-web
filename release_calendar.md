@@ -51,8 +51,8 @@ Starting with v1.4.0, every _other_ DuckDB version is going to be a Long-Term Su
 For LTS DuckDB versions, the support period for [community support](https://duckdblabs.com/community_support_policy/) is currently a year after the release.
 [DuckDB Labs](https://duckdblabs.com/) is offering support for older LTS versions after their community support has expired.
 
-<img src="/images/blog/lts-support-light.svg" alt="DuckDB LTS support" width="900" class="lightmode-img">
-<img src="/images/blog/lts-support-dark.svg" alt="DuckDB LTS support" width="900" class="darkmode-img">
+<img src="{% link images/blog/lts-support-light.svg %}" alt="DuckDB LTS support" width="900" class="lightmode-img">
+<img src="{% link images/blog/lts-support-dark.svg %}" alt="DuckDB LTS support" width="900" class="darkmode-img">
 
 For an overview of end-of-life information, see the [DuckDB entry on `endoflife.date`](https://endoflife.date/duckdb).
 

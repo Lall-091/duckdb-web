@@ -12,7 +12,7 @@ pill: "Spatial Data Management with DuckDB"
 ---
 
 <div class="graphics-box">
-    <img src="/images/library/spatial-data-management-with-duckdb.png" alt="Spatial Data Management with DuckDB – Book Cover" width="300" />
+    <img src="{% link images/library/spatial-data-management-with-duckdb.png %}" alt="Spatial Data Management with DuckDB – Book Cover" width="300" />
 </div>
 
 |-------|-------|

@@ -10,7 +10,7 @@ tags: ["meetup"]
 venue: "Adyen Rokin office, Amsterdam"
 ---
 
-<img src="/images/events/thumbs/duckdb-amsterdam-meetup-3.svg"
+<img src="{% link images/events/thumbs/duckdb-amsterdam-meetup-3.svg %}"
      alt="DuckDB Amsterdam Meetup Splashscreen"
      width="680"
      />

@@ -12,7 +12,7 @@ pill: "DuckDB in Action"
 ---
 
 <div class="graphics-box">
-    <img src="/images/library/duckdb-in-action.jpg" alt="DuckDB in Action – Book Cover" width="300" />
+    <img src="{% link images/library/duckdb-in-action.jpg %}" alt="DuckDB in Action – Book Cover" width="300" />
 </div>
 
 |-------|-------|
