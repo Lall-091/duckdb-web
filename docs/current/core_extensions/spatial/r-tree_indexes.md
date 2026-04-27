@@ -60,7 +60,7 @@ Here is an example that shows how to create an R-tree index on a geometry column
 INSTALL spatial;
 LOAD spatial;
 
--- Create a table with 10_000_000 random points
+-- Create a table with 10_000 random points
 CREATE TABLE t1 AS SELECT point::GEOMETRY AS geom
 FROM st_generatepoints({min_x: 0, min_y: 0, max_x: 100, max_y: 100}::BOX_2D, 10_000, 1337);
 
