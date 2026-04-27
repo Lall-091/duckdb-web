@@ -93,6 +93,25 @@ The `duckdb_constraints()` function provides metadata about the constraints avai
 
 The [`information_schema.referential_constraints`]({% link docs/current/sql/meta/information_schema.md %}#referential_constraints-referential-constraints) and [`information_schema.table_constraints`]({% link docs/current/sql/meta/information_schema.md %}#table_constraints-table-constraints) system views provide a more standardized way to obtain metadata about constraints, but the `duckdb_constraints` function also returns metadata about DuckDB internal objects. (In fact, `information_schema.referential_constraints` and `information_schema.table_constraints` are implemented as a query on top of `duckdb_constraints()`)
 
+## `duckdb_coordinate_systems`
+
+The `duckdb_coordinate_systems()` function lists the available [coordinate reference systems]({% link docs/current/sql/data_types/geometry.md %}#how-are-coordinate-reference-systems-stored-in-duckdb) (CRS) for use with the [`GEOMETRY`]({% link docs/current/sql/data_types/geometry.md %}) data type.
+
+| Column | Description | Type |
+|:-|:---|:-|
+| `database_name` | The name of the database that stores the CRS definition. | `VARCHAR` |
+| `database_oid` | Internal identifier of the database that stores the CRS definition. | `BIGINT` |
+| `schema_name` | The SQL name of the schema that stores the CRS definition. | `VARCHAR` |
+| `schema_oid` | Internal identifier of the schema that stores the CRS definition. | `BIGINT` |
+| `crs_oid` | Unique internal identifier for the CRS. | `BIGINT` |
+| `crs_name` | A unique name that identifies the CRS. (Typically, this value is identical to the `auth_name` and `auth_code`, separated by a colon) | `VARCHAR` |
+| `auth_name` | The name of the authorithy that defined the CRS. | `VARCHAR` |
+| `auth_code` | The code that defined the CRS within its authority. | `VARCHAR` |
+| `projjson` | The projjson encoding of the CRS. | `VARCHAR` |
+| `wkt2_2019` | The Well-Known Text (WKT) representation of the CRS. | `VARCHAR` |
+
+This function lists both built-in CRSs as well as the ones that are installed by extensions (such as the [`SPATIAL`]({% link docs/current/core_extensions/spatial/overview.md %}) extension. 
+
 ## `duckdb_databases`
 
 The `duckdb_databases()` function lists the databases that are accessible from within the current DuckDB process.
