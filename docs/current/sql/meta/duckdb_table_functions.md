@@ -95,7 +95,7 @@ The [`information_schema.referential_constraints`]({% link docs/current/sql/meta
 
 ## `duckdb_coordinate_systems`
 
-The `duckdb_coordinate_systems()` function lists the available [coordinate reference systems]({% link docs/current/sql/data_types/geometry.md %}#how-are-coordinate-reference-systems-stored-in-duckdb) (CRS) for use with the [`GEOMETRY `]({% link docs/current/sql/data_types/geometry.md %}) data type.
+The `duckdb_coordinate_systems()` function lists the available [coordinate reference systems]({% link docs/current/sql/data_types/geometry.md %}#how-are-coordinate-reference-systems-stored-in-duckdb) (CRS) for use with the [`GEOMETRY`]({% link docs/current/sql/data_types/geometry.md %}) data type.
 
 | Column | Description | Type |
 |:-|:---|:-|
