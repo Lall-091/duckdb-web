@@ -45,16 +45,9 @@ If the process was killed by the OOM killer/reaper, you will find an entry like 
 [Fri Apr 18 02:04:10 2025] Out of memory: Killed process 54400 (duckdb) total-vm:1037911068kB, anon-rss:770031964kB, file-rss:0kB, shmem-rss:0kB, UID:1000 pgtables:1814612kB oom_score_adj:0
 ```
 
-## Troubleshooting Out of Memory Errors
+## Troubleshooting Out-of-Memory Errors
 
-To prevent out of memory errors, try to reduce memory usage.
-To this end, please consult the [“How to Tune Workloads” site]({% link docs/current/guides/performance/how_to_tune_workloads.md %}).
-In short:
-
-* Reduce the number of threads using the `SET threads = ...` command.
-* If your query reads a large amount of data from a file or writes a large amount of data, try setting the `preserve_insertion_order` option to `false`: `SET preserve_insertion_order = false`.
-* Counter-intuitively, reducing the memory limit below the [default 80%]({% link docs/current/operations_manual/limits.md %}) can help prevent out of memory errors. This is because some DuckDB operations circumvent the database's buffer manager and thus they can reserve more memory than allowed by the memory limit. If this happens (e.g., DuckDB is killed by the operating system or an OOM reaper process), set the memory limit to just 50-60% of the total system memory by using the `SET memory_limit = '...'` statement.
-* Break up the query into subqueries. This allows you to see where the intermediate results “blow up”, causing the query to run out of memory.
+To prevent out-of-memory errors, please consult the [“Out-of-Memory” issues]({% link docs/current/guides/performance/oom.md %}) page of the Performance Guide.
 
 ## See Also
 

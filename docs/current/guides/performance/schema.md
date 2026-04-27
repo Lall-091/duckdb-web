@@ -9,13 +9,9 @@ title: Schema
 
 ## Types
 
-It is important to use the correct type for encoding columns (e.g., `BIGINT`, `DATE`, `DATETIME`). While it is always possible to use string types (`VARCHAR`, etc.) to encode more specific values, this is not recommended. Strings use more space and are slower to process in operations such as filtering, join, and aggregation.
+It is important to use the correct type for encoding columns (e.g., `BIGINT`, `DATE`, `DATETIME`). While it is always possible to use string types (`VARCHAR`, etc.) to encode more specific values, this is not recommended. Strings use more space and are slower to process in operations such as filtering, join, and aggregation. When loading CSV files, you may leverage the CSV reader's [auto-detection mechanism]({% link docs/current/data/csv/auto_detection.md %}) to determine the correct types for CSV inputs.
 
-When loading CSV files, you may leverage the CSV reader's [auto-detection mechanism]({% link docs/current/data/csv/auto_detection.md %}) to get the correct types for CSV inputs.
-
-If you run in a memory-constrained environment, using smaller data types (e.g., `TINYINT`) can reduce the amount of memory and disk space required to complete a query. DuckDB’s [bitpacking compression]({% post_url 2022-10-28-lightweight-compression %}#bit-packing) means small values stored in larger data types will not take up larger sizes on disk, but they will take up more memory during processing.
-
-> Bestpractice Use the most restrictive types possible when creating columns. Avoid using strings for encoding more specific data items.
+If you run in a memory-constrained environment, using smaller data types (e.g., `TINYINT`) can reduce the amount of memory and disk space required to complete a query. DuckDB’s [bitpacking compression]({% post_url 2022-10-28-lightweight-compression %}#bit-packing) means small values stored in larger data types will not take up larger sizes on disk, but they will take up more memory during processing – hence, using the most restrictive types possible when creating columns is necessary to reduce memory consumption.
 
 ### Microbenchmark: Using Timestamps
 

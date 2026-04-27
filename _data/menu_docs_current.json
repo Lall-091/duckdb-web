@@ -1459,6 +1459,10 @@
                   "url": "my_workload_is_slow"
                 },
                 {
+                  "page": "Out-of-Memory Issues",
+                  "url": "oom"
+                },
+                {
                   "page": "Benchmarks",
                   "url": "benchmarks"
                 },

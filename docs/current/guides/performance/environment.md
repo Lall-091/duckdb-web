@@ -50,14 +50,15 @@ Note that larger-than-memory workloads can be processed both in persistent mode 
 DuckDB's disk-based mode is designed to work best with SSD and NVMe disks. While HDDs are supported, they will result in low performance, especially for write operations.
 
 **Disk-based vs. in-memory storage.**
-Counter-intuitively, using a disk-based DuckDB instance can be faster than an in-memory instance due to compression.
+Counter-intuitively, using a disk-based DuckDB instance can be faster than an in-memory instance.
+This is because the default settings prescribe compression for disk-based storage but they do turn compression off for in-memory storage.
 Read more in the [“How to Tune Workloads” page]({% link docs/current/guides/performance/how_to_tune_workloads.md %}#persistent-vs-in-memory-tables).
 
 **File systems.**
-On Linux, [DuckDB performs best with the XFS file system](https://www.phoronix.com/review/linux-70-filesystems/4) but it also performs reasonably well with other file systems such as ext4.
+On Linux, [DuckDB performs best with the XFS file system](https://www.phoronix.com/review/linux-70-filesystems/4) but it also performs well with other file systems such as ext4.
 On Windows, we recommend using NTFS and avoiding FAT32.
 
-> Note that DuckDB databases have built-in checksums, so integrity checks from the file system are not required to prevent data corruption.
+> DuckDB databases have built-in checksums, so integrity checks from the file system are not required to prevent data corruption.
 
 ### Network-Attached Disks
 
@@ -91,8 +92,8 @@ If you don't have a particular preference, we recommend using Ubuntu Linux LTS d
 
 #### glibc vs. musl libc
 
-DuckDB can be built with both [glibc](https://www.gnu.org/software/libc/) (default) and [musl libc](https://www.musl-libc.org/) (see the [build guide]({% link docs/current/dev/building/linux.md %})).
-However, note that DuckDB binaries built with musl libc have lower performance.
+We distribute DuckDB builds with both [glibc](https://www.gnu.org/software/libc/) and [musl libc](https://www.musl-libc.org/).
+However, note that DuckDB binaries built with musl libc have significantly lower performance.
 In practice, this can lead to a slowdown of more than 5× on compute-intensive workloads.
 Therefore, it's recommended to use a Linux distribution with glibc for performance-oriented workloads when running DuckDB.
 
