@@ -116,7 +116,7 @@ so picking out the ones in the list avoids duplicate calls to the slow ICU funct
 Also notice that we are leveraging the `DATE` cast rules from the previous section 
 to bound the calendar to the model domain.
 
-## Half Open Intervals
+## Half-Open Intervals
 
 Another subtle problem in using SQL for temporal analytics is the `BETWEEN` operator.
 Temporal analytics almost always uses 
@@ -130,7 +130,6 @@ x BETWEEN begin AND end
 begin <= x AND x <= end
 -- not
 begin <= x AND x < end
-
 ```
 
 To avoid this problem, make sure you are explicit about comparison boundaries instead of using `BETWEEN`.
