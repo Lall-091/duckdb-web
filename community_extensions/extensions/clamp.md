@@ -17,7 +17,7 @@ extension:
 
 repo:
   github: oglego/duckdb_clamp
-  ref: 636947f33bdce27f980c8c0f40e3bb1024c0ba79
+  ref: f714928f05bd16e187c585d17fdcb3ea93f653dd
 
 docs:
   hello_world: |
@@ -93,8 +93,8 @@ docs:
 
 extension_star_count: 2
 extension_star_count_pretty: 2
-extension_download_count: 810
-extension_download_count_pretty: 810
+extension_download_count: 796
+extension_download_count_pretty: 796
 image: '/images/community_extensions/social_preview/preview_community_extension_clamp.png'
 layout: community_extension_doc
 ---

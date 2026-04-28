@@ -240,10 +240,10 @@ docs:
     SELECT * FROM polyglot_diff('SELECT a FROM t', 'SELECT b FROM t', 'generic');
     ```
 
-extension_star_count: 20
-extension_star_count_pretty: 20
-extension_download_count: 849
-extension_download_count_pretty: 849
+extension_star_count: 21
+extension_star_count_pretty: 21
+extension_download_count: 841
+extension_download_count_pretty: 841
 image: '/images/community_extensions/social_preview/preview_community_extension_polyglot.png'
 layout: community_extension_doc
 ---
