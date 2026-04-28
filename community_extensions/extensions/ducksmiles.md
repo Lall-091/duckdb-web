@@ -63,8 +63,8 @@ docs:
 
 extension_star_count: 0
 extension_star_count_pretty: 0
-extension_download_count: 410
-extension_download_count_pretty: 410
+extension_download_count: 420
+extension_download_count_pretty: 420
 image: '/images/community_extensions/social_preview/preview_community_extension_ducksmiles.png'
 layout: community_extension_doc
 ---
