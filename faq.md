@@ -264,7 +264,7 @@ Compatibility is also guaranteed between different DuckDB clients (e.g., Python 
 See the documentation on [handling concurrency]({% link docs/current/connect/concurrency.md %}#handling-concurrency)
 and the section on [“Writing to DuckDB from Multiple Processes”]({% link docs/current/connect/concurrency.md %}#writing-to-duckdb-from-multiple-processes).
 
-To work on the same data set with multiple DuckDB clients, consider using the [DuckLake format](http://ducklake.select/) through the [`ducklake` extension]({% link docs/current/core_extensions/ducklake.md %}).
+To work on the same data set with multiple DuckDB clients (“multi-player experience”), use the [DuckLake format](http://ducklake.select/) through the [`ducklake` extension]({% link docs/current/core_extensions/ducklake.md %} with PostgreSQL as the catatalog database.
 </div>
 
 </div>
@@ -353,7 +353,6 @@ i.e., making use of more resources (CPU, memory, and disk) to support larger dat
 DuckDB has been tested on machines with 100+ CPU cores and terabytes of memory.
 
 DuckDB's native database format also scales for multiple terabytes of data but this needs some planning – see the [“Working with Huge Databases” page]({% link docs/current/guides/performance/working_with_huge_databases.md %}).
-
 For working with large-scale datasets and/or collaborating on the same dataset, consider using the [DuckLake](https://ducklake.select/) lakehouse format.
 
 </div>
