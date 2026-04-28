@@ -49,7 +49,7 @@ SELECT 'abc' NOT ILIKE '%C'; -- false
 
 To search within a string for a character that is a wildcard (`%` or `_`), the pattern must use an `ESCAPE` clause and an escape character to indicate the wildcard should be treated as a literal character instead of a wildcard. See an example below.
 
-Additionally, the function `like_escape` has the same functionality as a `LIKE` expression with an `ESCAPE` clause, but using function syntax. See the [Text Functions Docs]({% link docs/current/sql/functions/text.md %}) for details.
+Additionally, the function `like_escape` has the same functionality as a `LIKE` expression with an `ESCAPE` clause, but using function syntax. See the [Text Functions page]({% link docs/current/sql/functions/text.md %}) for details.
 
 Search for strings with 'a' then a literal percent sign then 'c':
 

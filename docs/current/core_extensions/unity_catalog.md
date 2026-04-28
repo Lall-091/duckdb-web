@@ -45,7 +45,7 @@ ATTACH 'test_catalog' AS test_catalog (TYPE unity_catalog, DEFAULT_SCHEMA 'main'
 
 Where `token` comes from your Databricks or OSS Unity Catalog deployment, and `endpoint` is your Unity Catalog REST API endpoint.
 
-For more details on these deployments see [Databricks Unity Catalog Docs](https://docs.databricks.com/aws/en/data-governance/unity-catalog) and [OSS Unity Catalog Docs](https://docs.unitycatalog.io/).
+For more details on these deployments see the documentation of the [Databricks Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog) and the [OSS Unity Catalog](https://docs.unitycatalog.io/).
 
 To confirm correct attachment, try something like:
 
