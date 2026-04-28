@@ -37,13 +37,13 @@ FROM odbc_query(getvariable('conn'), 'SELECT SYSTIMESTAMP FROM DUAL');
 -- query with parameters
 FROM odbc_query(getvariable('conn') 
     'SELECT CAST(? AS NVARCHAR2(2)) || CAST(? AS VARCHAR2(5)) FROM DUAL',
-    params=row('🦆', 'quack'));
+    params = row('🦆', 'quack'));
 
 -- copy data into remote DB
 FROM odbc_copy(getvariable('conn'),
-    source_file='https://blobs.duckdb.org/nl_stations.csv',
-    dest_table='NL_TRAIN_STATIONS',
-    create_table=TRUE);
+    source_file = 'https://blobs.duckdb.org/nl_stations.csv',
+    dest_table = 'NL_TRAIN_STATIONS',
+    create_table = true);
 
 -- close connection
 SELECT odbc_close(getvariable('conn'));
@@ -158,7 +158,7 @@ Example of connection strings without a configured data source:
 
 Oracle: 
  
-```
+```text
 Driver={Oracle in instantclient_23_0};DBQ=//127.0.0.1:1521/XE;UID=scott;PWD=tiger;
 ```
 
@@ -170,49 +170,49 @@ Driver={ODBC Driver 18 for SQL Server};Server=tcp:127.0.0.1,1433;UID=sa;PWD=pwd;
 
 DB2: 
 
-```
+```text
 Driver={IBM DB2 ODBC DRIVER};HostName=127.0.0.1;Port=50000;Database=testdb;UID=db2inst1;PWD=pwd;
 ```
 
 PostgreSQL: 
 
-```
+```text
 Driver={PostgreSQL Unicode};Server=127.0.0.1;Port=5432;Username=postgres;Password=postgres;Database=test_db;
 ```
 
 MySQL/MariaDB: 
 
-```
+```text
 Driver={MariaDB ODBC 3.1 Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=test_db;
 ```
 
 Firebird: 
 
-```
+```text
 Driver={Firebird ODBC Driver};Database=127.0.0.1/3050:C:/path/to/test.fdb;UID=SYSDBA;PWD=pwd;CHARSET=UTF8;
 ```
 
 Snowflake: 
 
-```
+```text
 Driver={SnowflakeDSIIDriver};Server=foobar-ab12345.snowflakecomputing.com;Database=SNOWFLAKE_SAMPLE_DATA;UID=username;PWD=pwd;
 ```
 
 ClickHouse: 
 
-```
+```text
 Driver={ClickHouse ODBC Driver (Unicode)};Server=127.0.0.1;Port=8123;
 ```
 
 Spark: 
 
-```
+```text
 Driver={Simba Spark ODBC Driver};Host=127.0.0.1;Port=10000;
 ```
 
 Arrow Flight SQL (Dremio ODBC + GizmoSQL): 
 
-```
+```text
 Driver={Dremio Flight SQL ODBC Driver};Host=127.0.0.1;Port=31337;UID=gizmosql_username;PWD=gizmosql_password;useEncryption=true;
 ```
 
@@ -220,17 +220,17 @@ Driver={Dremio Flight SQL ODBC Driver};Host=127.0.0.1;Port=31337;UID=gizmosql_us
 
 When a DuckDB query is run using prepared statement, it is possible to pass input parameters from the client code. The extension allows to forward such input parameters over ODBC API to the queries to remote databases.
 
-2 methods of passing query parameters are supported, using either `params` or `params_handle` named argument to [`odbc_query`]({% link docs/current/core_extensions/odbc/functions.md %}#odbc_query) function.
+Two methods of passing query parameters are supported, using either `params` or `params_handle` named argument to [`odbc_query`]({% link docs/current/core_extensions/odbc/functions.md %}#odbc_query) function.
 
 `params` argument takes a `STRUCT` value as an input. Struct field names are ignored, so the `row()` function can be used to create a `STRUCT` value inline:
 
 ```sql
 FROM odbc_query(
-  getvariable('conn'),
-  '
-    SELECT CAST(? AS VARCHAR2(3)) || CAST(? AS VARCHAR2(3)) FROM DUAL
-  ', 
-  params=row(?, ?))
+    getvariable('conn'),
+    '
+      SELECT CAST(? AS VARCHAR2(3)) || CAST(? AS VARCHAR2(3)) FROM DUAL
+    ', 
+    params = row(?, ?))
 ```
 
 If we prepare this query with `duckdb_prepare()`, bind `foo` and `bar` `VARCHAR` values to it with `duckdb_bind_value()` and
@@ -248,11 +248,11 @@ SET VARIABLE params = odbc_create_params();
 
 -- when 'duckdb_prepare()' is called, the inner query will be prepared in the remote DB
 FROM odbc_query(
-  getvariable('conn'),
-  '
-    SELECT CAST(? AS VARCHAR2(3)) || CAST(? AS VARCHAR2(3)) FROM DUAL
-  ', 
-  params_handle=getvariable('params'));
+    getvariable('conn'),
+    '
+      SELECT CAST(? AS VARCHAR2(3)) || CAST(? AS VARCHAR2(3)) FROM DUAL
+    ', 
+    params_handle = getvariable('params'));
 
 -- now we can repeatedly bind new parameters to the handle using 'odbc_bind_params()'
 -- and call 'duckdb_execute_prepared()' to run the prepared query with
@@ -271,12 +271,12 @@ allow to use the same connection from multiple threads. For example, the followi
 ```sql
 FROM odbc_query(getvariable('conn'), 'SELECT ''foo'' col1 FROM DUAL')
 UNION ALL
-FROM odbc_query(getvariable('conn'), 'SELECT ''bar'' col1 FROM DUAL')
+FROM odbc_query(getvariable('conn'), 'SELECT ''bar'' col1 FROM DUAL');
 ```
 
 will fail with:
 
-```
+```text
 Invalid Input Error:
 'odbc_query' error: ODBC connection not found on global init, id: 139760181976192
 ```
@@ -286,7 +286,7 @@ This can be avoided by using multiple ODBC connections:
 ```sql
 FROM odbc_query(getvariable('conn1'), 'SELECT ''foo'' col1 FROM DUAL')
 UNION ALL
-FROM odbc_query(getvariable('conn2'), 'SELECT ''bar'' col1 FROM DUAL')
+FROM odbc_query(getvariable('conn2'), 'SELECT ''bar'' col1 FROM DUAL');
 ```
 
 Or by disabling multi-threaded execution setting `threads` DuckDB option to `1`.

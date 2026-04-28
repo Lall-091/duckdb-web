@@ -145,7 +145,6 @@ SELECT * FROM iceberg_snapshots(iceberg_catalog.default.simple_table);
 │               2 │ 6333537230056014119 │ 2025-11-10 17:27:35.602 │ s3://<storage_location>/simple_table/data/snap-6333537230056014119-316d09bc-549d-46bc-ae13-a9fab5cbf09b.avro │
 │               3 │ 7452040077415501383 │ 2025-11-10 17:27:52.169 │ s3://<storage_location>/simple_table/data/snap-7452040077415501383-93dee94e-9ec1-45fa-aec2-13ef434e50eb.avro │
 └─────────────────┴─────────────────────┴─────────────────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
-
 ```
 
 ## Time Travel
@@ -156,7 +155,7 @@ Time travel is also possible via snapshot ids or timestamps using the `AT (VERSI
 -- via snapshot id
 SELECT *
 FROM iceberg_catalog.default.simple_table AT (
-	VERSION => ⟨snapshot_id⟩
+    VERSION => ⟨snapshot_id⟩
 );
 ```
 

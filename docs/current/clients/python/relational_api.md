@@ -30,6 +30,7 @@ duckdb_conn = duckdb.connect()
 
 rel = duckdb_conn.sql("from range(1_000_000_000)")
 ```
+
 At the moment of execution, `rel` does not hold any data and no data is retrieved from the database.
 
 By calling `rel.show()` or simply printing `rel` on the terminal, the first 10K rows are fetched.
@@ -42,8 +43,6 @@ rel.to_table("example_rel")
 
 # 100% ▕████████████████████████████████████████████████████████████▏ 
 ```
-
-
 
 ## Relation Creation 
 
@@ -82,7 +81,7 @@ Create a relation object from an Arrow object
 
 - **arrow_object** : pyarrow.Table, pyarrow.RecordBatch
                             
-	Arrow object to create a relation from
+    Arrow object to create a relation from
 
 ##### Example
 
@@ -132,118 +131,118 @@ Create a relation object from the CSV file in 'name'
 
 - **path_or_buffer** : Union[str, StringIO, TextIOBase]
                             
-	Path to the CSV file or buffer to read from.
+    Path to the CSV file or buffer to read from.
 - **header** : Optional[bool], Optional[int]
                             
-	Row number(s) to use as the column names, or None if no header.
+    Row number(s) to use as the column names, or None if no header.
 - **compression** : Optional[str]
                             
-	Compression type (e.g., 'gzip', 'bz2').
+    Compression type (e.g., 'gzip', 'bz2').
 - **sep** : Optional[str]
                             
-	Delimiter to use; defaults to comma.
+    Delimiter to use; defaults to comma.
 - **delimiter** : Optional[str]
                             
-	Alternative delimiter to use.
+    Alternative delimiter to use.
 - **dtype** : Optional[Dict[str, str]], Optional[List[str]]
                             
-	Data types for columns.
+    Data types for columns.
 - **na_values** : Optional[str], Optional[List[str]]
                             
-	Additional strings to recognize as NA/NaN.
+    Additional strings to recognize as NA/NaN.
 - **skiprows** : Optional[int]
                             
-	Number of rows to skip at the start.
+    Number of rows to skip at the start.
 - **quotechar** : Optional[str]
                             
-	Character used to quote fields.
+    Character used to quote fields.
 - **escapechar** : Optional[str]
                             
-	Character used to escape delimiter or quote characters.
+    Character used to escape delimiter or quote characters.
 - **encoding** : Optional[str]
                             
-	Encoding to use for UTF when reading/writing.
+    Encoding to use for UTF when reading/writing.
 - **parallel** : Optional[bool]
                             
-	Enable parallel reading.
+    Enable parallel reading.
 - **date_format** : Optional[str]
                             
-	Format to parse dates.
+    Format to parse dates.
 - **timestamp_format** : Optional[str]
                             
-	Format to parse timestamps.
+    Format to parse timestamps.
 - **sample_size** : Optional[int]
                             
-	Number of rows to sample for schema inference.
+    Number of rows to sample for schema inference.
 - **all_varchar** : Optional[bool]
                             
-	Treat all columns as VARCHAR.
+    Treat all columns as VARCHAR.
 - **normalize_names** : Optional[bool]
                             
-	Normalize column names to lowercase.
+    Normalize column names to lowercase.
 - **null_padding** : Optional[bool]
                             
-	Enable null padding for rows with missing columns.
+    Enable null padding for rows with missing columns.
 - **names** : Optional[List[str]]
                             
-	List of column names to use.
+    List of column names to use.
 - **lineterminator** : Optional[str]
                             
-	Character to break lines on.
+    Character to break lines on.
 - **columns** : Optional[Dict[str, str]]
                             
-	Column mapping for schema.
+    Column mapping for schema.
 - **auto_type_candidates** : Optional[List[str]]
                             
-	List of columns for automatic type inference.
+    List of columns for automatic type inference.
 - **max_line_size** : Optional[int]
                             
-	Maximum line size in bytes.
+    Maximum line size in bytes.
 - **ignore_errors** : Optional[bool]
                             
-	Ignore parsing errors.
+    Ignore parsing errors.
 - **store_rejects** : Optional[bool]
                             
-	Store rejected rows.
+    Store rejected rows.
 - **rejects_table** : Optional[str]
                             
-	Table name to store rejected rows.
+    Table name to store rejected rows.
 - **rejects_scan** : Optional[str]
                             
-	Scan to use for rejects.
+    Scan to use for rejects.
 - **rejects_limit** : Optional[int]
                             
-	Limit number of rejects stored.
+    Limit number of rejects stored.
 - **force_not_null** : Optional[List[str]]
                             
-	List of columns to force as NOT NULL.
+    List of columns to force as NOT NULL.
 - **buffer_size** : Optional[int]
                             
-	Buffer size in bytes.
+    Buffer size in bytes.
 - **decimal** : Optional[str]
                             
-	Character to recognize as decimal point.
+    Character to recognize as decimal point.
 - **allow_quoted_nulls** : Optional[bool]
                             
-	Allow quoted NULL values.
+    Allow quoted NULL values.
 - **filename** : Optional[bool], Optional[str]
                             
-	Add filename column or specify filename.
+    Add filename column or specify filename.
 - **hive_partitioning** : Optional[bool]
                             
-	Enable Hive-style partitioning.
+    Enable Hive-style partitioning.
 - **union_by_name** : Optional[bool]
                             
-	Union files by column name instead of position.
+    Union files by column name instead of position.
 - **hive_types** : Optional[Dict[str, str]]
                             
-	Hive types for columns.
+    Hive types for columns.
 - **hive_types_autocast** : Optional[bool]
                             
-	Automatically cast Hive types.
+    Automatically cast Hive types.
 - **connection** : DuckDBPyConnection
                             
-	DuckDB connection to use.
+    DuckDB connection to use.
 
 ##### Example
 
@@ -293,7 +292,7 @@ Create a relation object from the DataFrame in df
 
 - **df** : pandas.DataFrame
                             
-	A pandas DataFrame to be converted into a DuckDB relation.
+    A pandas DataFrame to be converted into a DuckDB relation.
 
 ##### Example
 
@@ -350,25 +349,25 @@ Create a relation object from the Parquet files
 
 - **file_glob** : str
                             
-	File path or glob pattern pointing to Parquet files to be read.
+    File path or glob pattern pointing to Parquet files to be read.
 - **binary_as_string** : bool, default: False
                             
-	Interpret binary columns as strings instead of blobs.
+    Interpret binary columns as strings instead of blobs.
 - **file_row_number** : bool, default: False
                             
-	Add a column containing the row number within each file.
+    Add a column containing the row number within each file.
 - **filename** : bool, default: False
                             
-	Add a column containing the name of the file each row came from.
+    Add a column containing the name of the file each row came from.
 - **hive_partitioning** : bool, default: False
                             
-	Enable automatic detection of Hive-style partitions in file paths.
+    Enable automatic detection of Hive-style partitions in file paths.
 - **union_by_name** : bool, default: False
                             
-	Union Parquet files by matching column names instead of positions.
+    Union Parquet files by matching column names instead of positions.
 - **compression** : object
                             
-	Optional compression codec to use when reading the Parquet files.
+    Optional compression codec to use when reading the Parquet files.
 
 ##### Example
 
@@ -423,13 +422,13 @@ Run a SQL query. If it is a SELECT statement, create a relation object from the 
 
 - **query** : object
 
-	The SQL query or subquery to be executed and converted into a relation.
+    The SQL query or subquery to be executed and converted into a relation.
 - **alias** : str, default: ''
 
-	Optional alias name to assign to the resulting relation.
+    Optional alias name to assign to the resulting relation.
 - **params** : object
 
-	Optional query parameters. **Discouraged** due to [significant performance overhead]({% link docs/current/clients/python/known_issues.md %}#parameterized-queries-in-relational-api). Use [`execute()`]({% link docs/current/clients/python/dbapi.md %}#prepared-statements) for parameterized queries instead.
+    Optional query parameters. **Discouraged** due to [significant performance overhead]({% link docs/current/clients/python/known_issues.md %}#parameterized-queries-in-relational-api). Use [`execute()`]({% link docs/current/clients/python/dbapi.md %}#prepared-statements) for parameterized queries instead.
 
 ##### Example
 
@@ -476,13 +475,13 @@ Run a SQL query. If it is a SELECT statement, create a relation object from the 
 
 - **query** : object
 
-	The SQL query or subquery to be executed and converted into a relation.
+    The SQL query or subquery to be executed and converted into a relation.
 - **alias** : str, default: ''
 
-	Optional alias name to assign to the resulting relation.
+    Optional alias name to assign to the resulting relation.
 - **params** : object
 
-	Optional query parameters. **Discouraged** due to [significant performance overhead]({% link docs/current/clients/python/known_issues.md %}#parameterized-queries-in-relational-api). Use [`execute()`]({% link docs/current/clients/python/dbapi.md %}#prepared-statements) for parameterized queries instead.
+    Optional query parameters. **Discouraged** due to [significant performance overhead]({% link docs/current/clients/python/known_issues.md %}#parameterized-queries-in-relational-api). Use [`execute()`]({% link docs/current/clients/python/dbapi.md %}#prepared-statements) for parameterized queries instead.
 
 ##### Example
 
@@ -527,118 +526,118 @@ Create a relation object from the CSV file in 'name'
 
 - **path_or_buffer** : Union[str, StringIO, TextIOBase]
                             
-	Path to the CSV file or buffer to read from.
+    Path to the CSV file or buffer to read from.
 - **header** : Optional[bool], Optional[int]
                             
-	Row number(s) to use as the column names, or None if no header.
+    Row number(s) to use as the column names, or None if no header.
 - **compression** : Optional[str]
                             
-	Compression type (e.g., 'gzip', 'bz2').
+    Compression type (e.g., 'gzip', 'bz2').
 - **sep** : Optional[str]
                             
-	Delimiter to use; defaults to comma.
+    Delimiter to use; defaults to comma.
 - **delimiter** : Optional[str]
                             
-	Alternative delimiter to use.
+    Alternative delimiter to use.
 - **dtype** : Optional[Dict[str, str]], Optional[List[str]]
                             
-	Data types for columns.
+    Data types for columns.
 - **na_values** : Optional[str], Optional[List[str]]
                             
-	Additional strings to recognize as NA/NaN.
+    Additional strings to recognize as NA/NaN.
 - **skiprows** : Optional[int]
                             
-	Number of rows to skip at the start.
+    Number of rows to skip at the start.
 - **quotechar** : Optional[str]
                             
-	Character used to quote fields.
+    Character used to quote fields.
 - **escapechar** : Optional[str]
                             
-	Character used to escape delimiter or quote characters.
+    Character used to escape delimiter or quote characters.
 - **encoding** : Optional[str]
                             
-	Encoding to use for UTF when reading/writing.
+    Encoding to use for UTF when reading/writing.
 - **parallel** : Optional[bool]
                             
-	Enable parallel reading.
+    Enable parallel reading.
 - **date_format** : Optional[str]
                             
-	Format to parse dates.
+    Format to parse dates.
 - **timestamp_format** : Optional[str]
                             
-	Format to parse timestamps.
+    Format to parse timestamps.
 - **sample_size** : Optional[int]
                             
-	Number of rows to sample for schema inference.
+    Number of rows to sample for schema inference.
 - **all_varchar** : Optional[bool]
                             
-	Treat all columns as VARCHAR.
+    Treat all columns as VARCHAR.
 - **normalize_names** : Optional[bool]
                             
-	Normalize column names to lowercase.
+    Normalize column names to lowercase.
 - **null_padding** : Optional[bool]
                             
-	Enable null padding for rows with missing columns.
+    Enable null padding for rows with missing columns.
 - **names** : Optional[List[str]]
                             
-	List of column names to use.
+    List of column names to use.
 - **lineterminator** : Optional[str]
                             
-	Character to break lines on.
+    Character to break lines on.
 - **columns** : Optional[Dict[str, str]]
                             
-	Column mapping for schema.
+    Column mapping for schema.
 - **auto_type_candidates** : Optional[List[str]]
                             
-	List of columns for automatic type inference.
+    List of columns for automatic type inference.
 - **max_line_size** : Optional[int]
                             
-	Maximum line size in bytes.
+    Maximum line size in bytes.
 - **ignore_errors** : Optional[bool]
                             
-	Ignore parsing errors.
+    Ignore parsing errors.
 - **store_rejects** : Optional[bool]
                             
-	Store rejected rows.
+    Store rejected rows.
 - **rejects_table** : Optional[str]
                             
-	Table name to store rejected rows.
+    Table name to store rejected rows.
 - **rejects_scan** : Optional[str]
                             
-	Scan to use for rejects.
+    Scan to use for rejects.
 - **rejects_limit** : Optional[int]
                             
-	Limit number of rejects stored.
+    Limit number of rejects stored.
 - **force_not_null** : Optional[List[str]]
                             
-	List of columns to force as NOT NULL.
+    List of columns to force as NOT NULL.
 - **buffer_size** : Optional[int]
                             
-	Buffer size in bytes.
+    Buffer size in bytes.
 - **decimal** : Optional[str]
                             
-	Character to recognize as decimal point.
+    Character to recognize as decimal point.
 - **allow_quoted_nulls** : Optional[bool]
                             
-	Allow quoted NULL values.
+    Allow quoted NULL values.
 - **filename** : Optional[bool], Optional[str]
                             
-	Add filename column or specify filename.
+    Add filename column or specify filename.
 - **hive_partitioning** : Optional[bool]
                             
-	Enable Hive-style partitioning.
+    Enable Hive-style partitioning.
 - **union_by_name** : Optional[bool]
                             
-	Union files by column name instead of position.
+    Union files by column name instead of position.
 - **hive_types** : Optional[Dict[str, str]]
                             
-	Hive types for columns.
+    Hive types for columns.
 - **hive_types_autocast** : Optional[bool]
                             
-	Automatically cast Hive types.
+    Automatically cast Hive types.
 - **connection** : DuckDBPyConnection
                             
-	DuckDB connection to use.
+    DuckDB connection to use.
 
 ##### Example
 
@@ -688,64 +687,64 @@ Create a relation object from the JSON file in 'name'
 
 - **path_or_buffer** : object
                             
-	File path or file-like object containing JSON data to be read.
+    File path or file-like object containing JSON data to be read.
 - **columns** : object
                             
-	Optional list of column names to project from the JSON data.
+    Optional list of column names to project from the JSON data.
 - **sample_size** : object
                             
-	Number of rows to sample for inferring JSON schema.
+    Number of rows to sample for inferring JSON schema.
 - **maximum_depth** : object
                             
-	Maximum depth to which JSON objects should be parsed.
+    Maximum depth to which JSON objects should be parsed.
 - **records** : str
                             
-	Format string specifying whether JSON is in records mode.
+    Format string specifying whether JSON is in records mode.
 - **format** : str
                             
-	Format of the JSON data (e.g., 'auto', 'newline_delimited').
+    Format of the JSON data (e.g., 'auto', 'newline_delimited').
 - **date_format** : object
                             
-	Format string for parsing date fields.
+    Format string for parsing date fields.
 - **timestamp_format** : object
                             
-	Format string for parsing timestamp fields.
+    Format string for parsing timestamp fields.
 - **compression** : object
                             
-	Compression codec used on the JSON data (e.g., 'gzip').
+    Compression codec used on the JSON data (e.g., 'gzip').
 - **maximum_object_size** : object
                             
-	Maximum size in bytes for individual JSON objects.
+    Maximum size in bytes for individual JSON objects.
 - **ignore_errors** : object
                             
-	If True, skip over JSON records with parsing errors.
+    If True, skip over JSON records with parsing errors.
 - **convert_strings_to_integers** : object
                             
-	If True, attempt to convert strings to integers where appropriate.
+    If True, attempt to convert strings to integers where appropriate.
 - **field_appearance_threshold** : object
                             
-	Threshold for inferring optional fields in nested JSON.
+    Threshold for inferring optional fields in nested JSON.
 - **map_inference_threshold** : object
                             
-	Threshold for inferring maps from JSON object patterns.
+    Threshold for inferring maps from JSON object patterns.
 - **maximum_sample_files** : object
                             
-	Maximum number of files to sample for schema inference.
+    Maximum number of files to sample for schema inference.
 - **filename** : object
                             
-	If True, include a column with the source filename for each row.
+    If True, include a column with the source filename for each row.
 - **hive_partitioning** : object
                             
-	If True, enable Hive partitioning based on directory structure.
+    If True, enable Hive partitioning based on directory structure.
 - **union_by_name** : object
                             
-	If True, align JSON columns by name instead of position.
+    If True, align JSON columns by name instead of position.
 - **hive_types** : object
                             
-	If True, use Hive types from directory structure for schema.
+    If True, use Hive types from directory structure for schema.
 - **hive_types_autocast** : object
                             
-	If True, automatically cast data types to match Hive types.
+    If True, automatically cast data types to match Hive types.
 
 ##### Example
 
@@ -803,25 +802,25 @@ Create a relation object from the Parquet files
 
 - **file_glob** : str
                             
-	File path or glob pattern pointing to Parquet files to be read.
+    File path or glob pattern pointing to Parquet files to be read.
 - **binary_as_string** : bool, default: False
                             
-	Interpret binary columns as strings instead of blobs.
+    Interpret binary columns as strings instead of blobs.
 - **file_row_number** : bool, default: False
                             
-	Add a column containing the row number within each file.
+    Add a column containing the row number within each file.
 - **filename** : bool, default: False
                             
-	Add a column containing the name of the file each row came from.
+    Add a column containing the name of the file each row came from.
 - **hive_partitioning** : bool, default: False
                             
-	Enable automatic detection of Hive-style partitions in file paths.
+    Enable automatic detection of Hive-style partitions in file paths.
 - **union_by_name** : bool, default: False
                             
-	Union Parquet files by matching column names instead of positions.
+    Union Parquet files by matching column names instead of positions.
 - **compression** : object
                             
-	Optional compression codec to use when reading the Parquet files.
+    Optional compression codec to use when reading the Parquet files.
 
 ##### Example
 
@@ -876,13 +875,13 @@ Run a SQL query. If it is a SELECT statement, create a relation object from the 
 
 - **query** : object
 
-	The SQL query or subquery to be executed and converted into a relation.
+    The SQL query or subquery to be executed and converted into a relation.
 - **alias** : str, default: ''
 
-	Optional alias name to assign to the resulting relation.
+    Optional alias name to assign to the resulting relation.
 - **params** : object
 
-	Optional query parameters. **Discouraged** due to [significant performance overhead]({% link docs/current/clients/python/known_issues.md %}#parameterized-queries-in-relational-api). Use [`execute()`]({% link docs/current/clients/python/dbapi.md %}#prepared-statements) for parameterized queries instead.
+    Optional query parameters. **Discouraged** due to [significant performance overhead]({% link docs/current/clients/python/known_issues.md %}#parameterized-queries-in-relational-api). Use [`execute()`]({% link docs/current/clients/python/dbapi.md %}#prepared-statements) for parameterized queries instead.
 
 ##### Example
 
@@ -925,7 +924,7 @@ Create a relation object for the named table
 
 - **table_name** : str
                             
-	Name of the table to create a relation from.
+    Name of the table to create a relation from.
 
 ##### Example
 
@@ -970,10 +969,10 @@ Create a relation object from the named table function with given parameters
 
 - **name** : str
                             
-	Name of the table function to call.
+    Name of the table function to call.
 - **parameters** : object
                             
-	Optional parameters to pass to the table function.
+    Optional parameters to pass to the table function.
 
 ##### Example
 
@@ -1058,7 +1057,7 @@ Create a relation object for the named view
 
 - **view_name** : str
                             
-	Name of the view to create a relation from.
+    Name of the view to create a relation from.
 
 ##### Example
 
@@ -1348,7 +1347,6 @@ rel.explain()
 │                           │
 │          ~9 Rows          │
 └───────────────────────────┘
-
 ```
 
 ----
@@ -1369,10 +1367,10 @@ Run the given SQL query in sql_query on the view named virtual_table_name that r
 
 - **virtual_table_name** : str
                             
-	The name to assign to the current relation when referenced in the SQL query.
+    The name to assign to the current relation when referenced in the SQL query.
 - **sql_query** : str
                             
-	The SQL query string that uses the virtual table name to query the relation.
+    The SQL query string that uses the virtual table name to query the relation.
 
 ##### Example
 
@@ -1429,7 +1427,7 @@ Rename the relation object to new alias
 
 - **alias** : str
                             
-	The alias name to assign to the relation.
+    The alias name to assign to the relation.
 
 ##### Example
 
@@ -1511,19 +1509,19 @@ Display a summary of the data
 
 - **max_width** : int
                             
-	Maximum display width for the entire output in characters.
+    Maximum display width for the entire output in characters.
 - **max_rows** : int
                             
-	Maximum number of rows to display.
+    Maximum number of rows to display.
 - **max_col_width** : int
                             
-	Maximum number of characters to display per column.
+    Maximum number of characters to display per column.
 - **null_value** : str
                             
-	String to display in place of NULL values.
+    String to display in place of NULL values.
 - **render_mode** : object
                             
-	Render mode for displaying the output.
+    Render mode for displaying the output.
 
 ##### Example
 
@@ -1723,10 +1721,10 @@ Compute the aggregate aggr_expr by the optional groups group_expr on the relatio
 
 - **aggr_expr** : str, list[Expression]
                             
-	The list of columns and aggregation functions.
+    The list of columns and aggregation functions.
 - **group_expr** : str, default: ''
                             
-	The list of columns to be included in `group_by`. If `None`, `group by all` is applied.
+    The list of columns to be included in `group_by`. If `None`, `group by all` is applied.
 
 ##### Example
 
@@ -1779,19 +1777,19 @@ Compute the function of a single column or a list of columns by the optional gro
 
 - **function_name** : str
                             
-	Name of the function to apply over the relation.
+    Name of the function to apply over the relation.
 - **function_aggr** : str
                             
-	The list of columns to apply the function over.
+    The list of columns to apply the function over.
 - **group_expr** : str, default: ''
                             
-	Optional SQL expression for grouping.
+    Optional SQL expression for grouping.
 - **function_parameter** : str, default: ''
                             
-	Optional parameters to pass into the function.
+    Optional parameters to pass into the function.
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -1849,7 +1847,7 @@ Create cross/cartesian product of two relational objects
 
 - **other_rel** : _duckdb.DuckDBPyRelation
                             
-	Another relation to perform a cross product with.
+    Another relation to perform a cross product with.
 
 ##### Example
 
@@ -1901,7 +1899,7 @@ Create the set except of this relation object with another relation object in ot
 
 - **other_rel** : _duckdb.DuckDBPyRelation
                             
-	The relation to subtract from the current relation (set difference).
+    The relation to subtract from the current relation (set difference).
 
 ##### Example
 
@@ -1955,7 +1953,7 @@ Filter the relation object by the filter in filter_expr
 
 - **filter_expr** : str, Expression
                             
-	The filter expression to apply over the relation.
+    The filter expression to apply over the relation.
 
 ##### Example
 
@@ -2007,7 +2005,7 @@ Inserts the given values into the relation
 
 - **values** : object
                             
-	A tuple of values matching the relation column list, to be inserted.
+    A tuple of values matching the relation column list, to be inserted.
 
 ##### Example
 
@@ -2072,7 +2070,7 @@ Inserts the relation object into an existing table named table_name
 
 - **table_name** : str
                             
-	The table name to insert the data into. The relation must respect the column order of the table.
+    The table name to insert the data into. The relation must respect the column order of the table.
 
 ##### Example
 
@@ -2137,7 +2135,7 @@ Create the set intersection of this relation object with another relation object
 
 - **other_rel** : _duckdb.DuckDBPyRelation
                             
-	The relation to intersect with the current relation (set intersection).
+    The relation to intersect with the current relation (set intersection).
 
 ##### Example
 
@@ -2254,13 +2252,13 @@ ON ((unnamed_relation_41bc15e744037078.id = unnamed_relation_307e245965aa2c2b.id
 
 - **other_rel** : _duckdb.DuckDBPyRelation
                             
-	The relation to join with the current relation.
+    The relation to join with the current relation.
 - **condition** : object
                             
-	The join condition, typically a SQL expression or the duplicated column name to join on.
+    The join condition, typically a SQL expression or the duplicated column name to join on.
 - **how** : str, default: 'inner'
                             
-	The type of join to perform: 'inner', 'left', 'right', 'outer', 'semi' and 'anti'.
+    The type of join to perform: 'inner', 'left', 'right', 'outer', 'semi' and 'anti'.
 
 ##### Example
 
@@ -2318,10 +2316,10 @@ Only retrieve the first n rows from this relation object, starting at offset
 
 - **n** : int
                             
-	The maximum number of rows to return.
+    The maximum number of rows to return.
 - **offset** : int, default: 0
                             
-	The number of rows to skip before starting to return rows.
+    The number of rows to skip before starting to return rows.
 
 ##### Example
 
@@ -2373,10 +2371,10 @@ Calls the passed function on the relation
 
 - **map_function** : Callable
                             
-	A Python function that takes a DataFrame and returns a transformed DataFrame.
+    A Python function that takes a DataFrame and returns a transformed DataFrame.
 - **schema** : object, default: None
                             
-	Optional schema describing the structure of the output relation.
+    Optional schema describing the structure of the output relation.
 
 ##### Example
 
@@ -2424,7 +2422,7 @@ Reorder the relation object by order_expr
 
 - **order_expr** : str
                             
-	SQL expression defining the ordering of the result rows.
+    SQL expression defining the ordering of the result rows.
 
 ##### Example
 
@@ -2478,7 +2476,7 @@ Project the relation object by the projection in project_expr
 
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 
 ##### Example
 
@@ -2532,7 +2530,7 @@ Project the relation object by the projection in project_expr
 
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 
 ##### Example
 
@@ -2632,7 +2630,7 @@ Create the set union of this relation object with another relation object in oth
 
 - **union_rel** : _duckdb.DuckDBPyRelation
                             
-	The relation to union with the current relation (set union).
+    The relation to union with the current relation (set union).
 
 ##### Example
 
@@ -2686,10 +2684,10 @@ Update the given relation with the provided expressions
 
 - **set** : object
                             
-	Mapping of columns to new values for the update operation.
+    Mapping of columns to new values for the update operation.
 - **condition** : object, default: None
                             
-	Optional condition to filter which rows to update.
+    Optional condition to filter which rows to update.
 
 ##### Example
 
@@ -2810,16 +2808,16 @@ Returns the first non-null value from a given expression
 
 - **column** : str
                             
-	The column name from which to retrieve any value.
+    The column name from which to retrieve any value.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`.
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`.
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -2871,19 +2869,19 @@ Finds the row with the maximum value for a value column and returns the value of
 
 - **arg_column** : str
                             
-	The column name for which to find the argument maximizing the value.
+    The column name for which to find the argument maximizing the value.
 - **value_column** : str
                             
-	The column name containing values used to determine the maximum.
+    The column name containing values used to determine the maximum.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`.
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`.
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -2936,19 +2934,19 @@ Finds the row with the minimum value for a value column and returns the value of
 
 - **arg_column** : str
                             
-	The column name for which to find the argument minimizing the value.
+    The column name for which to find the argument minimizing the value.
 - **value_column** : str
                             
-	The column name containing values used to determine the minimum.
+    The column name containing values used to determine the minimum.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -3001,16 +2999,16 @@ Computes the average of a given expression
 
 - **column** : str
                             
-	The column name to calculate the average on.
+    The column name to calculate the average on.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -3063,16 +3061,16 @@ Computes the bitwise AND of all bits present in a given expression
 
 - **column** : str
                             
-	The column name to perform the bitwise AND aggregation on.
+    The column name to perform the bitwise AND aggregation on.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -3127,16 +3125,16 @@ Computes the bitwise OR of all bits present in a given expression
 
 - **column** : str
                             
-	The column name to perform the bitwise OR aggregation on.
+    The column name to perform the bitwise OR aggregation on.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -3191,16 +3189,16 @@ Computes the bitwise XOR of all bits present in a given expression
 
 - **column** : str
                             
-	The column name to perform the bitwise XOR aggregation on.
+    The column name to perform the bitwise XOR aggregation on.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -3255,22 +3253,22 @@ Computes a bitstring with bits set for each distinct value in a given expression
 
 - **column** : str
                             
-	The column name to aggregate as a bitstring.
+    The column name to aggregate as a bitstring.
 - **min** : object, default: None
                             
-	Optional minimum bitstring value for aggregation.
+    Optional minimum bitstring value for aggregation.
 - **max** : object, default: None
                             
-	Optional maximum bitstring value for aggregation.
+    Optional maximum bitstring value for aggregation.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -3323,16 +3321,16 @@ Computes the logical AND of all values present in a given expression
 
 - **column** : str
                             
-	The column name to perform the boolean AND aggregation on.
+    The column name to perform the boolean AND aggregation on.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -3387,16 +3385,16 @@ Computes the logical OR of all values present in a given expression
 
 - **column** : str
                             
-	The column name to perform the boolean OR aggregation on.
+    The column name to perform the boolean OR aggregation on.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -3451,16 +3449,16 @@ Computes the number of elements present in a given expression
 
 - **column** : str
                             
-	The column name to perform count on.
+    The column name to perform count on.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -3512,10 +3510,10 @@ Computes the cumulative distribution within the partition
 
 - **window_spec** : str
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -3577,10 +3575,10 @@ Computes the dense rank within the partition
 
 - **window_spec** : str
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -3681,16 +3679,16 @@ Computes the average of all values present in a given expression using a more ac
 
 - **column** : str
                             
-	The column name to calculate the average on.
+    The column name to calculate the average on.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -3743,13 +3741,13 @@ Returns the first value of a given expression
 
 - **column** : str
                             
-	The column name from which to retrieve the first value.
+    The column name from which to retrieve the first value.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -3802,13 +3800,13 @@ Computes the first value within the group or partition
 
 - **column** : str
                             
-	The column name from which to retrieve the first value.
+    The column name from which to retrieve the first value.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -3861,16 +3859,16 @@ Computes the sum of all values present in a given expression using a more accura
 
 - **column** : str
                             
-	The column name to calculate the sum on.
+    The column name to calculate the sum on.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -3923,13 +3921,13 @@ Computes the geometric mean over all values present in a given expression
 
 - **column** : str
                             
-	The column name to calculate the geometric mean on.
+    The column name to calculate the geometric mean on.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -3982,13 +3980,13 @@ Computes the histogram over all values present in a given expression
 
 - **column** : str
                             
-	The column name to calculate the histogram on.
+    The column name to calculate the histogram on.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -4041,22 +4039,22 @@ Computes the lag within the partition
 
 - **column** : str
                             
-	The column name to apply the lag function on.
+    The column name to apply the lag function on.
 - **window_spec** : str
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **offset** : int, default: 1
                             
-	The number of rows to lag behind.
+    The number of rows to lag behind.
 - **default_value** : str, default: 'NULL'
                             
-	The default value to return when the lag offset goes out of bounds.
+    The default value to return when the lag offset goes out of bounds.
 - **ignore_nulls** : bool, default: False
                             
-	Whether to ignore NULL values when computing the lag.
+    Whether to ignore NULL values when computing the lag.
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -4116,13 +4114,13 @@ Returns the last value of a given expression
 
 - **column** : str
                             
-	The column name from which to retrieve the last value.
+    The column name from which to retrieve the last value.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -4175,13 +4173,13 @@ Computes the last value within the group or partition
 
 - **column** : str
                             
-	The column name from which to retrieve the last value within the window.
+    The column name from which to retrieve the last value within the window.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -4234,22 +4232,22 @@ Computes the lead within the partition
 
 - **column** : str
                             
-	The column name to apply the lead function on.
+    The column name to apply the lead function on.
 - **window_spec** : str
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **offset** : int, default: 1
                             
-	The number of rows to lead ahead.
+    The number of rows to lead ahead.
 - **default_value** : str, default: 'NULL'
                             
-	The default value to return when the lead offset goes out of bounds.
+    The default value to return when the lead offset goes out of bounds.
 - **ignore_nulls** : bool, default: False
                             
-	Whether to ignore NULL values when computing the lead.
+    Whether to ignore NULL values when computing the lead.
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -4309,16 +4307,16 @@ Returns a list containing all values present in a given expression
 
 - **column** : str
                             
-	The column name to aggregate values into a list.
+    The column name to aggregate values into a list.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -4371,16 +4369,16 @@ Returns the maximum value present in a given expression
 
 - **column** : str
                             
-	The column name to calculate the maximum value of.
+    The column name to calculate the maximum value of.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -4433,16 +4431,16 @@ Computes the average of a given expression
 
 - **column** : str
                             
-	The column name to calculate the mean value of.
+    The column name to calculate the mean value of.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -4495,16 +4493,16 @@ Computes the median over all values present in a given expression
 
 - **column** : str
                             
-	The column name to calculate the median value of.
+    The column name to calculate the median value of.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -4557,16 +4555,16 @@ Returns the minimum value present in a given expression
 
 - **column** : str
                             
-	The column name to calculate the min value of.
+    The column name to calculate the min value of.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -4619,16 +4617,16 @@ Computes the mode over all values present in a given expression
 
 - **column** : str
                             
-	The column name to calculate the mode (most frequent value) of.
+    The column name to calculate the mode (most frequent value) of.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -4681,13 +4679,13 @@ Divides the partition as equally as possible into num_buckets
 
 - **window_spec** : str
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **num_buckets** : int
                             
-	The number of buckets to divide the rows into.
+    The number of buckets to divide the rows into.
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -4747,19 +4745,19 @@ Computes the nth value within the partition
 
 - **column** : str
                             
-	The column name from which to retrieve the nth value within the window.
+    The column name from which to retrieve the nth value within the window.
 - **window_spec** : str
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **offset** : int
                             
-	The position of the value to retrieve within the window (1-based index).
+    The position of the value to retrieve within the window (1-based index).
 - **ignore_nulls** : bool, default: False
                             
-	Whether to ignore NULL values when computing the nth value.
+    Whether to ignore NULL values when computing the nth value.
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -4819,10 +4817,10 @@ Computes the relative rank within the partition
 
 - **window_spec** : str
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -4882,16 +4880,16 @@ Returns the product of all values present in a given expression
 
 - **column** : str
                             
-	The column name to calculate the product of.
+    The column name to calculate the product of.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -4944,19 +4942,19 @@ Computes the exact quantile value for a given expression
 
 - **column** : str
                             
-	The column name to compute the quantile for.
+    The column name to compute the quantile for.
 - **q** : object, default: 0.5
                             
-	The quantile value to compute (e.g., 0.5 for median).
+    The quantile value to compute (e.g., 0.5 for median).
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -5009,19 +5007,19 @@ Computes the interpolated quantile value for a given expression
 
 - **column** : str
                             
-	The column name to compute the continuous quantile for.
+    The column name to compute the continuous quantile for.
 - **q** : object, default: 0.5
                             
-	The quantile value to compute (e.g., 0.5 for median).
+    The quantile value to compute (e.g., 0.5 for median).
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -5074,19 +5072,19 @@ Computes the exact quantile value for a given expression
 
 - **column** : str
                             
-	The column name to compute the discrete quantile for.
+    The column name to compute the discrete quantile for.
 - **q** : object, default: 0.5
                             
-	The quantile value to compute (e.g., 0.5 for median).
+    The quantile value to compute (e.g., 0.5 for median).
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -5139,10 +5137,10 @@ Computes the rank within the partition
 
 - **window_spec** : str
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -5204,10 +5202,10 @@ Computes the dense rank within the partition
 
 - **window_spec** : str
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -5267,10 +5265,10 @@ Computes the row number within the partition
 
 - **window_spec** : str
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -5332,7 +5330,7 @@ Select columns from the relation, by filtering based on type(s)
 
 - **types** : object
                             
-	Data type(s) to select columns by. Can be a single type or a collection of types.
+    Data type(s) to select columns by. Can be a single type or a collection of types.
 
 ##### Example
 
@@ -5387,7 +5385,7 @@ Select columns from the relation, by filtering based on type(s)
 
 - **types** : object
                             
-	Data type(s) to select columns by. Can be a single type or a collection of types.
+    Data type(s) to select columns by. Can be a single type or a collection of types.
 
 ##### Example
 
@@ -5442,16 +5440,16 @@ Computes the sample standard deviation for a given expression
 
 - **column** : str
                             
-	The column name to calculate the standard deviation for.
+    The column name to calculate the standard deviation for.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -5506,16 +5504,16 @@ Computes the sample standard deviation for a given expression
 
 - **column** : str
                             
-	The column name to calculate the standard deviation for.
+    The column name to calculate the standard deviation for.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -5568,16 +5566,16 @@ Computes the population standard deviation for a given expression
 
 - **column** : str
                             
-	The column name to calculate the standard deviation for.
+    The column name to calculate the standard deviation for.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -5632,16 +5630,16 @@ Computes the sample standard deviation for a given expression
 
 - **column** : str
                             
-	The column name to calculate the standard deviation for.
+    The column name to calculate the standard deviation for.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -5694,19 +5692,19 @@ Concatenates the values present in a given expression with a separator
 
 - **column** : str
                             
-	The column name to concatenate values from.
+    The column name to concatenate values from.
 - **sep** : str, default: ','
                             
-	Separator string to use between concatenated values.
+    Separator string to use between concatenated values.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -5759,16 +5757,16 @@ Computes the sum of all values present in a given expression
 
 - **column** : str
                             
-	The column name to calculate the sum for.
+    The column name to calculate the sum for.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -5821,7 +5819,7 @@ Returns the distinct values in a column.
 
 - **unique_aggr** : str
                             
-	The column to get the distinct values for.
+    The column to get the distinct values for.
 
 ##### Example
 
@@ -5874,10 +5872,10 @@ Computes the number of elements present in a given expression, also projecting t
 
 - **column** : str
                             
-	The column name to count values from.
+    The column name to count values from.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 
 ##### Example
 
@@ -5932,16 +5930,16 @@ Computes the sample variance for a given expression
 
 - **column** : str
                             
-	The column name to calculate the sample variance for.
+    The column name to calculate the sample variance for.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -5994,16 +5992,16 @@ Computes the population variance for a given expression
 
 - **column** : str
                             
-	The column name to calculate the population variance for.
+    The column name to calculate the population variance for.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -6058,16 +6056,16 @@ Computes the sample variance for a given expression
 
 - **column** : str
                             
-	The column name to calculate the sample variance for.
+    The column name to calculate the sample variance for.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -6122,16 +6120,16 @@ Computes the sample variance for a given expression
 
 - **column** : str
                             
-	The column name to calculate the sample variance for.
+    The column name to calculate the sample variance for.
 - **groups** : str, default: ''
                             
-	Comma-separated list of columns to include in the `group by`.
+    Comma-separated list of columns to include in the `group by`.
 - **window_spec** : str, default: ''
                             
-	Optional window specification for window functions, provided as `over (partition by ... order by ...)`
+    Optional window specification for window functions, provided as `over (partition by ... order by ...)`
 - **projected_columns** : str, default: ''
                             
-	Comma-separated list of columns to include in the result.
+    Comma-separated list of columns to include in the result.
 
 ##### Example
 
@@ -6220,7 +6218,7 @@ Alias of to_arrow_reader(). We recommend using to_arrow_reader() instead.
 
 - **batch_size** : int, default: 1000000
                             
-	The batch size for fetching the data.
+    The batch size for fetching the data.
 
 ##### Example
 
@@ -6294,7 +6292,7 @@ Creates a new table named table_name with the contents of the relation object
 
 - **table_name** : str
                             
-	The name of the table to be created. There shouldn't be any other table with the same name.
+    The name of the table to be created. There shouldn't be any other table with the same name.
 
 ##### Example
 
@@ -6350,10 +6348,10 @@ Creates a view named view_name that refers to the relation object
 
 - **view_name** : str
                             
-	The name of the view to be created.
+    The name of the view to be created.
 - **replace** : bool, default: True
                             
-	If the view should be created with `CREATE OR REPLACE`. When set to `False`, there shouldn't be another view with the same `view_name`.
+    If the view should be created with `CREATE OR REPLACE`. When set to `False`, there shouldn't be another view with the same `view_name`.
 
 ##### Example
 
@@ -6409,7 +6407,7 @@ Execute and fetch all rows as a pandas DataFrame
 
 - **date_as_object** : bool, default: False
                             
-	If the date columns should be interpreted as Python date objects.
+    If the date columns should be interpreted as Python date objects.
 
 ##### Example
 
@@ -6509,7 +6507,7 @@ Execute and return an Arrow Record Batch Reader that yields all rows
 
 - **batch_size** : int, default: 1000000
                             
-	The batch size for fetching the data.
+    The batch size for fetching the data.
 
 ##### Example
 
@@ -6571,7 +6569,7 @@ Execute and fetch all rows as an Arrow Table
 
 - **batch_size** : int, default: 1000000
                             
-	The batch size for fetching the data.
+    The batch size for fetching the data.
 
 ##### Example
 
@@ -6627,10 +6625,10 @@ Execute and fetch a chunk of the rows
 
 - **vectors_per_chunk** : int, default: 1
                             
-	Number of data chunks to be processed before converting to dataframe.
+    Number of data chunks to be processed before converting to dataframe.
 - **date_as_object** : bool, default: False
                             
-	If the date columns should be interpreted as Python date objects.
+    If the date columns should be interpreted as Python date objects.
 
 ##### Example
 
@@ -6685,7 +6683,7 @@ Execute and return an Arrow Record Batch Reader that yields all rows
 
 - **rows_per_batch** : int, default: 1000000
                             
-	The number of rows per batch.
+    The number of rows per batch.
 
 ##### Example
 
@@ -6789,7 +6787,7 @@ Execute and fetch all rows as a pandas DataFrame
 
 - **date_as_object** : bool, default: False
                             
-	If the date columns should be interpreted as Python date objects.
+    If the date columns should be interpreted as Python date objects.
 
 ##### Example
 
@@ -6866,7 +6864,7 @@ Execute and fetch the next set of rows as a list of tuples
 
 - **size** : int, default: 1
                             
-	The number of records to be fetched.
+    The number of records to be fetched.
 
 ##### Example
 
@@ -7057,7 +7055,7 @@ Execute and fetch all rows as a Polars DataFrame
 
 - **batch_size** : int, default: 1000000
                             
-	The number of records to be fetched per batch.
+    The number of records to be fetched per batch.
 
 ##### Example
 
@@ -7158,7 +7156,7 @@ Execute and return an Arrow Record Batch Reader that yields all rows
 
 - **batch_size** : int, default: 1000000
                             
-	The batch size for fetching the data.
+    The batch size for fetching the data.
 
 ##### Example
 
@@ -7218,7 +7216,7 @@ Execute and fetch all rows as an Arrow Table
 
 - **batch_size** : int, default: 1000000
                             
-	The batch size for fetching the data.
+    The batch size for fetching the data.
 
 ##### Example
 
@@ -7276,52 +7274,52 @@ Write the relation object to a CSV file in 'file_name'
 
 - **file_name** : str
                             
-	The name of the output CSV file.
+    The name of the output CSV file.
 - **sep** : str, default: ','
                             
-	Field delimiter for the output file.
+    Field delimiter for the output file.
 - **na_rep** : str, default: ''
                             
-	Missing data representation.
+    Missing data representation.
 - **header** : bool, default: True
                             
-	Whether to write column headers.
+    Whether to write column headers.
 - **quotechar** : str, default: '"'
                             
-	Character used to quote fields containing special characters.
+    Character used to quote fields containing special characters.
 - **escapechar** : str, default: None
                             
-	Character used to escape the delimiter if quoting is set to QUOTE_NONE.
+    Character used to escape the delimiter if quoting is set to QUOTE_NONE.
 - **date_format** : str, default: None
                             
-	Custom format string for DATE values.
+    Custom format string for DATE values.
 - **timestamp_format** : str, default: None
                             
-	Custom format string for TIMESTAMP values.
+    Custom format string for TIMESTAMP values.
 - **quoting** : int, default: csv.QUOTE_MINIMAL
                             
-	Control field quoting behavior (e.g., QUOTE_MINIMAL, QUOTE_ALL).
+    Control field quoting behavior (e.g., QUOTE_MINIMAL, QUOTE_ALL).
 - **encoding** : str, default: 'utf-8'
                             
-	Character encoding for the output file.
+    Character encoding for the output file.
 - **compression** : str, default: auto
                             
-	Compression type (e.g., 'gzip', 'bz2', 'zstd').
+    Compression type (e.g., 'gzip', 'bz2', 'zstd').
 - **overwrite** : bool, default: False
                             
-	When true, all existing files inside targeted directories will be removed (not supported on remote filesystems). Only has an effect when used with `partition_by`.
+    When true, all existing files inside targeted directories will be removed (not supported on remote filesystems). Only has an effect when used with `partition_by`.
 - **per_thread_output** : bool, default: False
                             
-	When `true`, write one file per thread, rather than one file in total. This allows for faster parallel writing.
+    When `true`, write one file per thread, rather than one file in total. This allows for faster parallel writing.
 - **use_tmp_file** : bool, default: False
                             
-	Write to a temporary file before renaming to final name to avoid partial writes.
+    Write to a temporary file before renaming to final name to avoid partial writes.
 - **partition_by** : list[str], default: None
                             
-	List of column names to partition output by (creates folder structure).
+    List of column names to partition output by (creates folder structure).
 - **write_partition_columns** : bool, default: False
                             
-	Whether or not to write partition columns into files. Only has an effect when used with `partition_by`.
+    Whether or not to write partition columns into files. Only has an effect when used with `partition_by`.
 
 ##### Example
 
@@ -7370,7 +7368,7 @@ Execute and fetch all rows as a pandas DataFrame
 
 - **date_as_object** : bool, default: False
                             
-	If the date columns should be interpreted as Python date objects.
+    If the date columns should be interpreted as Python date objects.
 
 ##### Example
 
@@ -7423,37 +7421,37 @@ Write the relation object to a Parquet file in 'file_name'
 
 - **file_name** : str
                             
-	The name of the output Parquet file.
+    The name of the output Parquet file.
 - **compression** : str, default: 'snappy'
                             
-	The compression format to use (`uncompressed`, `snappy`, `gzip`, `zstd`, `brotli`, `lz4`, `lz4_raw`).
+    The compression format to use (`uncompressed`, `snappy`, `gzip`, `zstd`, `brotli`, `lz4`, `lz4_raw`).
 - **field_ids** : STRUCT
                             
-	The field_id for each column. Pass auto to attempt to infer automatically.
+    The field_id for each column. Pass auto to attempt to infer automatically.
 - **row_group_size_bytes** : int, default: row_group_size * 1024
                             
-	The target size of each row group. You can pass either a human-readable string, e.g., 2MB, or an integer, i.e., the number of bytes. This option is only used when you have issued `SET preserve_insertion_order = false;`, otherwise, it is ignored.
+    The target size of each row group. You can pass either a human-readable string, e.g., 2MB, or an integer, i.e., the number of bytes. This option is only used when you have issued `SET preserve_insertion_order = false;`, otherwise, it is ignored.
 - **row_group_size** : int, default: 122880
                             
-	The target size, i.e., number of rows, of each row group.
+    The target size, i.e., number of rows, of each row group.
 - **overwrite** : bool, default: False
                             
-	If True, overwrite the file if it exists.
+    If True, overwrite the file if it exists.
 - **per_thread_output** : bool, default: False
                             
-	When `True`, write one file per thread, rather than one file in total. This allows for faster parallel writing.
+    When `True`, write one file per thread, rather than one file in total. This allows for faster parallel writing.
 - **use_tmp_file** : bool, default: False
                             
-	Write to a temporary file before renaming to final name to avoid partial writes.
+    Write to a temporary file before renaming to final name to avoid partial writes.
 - **partition_by** : list[str], default: None
                             
-	List of column names to partition output by (creates folder structure).
+    List of column names to partition output by (creates folder structure).
 - **write_partition_columns** : bool, default: False
                             
-	Whether or not to write partition columns into files. Only has an effect when used with `partition_by`.
+    Whether or not to write partition columns into files. Only has an effect when used with `partition_by`.
 - **append** : bool, default: False
                             
-	When `True`, in the event a filename pattern is generated that already exists, the path will be regenerated to ensure no existing files are overwritten. Only has an effect when used with `partition_by`.
+    When `True`, in the event a filename pattern is generated that already exists, the path will be regenerated to ensure no existing files are overwritten. Only has an effect when used with `partition_by`.
 
 ##### Example
 
@@ -7502,7 +7500,7 @@ Creates a new table named table_name with the contents of the relation object
 
 - **table_name** : str
                             
-	The name of the table to be created. There shouldn't be any other table with the same name.
+    The name of the table to be created. There shouldn't be any other table with the same name.
 
 ##### Example
 
@@ -7551,10 +7549,10 @@ Creates a view named view_name that refers to the relation object
 
 - **view_name** : str
                             
-	The name of the view to be created.
+    The name of the view to be created.
 - **replace** : bool, default: True
                             
-	If the view should be created with `CREATE OR REPLACE`. When set to `False`, there shouldn't be another view with the same `view_name`.
+    If the view should be created with `CREATE OR REPLACE`. When set to `False`, there shouldn't be another view with the same `view_name`.
 
 ##### Example
 
@@ -7644,52 +7642,52 @@ Write the relation object to a CSV file in 'file_name'
 
 - **file_name** : str
                             
-	The name of the output CSV file.
+    The name of the output CSV file.
 - **sep** : str, default: ','
                             
-	Field delimiter for the output file.
+    Field delimiter for the output file.
 - **na_rep** : str, default: ''
                             
-	Missing data representation.
+    Missing data representation.
 - **header** : bool, default: True
                             
-	Whether to write column headers.
+    Whether to write column headers.
 - **quotechar** : str, default: '"'
                             
-	Character used to quote fields containing special characters.
+    Character used to quote fields containing special characters.
 - **escapechar** : str, default: None
                             
-	Character used to escape the delimiter if quoting is set to QUOTE_NONE.
+    Character used to escape the delimiter if quoting is set to QUOTE_NONE.
 - **date_format** : str, default: None
                             
-	Custom format string for DATE values.
+    Custom format string for DATE values.
 - **timestamp_format** : str, default: None
                             
-	Custom format string for TIMESTAMP values.
+    Custom format string for TIMESTAMP values.
 - **quoting** : int, default: csv.QUOTE_MINIMAL
                             
-	Control field quoting behavior (e.g., QUOTE_MINIMAL, QUOTE_ALL).
+    Control field quoting behavior (e.g., QUOTE_MINIMAL, QUOTE_ALL).
 - **encoding** : str, default: 'utf-8'
                             
-	Character encoding for the output file.
+    Character encoding for the output file.
 - **compression** : str, default: auto
                             
-	Compression type (e.g., 'gzip', 'bz2', 'zstd').
+    Compression type (e.g., 'gzip', 'bz2', 'zstd').
 - **overwrite** : bool, default: False
                             
-	When true, all existing files inside targeted directories will be removed (not supported on remote filesystems). Only has an effect when used with `partition_by`.
+    When true, all existing files inside targeted directories will be removed (not supported on remote filesystems). Only has an effect when used with `partition_by`.
 - **per_thread_output** : bool, default: False
                             
-	When `true`, write one file per thread, rather than one file in total. This allows for faster parallel writing.
+    When `true`, write one file per thread, rather than one file in total. This allows for faster parallel writing.
 - **use_tmp_file** : bool, default: False
                             
-	Write to a temporary file before renaming to final name to avoid partial writes.
+    Write to a temporary file before renaming to final name to avoid partial writes.
 - **partition_by** : list[str], default: None
                             
-	List of column names to partition output by (creates folder structure).
+    List of column names to partition output by (creates folder structure).
 - **write_partition_columns** : bool, default: False
                             
-	Whether or not to write partition columns into files. Only has an effect when used with `partition_by`.
+    Whether or not to write partition columns into files. Only has an effect when used with `partition_by`.
 
 ##### Example
 
@@ -7738,37 +7736,37 @@ Write the relation object to a Parquet file in 'file_name'
 
 - **file_name** : str
                             
-	The name of the output Parquet file.
+    The name of the output Parquet file.
 - **compression** : str, default: 'snappy'
                             
-	The compression format to use (`uncompressed`, `snappy`, `gzip`, `zstd`, `brotli`, `lz4`, `lz4_raw`).
+    The compression format to use (`uncompressed`, `snappy`, `gzip`, `zstd`, `brotli`, `lz4`, `lz4_raw`).
 - **field_ids** : STRUCT
                             
-	The field_id for each column. Pass auto to attempt to infer automatically.
+    The field_id for each column. Pass auto to attempt to infer automatically.
 - **row_group_size_bytes** : int, default: row_group_size * 1024
                             
-	The target size of each row group. You can pass either a human-readable string, e.g., 2MB, or an integer, i.e., the number of bytes. This option is only used when you have issued `SET preserve_insertion_order = false;`, otherwise, it is ignored.
+    The target size of each row group. You can pass either a human-readable string, e.g., 2MB, or an integer, i.e., the number of bytes. This option is only used when you have issued `SET preserve_insertion_order = false;`, otherwise, it is ignored.
 - **row_group_size** : int, default: 122880
                             
-	The target size, i.e., number of rows, of each row group.
+    The target size, i.e., number of rows, of each row group.
 - **overwrite** : bool, default: False
                             
-	If True, overwrite the file if it exists.
+    If True, overwrite the file if it exists.
 - **per_thread_output** : bool, default: False
                             
-	When `True`, write one file per thread, rather than one file in total. This allows for faster parallel writing.
+    When `True`, write one file per thread, rather than one file in total. This allows for faster parallel writing.
 - **use_tmp_file** : bool, default: False
                             
-	Write to a temporary file before renaming to final name to avoid partial writes.
+    Write to a temporary file before renaming to final name to avoid partial writes.
 - **partition_by** : list[str], default: None
                             
-	List of column names to partition output by (creates folder structure).
+    List of column names to partition output by (creates folder structure).
 - **write_partition_columns** : bool, default: False
                             
-	Whether or not to write partition columns into files. Only has an effect when used with `partition_by`.
+    Whether or not to write partition columns into files. Only has an effect when used with `partition_by`.
 - **append** : bool, default: False
                             
-	When `True`, in the event a filename pattern is generated that already exists, the path will be regenerated to ensure no existing files are overwritten. Only has an effect when used with `partition_by`.
+    When `True`, in the event a filename pattern is generated that already exists, the path will be regenerated to ensure no existing files are overwritten. Only has an effect when used with `partition_by`.
 
 ##### Example
 

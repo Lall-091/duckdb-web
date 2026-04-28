@@ -23,7 +23,7 @@ CREATE SECRET my_secret (
     TYPE s3,
     KEY_ID '⟨AKIAIOSFODNN7EXAMPLE⟩',
     SECRET '⟨wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY⟩',
-	URL_STYLE 'path',
+    URL_STYLE 'path',
     REGION '⟨us-east⟩',
     ENDPOINT '⟨us-east⟩.object.fastlystorage.app' -- see note below
 );

@@ -128,7 +128,6 @@ text_emotions_tokenized_rel.join(
     condition="token",
     how="anti",
 ).to_table("text_emotion_tokens")
-
 ```
 
 Now that we have tokenized and cleaned the text, we can implement keyword search by ranking the match with [similarity functions]({% link docs/lts/sql/functions/text.md %}#text-similarity-functions), such as [Jaccard](https://en.wikipedia.org/wiki/Jaccard_index):
