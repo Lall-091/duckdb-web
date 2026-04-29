@@ -14,11 +14,12 @@ extension:
   license: MIT
   maintainers:
     - neuesql
+    - wuqunfei
   excluded_platforms: "wasm_mvp;wasm_eh;wasm_threads;windows_amd64_rtools;windows_amd64_mingw"
 
 repo:
   github: neuesql/atm_talib
-  ref: e3f6fb79dda4e930e0fa25ce68a6a0a2383645da
+  ref: 53c4312814729d037f865126025cc4235aa4afea
 
 docs:
   hello_world: |
@@ -26,10 +27,7 @@ docs:
     SELECT t_sma([1.0, 2.0, 3.0, 4.0, 5.0], 3);
 
     -- Aggregate/window form: use OVER() for row-by-row SMA
-    SELECT date, close,
-           ta_sma(close, 14) OVER (ORDER BY date
-                                   ROWS BETWEEN 13 PRECEDING AND CURRENT ROW) AS sma_14
-    FROM ohlc;
+    SELECT date, close, ta_sma(close, 14) OVER (ORDER BY date ROWS BETWEEN 13 PRECEDING AND CURRENT ROW) AS sma_14 FROM ohlc;
 
     -- Multi-output indicators return structs (MACD, Bollinger Bands)
     SELECT t_macd(list(close ORDER BY date), 12, 26, 9) FROM ohlc;
@@ -41,18 +39,32 @@ docs:
     FROM ohlc;
   extended_description: |
     100+ TA-Lib indicators as native DuckDB functions: overlap studies
-    (SMA, EMA, BBANDS), momentum (RSI, MACD, Stochastic), volatility
-    (ATR, NATR), volume and cycle indicators, math/statistics, and
-    candlestick pattern recognizers.
+    | Category | Count | Examples |
+    |----------|-------|---------|
+    | 🔀 Overlap Studies | 8+ | `t_sma`, `t_ema`, `t_wma`, `t_dema`, `t_tema` |
+    | 🏃 Momentum | 15+ | `t_rsi`, `t_macd`, `t_willr`, `t_cci`, `t_adx` |
+    | 🔊 Volume | 1+ | `t_ad` |
+    | 🌊 Volatility | 2+ | `t_atr`, `t_natr` |
+    | 🕯️ Pattern Recognition | 49+ | `t_cdldoji`, `t_cdlhammer`, `t_cdlengulfing` |
+    | 💰 Price Transform | 2+ | `t_avgprice`, `t_bop` |
+    | 🔄 Cycle Indicators | 4+ | `t_ht_dcperiod`, `t_ht_trendline`, `t_ht_trendmode` |
+    | 📏 Statistics | 10+ | `t_linearreg`, `t_tsf`, `t_max`, `t_min` |
+    | ➗ Math Transform | 15 | `t_sin`, `t_cos`, `t_ln`, `t_sqrt` |
 
     Every function is registered in two forms:
     - Scalar (`t_*`): pass pre-collected lists, returns a list
     - Aggregate/window (`ta_*`): use with `OVER()` for row-by-row results
+    
+    | | 🏎️ Scalar `t_*` | 🧑‍💻 Aggregate `ta_*` |
+    |---|---|---|
+    | **Performance** | ⚡ Fast — one pass over the full series, O(N) | 🐢 Slower — recomputes per window frame, ~O(N × window) |
+    | **Ergonomics** | Requires `list(col ORDER BY date)` + `unnest` to rejoin rows | Natural SQL — plugs into `OVER (PARTITION BY … ORDER BY …)` |
+    | **Best for** | Backtests, full-history feature generation, large datasets | Dashboards, ad-hoc queries, mixing indicators with row-level columns |
 
 extension_star_count: 2
 extension_star_count_pretty: 2
-extension_download_count: 353
-extension_download_count_pretty: 353
+extension_download_count: 361
+extension_download_count_pretty: 361
 image: '/images/community_extensions/social_preview/preview_community_extension_talib.png'
 layout: community_extension_doc
 ---
@@ -78,252 +90,260 @@ LOAD {{ page.extension.name }};
 
 <div class="extension_functions_table"></div>
 
-|      function_name      | function_type | description | comment | examples |
-|-------------------------|---------------|-------------|---------|----------|
-| ta_acos                 | scalar        | NULL        | NULL    |          |
-| ta_ad                   | scalar        | NULL        | NULL    |          |
-| ta_adx                  | scalar        | NULL        | NULL    |          |
-| ta_adxr                 | scalar        | NULL        | NULL    |          |
-| ta_aroon                | scalar        | NULL        | NULL    |          |
-| ta_asin                 | scalar        | NULL        | NULL    |          |
-| ta_atan                 | scalar        | NULL        | NULL    |          |
-| ta_atr                  | scalar        | NULL        | NULL    |          |
-| ta_avgprice             | scalar        | NULL        | NULL    |          |
-| ta_bbands               | scalar        | NULL        | NULL    |          |
-| ta_bop                  | scalar        | NULL        | NULL    |          |
-| ta_cci                  | scalar        | NULL        | NULL    |          |
-| ta_cdl2crows            | scalar        | NULL        | NULL    |          |
-| ta_cdl3blackcrows       | scalar        | NULL        | NULL    |          |
-| ta_cdl3inside           | scalar        | NULL        | NULL    |          |
-| ta_cdl3linestrike       | scalar        | NULL        | NULL    |          |
-| ta_cdl3outside          | scalar        | NULL        | NULL    |          |
-| ta_cdl3starsinsouth     | scalar        | NULL        | NULL    |          |
-| ta_cdl3whitesoldiers    | scalar        | NULL        | NULL    |          |
-| ta_cdladvanceblock      | scalar        | NULL        | NULL    |          |
-| ta_cdlbelthold          | scalar        | NULL        | NULL    |          |
-| ta_cdlbreakaway         | scalar        | NULL        | NULL    |          |
-| ta_cdlclosingmarubozu   | scalar        | NULL        | NULL    |          |
-| ta_cdlconcealbabyswall  | scalar        | NULL        | NULL    |          |
-| ta_cdlcounterattack     | scalar        | NULL        | NULL    |          |
-| ta_cdldoji              | scalar        | NULL        | NULL    |          |
-| ta_cdldojistar          | scalar        | NULL        | NULL    |          |
-| ta_cdldragonflydoji     | scalar        | NULL        | NULL    |          |
-| ta_cdlengulfing         | scalar        | NULL        | NULL    |          |
-| ta_cdlgapsidesidewhite  | scalar        | NULL        | NULL    |          |
-| ta_cdlgravestonedoji    | scalar        | NULL        | NULL    |          |
-| ta_cdlhammer            | scalar        | NULL        | NULL    |          |
-| ta_cdlhangingman        | scalar        | NULL        | NULL    |          |
-| ta_cdlharami            | scalar        | NULL        | NULL    |          |
-| ta_cdlharamicross       | scalar        | NULL        | NULL    |          |
-| ta_cdlhighwave          | scalar        | NULL        | NULL    |          |
-| ta_cdlhikkake           | scalar        | NULL        | NULL    |          |
-| ta_cdlhikkakemod        | scalar        | NULL        | NULL    |          |
-| ta_cdlhomingpigeon      | scalar        | NULL        | NULL    |          |
-| ta_cdlidentical3crows   | scalar        | NULL        | NULL    |          |
-| ta_cdlinneck            | scalar        | NULL        | NULL    |          |
-| ta_cdlinvertedhammer    | scalar        | NULL        | NULL    |          |
-| ta_cdlkicking           | scalar        | NULL        | NULL    |          |
-| ta_cdlkickingbylength   | scalar        | NULL        | NULL    |          |
-| ta_cdlladderbottom      | scalar        | NULL        | NULL    |          |
-| ta_cdllongleggeddoji    | scalar        | NULL        | NULL    |          |
-| ta_cdllongline          | scalar        | NULL        | NULL    |          |
-| ta_cdlmarubozu          | scalar        | NULL        | NULL    |          |
-| ta_cdlmatchinglow       | scalar        | NULL        | NULL    |          |
-| ta_cdlonneck            | scalar        | NULL        | NULL    |          |
-| ta_cdlpiercing          | scalar        | NULL        | NULL    |          |
-| ta_cdlrickshawman       | scalar        | NULL        | NULL    |          |
-| ta_cdlrisefall3methods  | scalar        | NULL        | NULL    |          |
-| ta_cdlseparatinglines   | scalar        | NULL        | NULL    |          |
-| ta_cdlshootingstar      | scalar        | NULL        | NULL    |          |
-| ta_cdlshortline         | scalar        | NULL        | NULL    |          |
-| ta_cdlspinningtop       | scalar        | NULL        | NULL    |          |
-| ta_cdlstalledpattern    | scalar        | NULL        | NULL    |          |
-| ta_cdlsticksandwich     | scalar        | NULL        | NULL    |          |
-| ta_cdltakuri            | scalar        | NULL        | NULL    |          |
-| ta_cdltasukigap         | scalar        | NULL        | NULL    |          |
-| ta_cdlthrusting         | scalar        | NULL        | NULL    |          |
-| ta_cdltristar           | scalar        | NULL        | NULL    |          |
-| ta_cdlunique3river      | scalar        | NULL        | NULL    |          |
-| ta_cdlupsidegap2crows   | scalar        | NULL        | NULL    |          |
-| ta_cdlxsidegap3methods  | scalar        | NULL        | NULL    |          |
-| ta_ceil                 | scalar        | NULL        | NULL    |          |
-| ta_cmo                  | scalar        | NULL        | NULL    |          |
-| ta_cos                  | scalar        | NULL        | NULL    |          |
-| ta_cosh                 | scalar        | NULL        | NULL    |          |
-| ta_dema                 | scalar        | NULL        | NULL    |          |
-| ta_dx                   | scalar        | NULL        | NULL    |          |
-| ta_ema                  | scalar        | NULL        | NULL    |          |
-| ta_exp                  | scalar        | NULL        | NULL    |          |
-| ta_floor                | scalar        | NULL        | NULL    |          |
-| ta_ht_dcperiod          | scalar        | NULL        | NULL    |          |
-| ta_ht_dcphase           | scalar        | NULL        | NULL    |          |
-| ta_ht_phasor            | scalar        | NULL        | NULL    |          |
-| ta_ht_sine              | scalar        | NULL        | NULL    |          |
-| ta_ht_trendline         | scalar        | NULL        | NULL    |          |
-| ta_ht_trendmode         | scalar        | NULL        | NULL    |          |
-| ta_kama                 | scalar        | NULL        | NULL    |          |
-| ta_linearreg            | scalar        | NULL        | NULL    |          |
-| ta_linearreg_angle      | scalar        | NULL        | NULL    |          |
-| ta_linearreg_intercept  | scalar        | NULL        | NULL    |          |
-| ta_linearreg_slope      | scalar        | NULL        | NULL    |          |
-| ta_ln                   | scalar        | NULL        | NULL    |          |
-| ta_log10                | scalar        | NULL        | NULL    |          |
-| ta_macd                 | scalar        | NULL        | NULL    |          |
-| ta_mama                 | scalar        | NULL        | NULL    |          |
-| ta_max                  | scalar        | NULL        | NULL    |          |
-| ta_maxindex             | scalar        | NULL        | NULL    |          |
-| ta_medprice             | scalar        | NULL        | NULL    |          |
-| ta_midpoint             | scalar        | NULL        | NULL    |          |
-| ta_midprice             | scalar        | NULL        | NULL    |          |
-| ta_min                  | scalar        | NULL        | NULL    |          |
-| ta_minindex             | scalar        | NULL        | NULL    |          |
-| ta_minmax               | scalar        | NULL        | NULL    |          |
-| ta_minus_di             | scalar        | NULL        | NULL    |          |
-| ta_minus_dm             | scalar        | NULL        | NULL    |          |
-| ta_mom                  | scalar        | NULL        | NULL    |          |
-| ta_natr                 | scalar        | NULL        | NULL    |          |
-| ta_plus_di              | scalar        | NULL        | NULL    |          |
-| ta_plus_dm              | scalar        | NULL        | NULL    |          |
-| ta_roc                  | scalar        | NULL        | NULL    |          |
-| ta_rocp                 | scalar        | NULL        | NULL    |          |
-| ta_rocr                 | scalar        | NULL        | NULL    |          |
-| ta_rocr100              | scalar        | NULL        | NULL    |          |
-| ta_rsi                  | scalar        | NULL        | NULL    |          |
-| ta_sin                  | scalar        | NULL        | NULL    |          |
-| ta_sinh                 | scalar        | NULL        | NULL    |          |
-| ta_sma                  | scalar        | NULL        | NULL    |          |
-| ta_sqrt                 | scalar        | NULL        | NULL    |          |
-| ta_stoch                | scalar        | NULL        | NULL    |          |
-| ta_sum                  | scalar        | NULL        | NULL    |          |
-| ta_tan                  | scalar        | NULL        | NULL    |          |
-| ta_tanh                 | scalar        | NULL        | NULL    |          |
-| ta_tema                 | scalar        | NULL        | NULL    |          |
-| ta_trange               | scalar        | NULL        | NULL    |          |
-| ta_trima                | scalar        | NULL        | NULL    |          |
-| ta_trix                 | scalar        | NULL        | NULL    |          |
-| ta_tsf                  | scalar        | NULL        | NULL    |          |
-| ta_typprice             | scalar        | NULL        | NULL    |          |
-| ta_wclprice             | scalar        | NULL        | NULL    |          |
-| ta_willr                | scalar        | NULL        | NULL    |          |
-| ta_wma                  | scalar        | NULL        | NULL    |          |
-| taw_acos                | aggregate     | NULL        | NULL    |          |
-| taw_ad                  | aggregate     | NULL        | NULL    |          |
-| taw_adx                 | aggregate     | NULL        | NULL    |          |
-| taw_adxr                | aggregate     | NULL        | NULL    |          |
-| taw_asin                | aggregate     | NULL        | NULL    |          |
-| taw_atan                | aggregate     | NULL        | NULL    |          |
-| taw_atr                 | aggregate     | NULL        | NULL    |          |
-| taw_avgprice            | aggregate     | NULL        | NULL    |          |
-| taw_bop                 | aggregate     | NULL        | NULL    |          |
-| taw_cci                 | aggregate     | NULL        | NULL    |          |
-| taw_cdl2crows           | aggregate     | NULL        | NULL    |          |
-| taw_cdl3blackcrows      | aggregate     | NULL        | NULL    |          |
-| taw_cdl3inside          | aggregate     | NULL        | NULL    |          |
-| taw_cdl3linestrike      | aggregate     | NULL        | NULL    |          |
-| taw_cdl3outside         | aggregate     | NULL        | NULL    |          |
-| taw_cdl3starsinsouth    | aggregate     | NULL        | NULL    |          |
-| taw_cdl3whitesoldiers   | aggregate     | NULL        | NULL    |          |
-| taw_cdladvanceblock     | aggregate     | NULL        | NULL    |          |
-| taw_cdlbelthold         | aggregate     | NULL        | NULL    |          |
-| taw_cdlbreakaway        | aggregate     | NULL        | NULL    |          |
-| taw_cdlclosingmarubozu  | aggregate     | NULL        | NULL    |          |
-| taw_cdlconcealbabyswall | aggregate     | NULL        | NULL    |          |
-| taw_cdlcounterattack    | aggregate     | NULL        | NULL    |          |
-| taw_cdldoji             | aggregate     | NULL        | NULL    |          |
-| taw_cdldojistar         | aggregate     | NULL        | NULL    |          |
-| taw_cdldragonflydoji    | aggregate     | NULL        | NULL    |          |
-| taw_cdlengulfing        | aggregate     | NULL        | NULL    |          |
-| taw_cdlgapsidesidewhite | aggregate     | NULL        | NULL    |          |
-| taw_cdlgravestonedoji   | aggregate     | NULL        | NULL    |          |
-| taw_cdlhammer           | aggregate     | NULL        | NULL    |          |
-| taw_cdlhangingman       | aggregate     | NULL        | NULL    |          |
-| taw_cdlharami           | aggregate     | NULL        | NULL    |          |
-| taw_cdlharamicross      | aggregate     | NULL        | NULL    |          |
-| taw_cdlhighwave         | aggregate     | NULL        | NULL    |          |
-| taw_cdlhikkake          | aggregate     | NULL        | NULL    |          |
-| taw_cdlhikkakemod       | aggregate     | NULL        | NULL    |          |
-| taw_cdlhomingpigeon     | aggregate     | NULL        | NULL    |          |
-| taw_cdlidentical3crows  | aggregate     | NULL        | NULL    |          |
-| taw_cdlinneck           | aggregate     | NULL        | NULL    |          |
-| taw_cdlinvertedhammer   | aggregate     | NULL        | NULL    |          |
-| taw_cdlkicking          | aggregate     | NULL        | NULL    |          |
-| taw_cdlkickingbylength  | aggregate     | NULL        | NULL    |          |
-| taw_cdlladderbottom     | aggregate     | NULL        | NULL    |          |
-| taw_cdllongleggeddoji   | aggregate     | NULL        | NULL    |          |
-| taw_cdllongline         | aggregate     | NULL        | NULL    |          |
-| taw_cdlmarubozu         | aggregate     | NULL        | NULL    |          |
-| taw_cdlmatchinglow      | aggregate     | NULL        | NULL    |          |
-| taw_cdlonneck           | aggregate     | NULL        | NULL    |          |
-| taw_cdlpiercing         | aggregate     | NULL        | NULL    |          |
-| taw_cdlrickshawman      | aggregate     | NULL        | NULL    |          |
-| taw_cdlrisefall3methods | aggregate     | NULL        | NULL    |          |
-| taw_cdlseparatinglines  | aggregate     | NULL        | NULL    |          |
-| taw_cdlshootingstar     | aggregate     | NULL        | NULL    |          |
-| taw_cdlshortline        | aggregate     | NULL        | NULL    |          |
-| taw_cdlspinningtop      | aggregate     | NULL        | NULL    |          |
-| taw_cdlstalledpattern   | aggregate     | NULL        | NULL    |          |
-| taw_cdlsticksandwich    | aggregate     | NULL        | NULL    |          |
-| taw_cdltakuri           | aggregate     | NULL        | NULL    |          |
-| taw_cdltasukigap        | aggregate     | NULL        | NULL    |          |
-| taw_cdlthrusting        | aggregate     | NULL        | NULL    |          |
-| taw_cdltristar          | aggregate     | NULL        | NULL    |          |
-| taw_cdlunique3river     | aggregate     | NULL        | NULL    |          |
-| taw_cdlupsidegap2crows  | aggregate     | NULL        | NULL    |          |
-| taw_cdlxsidegap3methods | aggregate     | NULL        | NULL    |          |
-| taw_ceil                | aggregate     | NULL        | NULL    |          |
-| taw_cmo                 | aggregate     | NULL        | NULL    |          |
-| taw_cos                 | aggregate     | NULL        | NULL    |          |
-| taw_cosh                | aggregate     | NULL        | NULL    |          |
-| taw_dema                | aggregate     | NULL        | NULL    |          |
-| taw_dx                  | aggregate     | NULL        | NULL    |          |
-| taw_ema                 | aggregate     | NULL        | NULL    |          |
-| taw_exp                 | aggregate     | NULL        | NULL    |          |
-| taw_floor               | aggregate     | NULL        | NULL    |          |
-| taw_ht_dcperiod         | aggregate     | NULL        | NULL    |          |
-| taw_ht_dcphase          | aggregate     | NULL        | NULL    |          |
-| taw_ht_trendline        | aggregate     | NULL        | NULL    |          |
-| taw_ht_trendmode        | aggregate     | NULL        | NULL    |          |
-| taw_kama                | aggregate     | NULL        | NULL    |          |
-| taw_linearreg           | aggregate     | NULL        | NULL    |          |
-| taw_linearreg_angle     | aggregate     | NULL        | NULL    |          |
-| taw_linearreg_intercept | aggregate     | NULL        | NULL    |          |
-| taw_linearreg_slope     | aggregate     | NULL        | NULL    |          |
-| taw_ln                  | aggregate     | NULL        | NULL    |          |
-| taw_log10               | aggregate     | NULL        | NULL    |          |
-| taw_max                 | aggregate     | NULL        | NULL    |          |
-| taw_maxindex            | aggregate     | NULL        | NULL    |          |
-| taw_medprice            | aggregate     | NULL        | NULL    |          |
-| taw_midpoint            | aggregate     | NULL        | NULL    |          |
-| taw_midprice            | aggregate     | NULL        | NULL    |          |
-| taw_min                 | aggregate     | NULL        | NULL    |          |
-| taw_minindex            | aggregate     | NULL        | NULL    |          |
-| taw_minus_di            | aggregate     | NULL        | NULL    |          |
-| taw_minus_dm            | aggregate     | NULL        | NULL    |          |
-| taw_mom                 | aggregate     | NULL        | NULL    |          |
-| taw_natr                | aggregate     | NULL        | NULL    |          |
-| taw_plus_di             | aggregate     | NULL        | NULL    |          |
-| taw_plus_dm             | aggregate     | NULL        | NULL    |          |
-| taw_roc                 | aggregate     | NULL        | NULL    |          |
-| taw_rocp                | aggregate     | NULL        | NULL    |          |
-| taw_rocr                | aggregate     | NULL        | NULL    |          |
-| taw_rocr100             | aggregate     | NULL        | NULL    |          |
-| taw_rsi                 | aggregate     | NULL        | NULL    |          |
-| taw_sin                 | aggregate     | NULL        | NULL    |          |
-| taw_sinh                | aggregate     | NULL        | NULL    |          |
-| taw_sma                 | aggregate     | NULL        | NULL    |          |
-| taw_sqrt                | aggregate     | NULL        | NULL    |          |
-| taw_sum                 | aggregate     | NULL        | NULL    |          |
-| taw_tan                 | aggregate     | NULL        | NULL    |          |
-| taw_tanh                | aggregate     | NULL        | NULL    |          |
-| taw_tema                | aggregate     | NULL        | NULL    |          |
-| taw_trange              | aggregate     | NULL        | NULL    |          |
-| taw_trima               | aggregate     | NULL        | NULL    |          |
-| taw_trix                | aggregate     | NULL        | NULL    |          |
-| taw_tsf                 | aggregate     | NULL        | NULL    |          |
-| taw_typprice            | aggregate     | NULL        | NULL    |          |
-| taw_wclprice            | aggregate     | NULL        | NULL    |          |
-| taw_willr               | aggregate     | NULL        | NULL    |          |
-| taw_wma                 | aggregate     | NULL        | NULL    |          |
+|     function_name      | function_type | description | comment | examples |
+|------------------------|---------------|-------------|---------|----------|
+| t_acos                 | scalar        | NULL        | NULL    |          |
+| t_ad                   | scalar        | NULL        | NULL    |          |
+| t_adx                  | scalar        | NULL        | NULL    |          |
+| t_adxr                 | scalar        | NULL        | NULL    |          |
+| t_aroon                | scalar        | NULL        | NULL    |          |
+| t_asin                 | scalar        | NULL        | NULL    |          |
+| t_atan                 | scalar        | NULL        | NULL    |          |
+| t_atr                  | scalar        | NULL        | NULL    |          |
+| t_avgprice             | scalar        | NULL        | NULL    |          |
+| t_bbands               | scalar        | NULL        | NULL    |          |
+| t_bop                  | scalar        | NULL        | NULL    |          |
+| t_cci                  | scalar        | NULL        | NULL    |          |
+| t_cdl2crows            | scalar        | NULL        | NULL    |          |
+| t_cdl3blackcrows       | scalar        | NULL        | NULL    |          |
+| t_cdl3inside           | scalar        | NULL        | NULL    |          |
+| t_cdl3linestrike       | scalar        | NULL        | NULL    |          |
+| t_cdl3outside          | scalar        | NULL        | NULL    |          |
+| t_cdl3starsinsouth     | scalar        | NULL        | NULL    |          |
+| t_cdl3whitesoldiers    | scalar        | NULL        | NULL    |          |
+| t_cdladvanceblock      | scalar        | NULL        | NULL    |          |
+| t_cdlbelthold          | scalar        | NULL        | NULL    |          |
+| t_cdlbreakaway         | scalar        | NULL        | NULL    |          |
+| t_cdlclosingmarubozu   | scalar        | NULL        | NULL    |          |
+| t_cdlconcealbabyswall  | scalar        | NULL        | NULL    |          |
+| t_cdlcounterattack     | scalar        | NULL        | NULL    |          |
+| t_cdldoji              | scalar        | NULL        | NULL    |          |
+| t_cdldojistar          | scalar        | NULL        | NULL    |          |
+| t_cdldragonflydoji     | scalar        | NULL        | NULL    |          |
+| t_cdlengulfing         | scalar        | NULL        | NULL    |          |
+| t_cdlgapsidesidewhite  | scalar        | NULL        | NULL    |          |
+| t_cdlgravestonedoji    | scalar        | NULL        | NULL    |          |
+| t_cdlhammer            | scalar        | NULL        | NULL    |          |
+| t_cdlhangingman        | scalar        | NULL        | NULL    |          |
+| t_cdlharami            | scalar        | NULL        | NULL    |          |
+| t_cdlharamicross       | scalar        | NULL        | NULL    |          |
+| t_cdlhighwave          | scalar        | NULL        | NULL    |          |
+| t_cdlhikkake           | scalar        | NULL        | NULL    |          |
+| t_cdlhikkakemod        | scalar        | NULL        | NULL    |          |
+| t_cdlhomingpigeon      | scalar        | NULL        | NULL    |          |
+| t_cdlidentical3crows   | scalar        | NULL        | NULL    |          |
+| t_cdlinneck            | scalar        | NULL        | NULL    |          |
+| t_cdlinvertedhammer    | scalar        | NULL        | NULL    |          |
+| t_cdlkicking           | scalar        | NULL        | NULL    |          |
+| t_cdlkickingbylength   | scalar        | NULL        | NULL    |          |
+| t_cdlladderbottom      | scalar        | NULL        | NULL    |          |
+| t_cdllongleggeddoji    | scalar        | NULL        | NULL    |          |
+| t_cdllongline          | scalar        | NULL        | NULL    |          |
+| t_cdlmarubozu          | scalar        | NULL        | NULL    |          |
+| t_cdlmatchinglow       | scalar        | NULL        | NULL    |          |
+| t_cdlonneck            | scalar        | NULL        | NULL    |          |
+| t_cdlpiercing          | scalar        | NULL        | NULL    |          |
+| t_cdlrickshawman       | scalar        | NULL        | NULL    |          |
+| t_cdlrisefall3methods  | scalar        | NULL        | NULL    |          |
+| t_cdlseparatinglines   | scalar        | NULL        | NULL    |          |
+| t_cdlshootingstar      | scalar        | NULL        | NULL    |          |
+| t_cdlshortline         | scalar        | NULL        | NULL    |          |
+| t_cdlspinningtop       | scalar        | NULL        | NULL    |          |
+| t_cdlstalledpattern    | scalar        | NULL        | NULL    |          |
+| t_cdlsticksandwich     | scalar        | NULL        | NULL    |          |
+| t_cdltakuri            | scalar        | NULL        | NULL    |          |
+| t_cdltasukigap         | scalar        | NULL        | NULL    |          |
+| t_cdlthrusting         | scalar        | NULL        | NULL    |          |
+| t_cdltristar           | scalar        | NULL        | NULL    |          |
+| t_cdlunique3river      | scalar        | NULL        | NULL    |          |
+| t_cdlupsidegap2crows   | scalar        | NULL        | NULL    |          |
+| t_cdlxsidegap3methods  | scalar        | NULL        | NULL    |          |
+| t_ceil                 | scalar        | NULL        | NULL    |          |
+| t_cmo                  | scalar        | NULL        | NULL    |          |
+| t_cos                  | scalar        | NULL        | NULL    |          |
+| t_cosh                 | scalar        | NULL        | NULL    |          |
+| t_dema                 | scalar        | NULL        | NULL    |          |
+| t_dx                   | scalar        | NULL        | NULL    |          |
+| t_ema                  | scalar        | NULL        | NULL    |          |
+| t_exp                  | scalar        | NULL        | NULL    |          |
+| t_floor                | scalar        | NULL        | NULL    |          |
+| t_ht_dcperiod          | scalar        | NULL        | NULL    |          |
+| t_ht_dcphase           | scalar        | NULL        | NULL    |          |
+| t_ht_phasor            | scalar        | NULL        | NULL    |          |
+| t_ht_sine              | scalar        | NULL        | NULL    |          |
+| t_ht_trendline         | scalar        | NULL        | NULL    |          |
+| t_ht_trendmode         | scalar        | NULL        | NULL    |          |
+| t_kama                 | scalar        | NULL        | NULL    |          |
+| t_linearreg            | scalar        | NULL        | NULL    |          |
+| t_linearreg_angle      | scalar        | NULL        | NULL    |          |
+| t_linearreg_intercept  | scalar        | NULL        | NULL    |          |
+| t_linearreg_slope      | scalar        | NULL        | NULL    |          |
+| t_ln                   | scalar        | NULL        | NULL    |          |
+| t_log10                | scalar        | NULL        | NULL    |          |
+| t_macd                 | scalar        | NULL        | NULL    |          |
+| t_mama                 | scalar        | NULL        | NULL    |          |
+| t_max                  | scalar        | NULL        | NULL    |          |
+| t_maxindex             | scalar        | NULL        | NULL    |          |
+| t_medprice             | scalar        | NULL        | NULL    |          |
+| t_midpoint             | scalar        | NULL        | NULL    |          |
+| t_midprice             | scalar        | NULL        | NULL    |          |
+| t_min                  | scalar        | NULL        | NULL    |          |
+| t_minindex             | scalar        | NULL        | NULL    |          |
+| t_minmax               | scalar        | NULL        | NULL    |          |
+| t_minus_di             | scalar        | NULL        | NULL    |          |
+| t_minus_dm             | scalar        | NULL        | NULL    |          |
+| t_mom                  | scalar        | NULL        | NULL    |          |
+| t_natr                 | scalar        | NULL        | NULL    |          |
+| t_plus_di              | scalar        | NULL        | NULL    |          |
+| t_plus_dm              | scalar        | NULL        | NULL    |          |
+| t_roc                  | scalar        | NULL        | NULL    |          |
+| t_rocp                 | scalar        | NULL        | NULL    |          |
+| t_rocr                 | scalar        | NULL        | NULL    |          |
+| t_rocr100              | scalar        | NULL        | NULL    |          |
+| t_rsi                  | scalar        | NULL        | NULL    |          |
+| t_sin                  | scalar        | NULL        | NULL    |          |
+| t_sinh                 | scalar        | NULL        | NULL    |          |
+| t_sma                  | scalar        | NULL        | NULL    |          |
+| t_sqrt                 | scalar        | NULL        | NULL    |          |
+| t_stoch                | scalar        | NULL        | NULL    |          |
+| t_sum                  | scalar        | NULL        | NULL    |          |
+| t_tan                  | scalar        | NULL        | NULL    |          |
+| t_tanh                 | scalar        | NULL        | NULL    |          |
+| t_tema                 | scalar        | NULL        | NULL    |          |
+| t_trange               | scalar        | NULL        | NULL    |          |
+| t_trima                | scalar        | NULL        | NULL    |          |
+| t_trix                 | scalar        | NULL        | NULL    |          |
+| t_tsf                  | scalar        | NULL        | NULL    |          |
+| t_typprice             | scalar        | NULL        | NULL    |          |
+| t_wclprice             | scalar        | NULL        | NULL    |          |
+| t_willr                | scalar        | NULL        | NULL    |          |
+| t_wma                  | scalar        | NULL        | NULL    |          |
+| ta_acos                | aggregate     | NULL        | NULL    |          |
+| ta_ad                  | aggregate     | NULL        | NULL    |          |
+| ta_adx                 | aggregate     | NULL        | NULL    |          |
+| ta_adxr                | aggregate     | NULL        | NULL    |          |
+| ta_aroon               | aggregate     | NULL        | NULL    |          |
+| ta_asin                | aggregate     | NULL        | NULL    |          |
+| ta_atan                | aggregate     | NULL        | NULL    |          |
+| ta_atr                 | aggregate     | NULL        | NULL    |          |
+| ta_avgprice            | aggregate     | NULL        | NULL    |          |
+| ta_bbands              | aggregate     | NULL        | NULL    |          |
+| ta_bop                 | aggregate     | NULL        | NULL    |          |
+| ta_cci                 | aggregate     | NULL        | NULL    |          |
+| ta_cdl2crows           | aggregate     | NULL        | NULL    |          |
+| ta_cdl3blackcrows      | aggregate     | NULL        | NULL    |          |
+| ta_cdl3inside          | aggregate     | NULL        | NULL    |          |
+| ta_cdl3linestrike      | aggregate     | NULL        | NULL    |          |
+| ta_cdl3outside         | aggregate     | NULL        | NULL    |          |
+| ta_cdl3starsinsouth    | aggregate     | NULL        | NULL    |          |
+| ta_cdl3whitesoldiers   | aggregate     | NULL        | NULL    |          |
+| ta_cdladvanceblock     | aggregate     | NULL        | NULL    |          |
+| ta_cdlbelthold         | aggregate     | NULL        | NULL    |          |
+| ta_cdlbreakaway        | aggregate     | NULL        | NULL    |          |
+| ta_cdlclosingmarubozu  | aggregate     | NULL        | NULL    |          |
+| ta_cdlconcealbabyswall | aggregate     | NULL        | NULL    |          |
+| ta_cdlcounterattack    | aggregate     | NULL        | NULL    |          |
+| ta_cdldoji             | aggregate     | NULL        | NULL    |          |
+| ta_cdldojistar         | aggregate     | NULL        | NULL    |          |
+| ta_cdldragonflydoji    | aggregate     | NULL        | NULL    |          |
+| ta_cdlengulfing        | aggregate     | NULL        | NULL    |          |
+| ta_cdlgapsidesidewhite | aggregate     | NULL        | NULL    |          |
+| ta_cdlgravestonedoji   | aggregate     | NULL        | NULL    |          |
+| ta_cdlhammer           | aggregate     | NULL        | NULL    |          |
+| ta_cdlhangingman       | aggregate     | NULL        | NULL    |          |
+| ta_cdlharami           | aggregate     | NULL        | NULL    |          |
+| ta_cdlharamicross      | aggregate     | NULL        | NULL    |          |
+| ta_cdlhighwave         | aggregate     | NULL        | NULL    |          |
+| ta_cdlhikkake          | aggregate     | NULL        | NULL    |          |
+| ta_cdlhikkakemod       | aggregate     | NULL        | NULL    |          |
+| ta_cdlhomingpigeon     | aggregate     | NULL        | NULL    |          |
+| ta_cdlidentical3crows  | aggregate     | NULL        | NULL    |          |
+| ta_cdlinneck           | aggregate     | NULL        | NULL    |          |
+| ta_cdlinvertedhammer   | aggregate     | NULL        | NULL    |          |
+| ta_cdlkicking          | aggregate     | NULL        | NULL    |          |
+| ta_cdlkickingbylength  | aggregate     | NULL        | NULL    |          |
+| ta_cdlladderbottom     | aggregate     | NULL        | NULL    |          |
+| ta_cdllongleggeddoji   | aggregate     | NULL        | NULL    |          |
+| ta_cdllongline         | aggregate     | NULL        | NULL    |          |
+| ta_cdlmarubozu         | aggregate     | NULL        | NULL    |          |
+| ta_cdlmatchinglow      | aggregate     | NULL        | NULL    |          |
+| ta_cdlonneck           | aggregate     | NULL        | NULL    |          |
+| ta_cdlpiercing         | aggregate     | NULL        | NULL    |          |
+| ta_cdlrickshawman      | aggregate     | NULL        | NULL    |          |
+| ta_cdlrisefall3methods | aggregate     | NULL        | NULL    |          |
+| ta_cdlseparatinglines  | aggregate     | NULL        | NULL    |          |
+| ta_cdlshootingstar     | aggregate     | NULL        | NULL    |          |
+| ta_cdlshortline        | aggregate     | NULL        | NULL    |          |
+| ta_cdlspinningtop      | aggregate     | NULL        | NULL    |          |
+| ta_cdlstalledpattern   | aggregate     | NULL        | NULL    |          |
+| ta_cdlsticksandwich    | aggregate     | NULL        | NULL    |          |
+| ta_cdltakuri           | aggregate     | NULL        | NULL    |          |
+| ta_cdltasukigap        | aggregate     | NULL        | NULL    |          |
+| ta_cdlthrusting        | aggregate     | NULL        | NULL    |          |
+| ta_cdltristar          | aggregate     | NULL        | NULL    |          |
+| ta_cdlunique3river     | aggregate     | NULL        | NULL    |          |
+| ta_cdlupsidegap2crows  | aggregate     | NULL        | NULL    |          |
+| ta_cdlxsidegap3methods | aggregate     | NULL        | NULL    |          |
+| ta_ceil                | aggregate     | NULL        | NULL    |          |
+| ta_cmo                 | aggregate     | NULL        | NULL    |          |
+| ta_cos                 | aggregate     | NULL        | NULL    |          |
+| ta_cosh                | aggregate     | NULL        | NULL    |          |
+| ta_dema                | aggregate     | NULL        | NULL    |          |
+| ta_dx                  | aggregate     | NULL        | NULL    |          |
+| ta_ema                 | aggregate     | NULL        | NULL    |          |
+| ta_exp                 | aggregate     | NULL        | NULL    |          |
+| ta_floor               | aggregate     | NULL        | NULL    |          |
+| ta_ht_dcperiod         | aggregate     | NULL        | NULL    |          |
+| ta_ht_dcphase          | aggregate     | NULL        | NULL    |          |
+| ta_ht_phasor           | aggregate     | NULL        | NULL    |          |
+| ta_ht_sine             | aggregate     | NULL        | NULL    |          |
+| ta_ht_trendline        | aggregate     | NULL        | NULL    |          |
+| ta_ht_trendmode        | aggregate     | NULL        | NULL    |          |
+| ta_kama                | aggregate     | NULL        | NULL    |          |
+| ta_linearreg           | aggregate     | NULL        | NULL    |          |
+| ta_linearreg_angle     | aggregate     | NULL        | NULL    |          |
+| ta_linearreg_intercept | aggregate     | NULL        | NULL    |          |
+| ta_linearreg_slope     | aggregate     | NULL        | NULL    |          |
+| ta_ln                  | aggregate     | NULL        | NULL    |          |
+| ta_log10               | aggregate     | NULL        | NULL    |          |
+| ta_macd                | aggregate     | NULL        | NULL    |          |
+| ta_mama                | aggregate     | NULL        | NULL    |          |
+| ta_max                 | aggregate     | NULL        | NULL    |          |
+| ta_maxindex            | aggregate     | NULL        | NULL    |          |
+| ta_medprice            | aggregate     | NULL        | NULL    |          |
+| ta_midpoint            | aggregate     | NULL        | NULL    |          |
+| ta_midprice            | aggregate     | NULL        | NULL    |          |
+| ta_min                 | aggregate     | NULL        | NULL    |          |
+| ta_minindex            | aggregate     | NULL        | NULL    |          |
+| ta_minmax              | aggregate     | NULL        | NULL    |          |
+| ta_minus_di            | aggregate     | NULL        | NULL    |          |
+| ta_minus_dm            | aggregate     | NULL        | NULL    |          |
+| ta_mom                 | aggregate     | NULL        | NULL    |          |
+| ta_natr                | aggregate     | NULL        | NULL    |          |
+| ta_plus_di             | aggregate     | NULL        | NULL    |          |
+| ta_plus_dm             | aggregate     | NULL        | NULL    |          |
+| ta_roc                 | aggregate     | NULL        | NULL    |          |
+| ta_rocp                | aggregate     | NULL        | NULL    |          |
+| ta_rocr                | aggregate     | NULL        | NULL    |          |
+| ta_rocr100             | aggregate     | NULL        | NULL    |          |
+| ta_rsi                 | aggregate     | NULL        | NULL    |          |
+| ta_sin                 | aggregate     | NULL        | NULL    |          |
+| ta_sinh                | aggregate     | NULL        | NULL    |          |
+| ta_sma                 | aggregate     | NULL        | NULL    |          |
+| ta_sqrt                | aggregate     | NULL        | NULL    |          |
+| ta_stoch               | aggregate     | NULL        | NULL    |          |
+| ta_sum                 | aggregate     | NULL        | NULL    |          |
+| ta_tan                 | aggregate     | NULL        | NULL    |          |
+| ta_tanh                | aggregate     | NULL        | NULL    |          |
+| ta_tema                | aggregate     | NULL        | NULL    |          |
+| ta_trange              | aggregate     | NULL        | NULL    |          |
+| ta_trima               | aggregate     | NULL        | NULL    |          |
+| ta_trix                | aggregate     | NULL        | NULL    |          |
+| ta_tsf                 | aggregate     | NULL        | NULL    |          |
+| ta_typprice            | aggregate     | NULL        | NULL    |          |
+| ta_wclprice            | aggregate     | NULL        | NULL    |          |
+| ta_willr               | aggregate     | NULL        | NULL    |          |
+| ta_wma                 | aggregate     | NULL        | NULL    |          |
 
 ### Overloaded Functions
 
