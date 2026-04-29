@@ -9,7 +9,7 @@ redirect_from:
 title: DuckLake
 ---
 
-> DuckLake 1.0 was been in April 2026.
+> DuckLake 1.0 was released in April 2026.
 > Read the [announcement blog post](https://ducklake.select/2026/04/13/ducklake-10/).
 
 The `ducklake` extension adds support for attaching to databases stored in the [DuckLake format](http://ducklake.select/). 
