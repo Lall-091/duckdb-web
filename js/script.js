@@ -1073,7 +1073,14 @@ $('body.documentation #main_content_wrap a.externallink').each(function () {
 
 	/** ADD WORD-BOXES TO CODE TABLES */
 	$('.monospace_table + table tbody td').each(function() {
-		$(this).wrapInner('<code class="language-plaintext"></code>');
+		var $cell = $(this);
+		var $children = $cell.contents().filter(function() {
+			return this.nodeType !== Node.TEXT_NODE || $.trim(this.nodeValue).length > 0;
+		});
+		if ($children.length === 1 && $children[0].nodeType === Node.ELEMENT_NODE && $children[0].tagName === 'CODE') {
+			return;
+		}
+		$cell.wrapInner('<code class="language-plaintext"></code>');
 	});
 	
 	/** RE-CALCULATE SELECT-ACTIVE-BUBBLES */
