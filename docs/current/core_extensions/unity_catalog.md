@@ -16,7 +16,7 @@ The `delta` extension adds support for the [Delta Lake open-source storage forma
 
 For implementation details, see the [announcement blog post]({% post_url 2024-06-10-delta %}).
 
-> Warning Both the `unity_catalog` and `delta` extensions are currently experimental and [only supported on given platforms](#supported-duckdb-versions-and-platforms).
+> Note Both extensions are [only supported on given platforms](#supported-duckdb-versions-and-platforms).
 
 ## Installing and Loading
 
@@ -29,39 +29,59 @@ LOAD unity_catalog;
 
 ## Usage
 
-Given that you already have a Unity Catalog setup with either Databricks or Unity Catalog OSS, you will need to
-configure your secret token, endpoint, and region; then attach to your catalog. For example an AWS configuration
-would look like this:
+Given that you already have a Unity Catalog setup with either Databricks or Unity Catalog OSS, configure a secret with your token, endpoint, and region, then attach to your catalog:
 
 ```sql
-CREATE SECRET uc (
+CREATE SECRET (
     TYPE unity_catalog,
     TOKEN '⟨token⟩',
     ENDPOINT '⟨endpoint⟩',
     AWS_REGION '⟨region⟩'
 );
-ATTACH 'test_catalog' AS test_catalog (TYPE unity_catalog, DEFAULT_SCHEMA 'main');
+ATTACH 'my_catalog' AS my_catalog (TYPE unity_catalog, DEFAULT_SCHEMA 'main');
 ```
 
-Where `token` comes from your Databricks or OSS Unity Catalog deployment, and `endpoint` is your Unity Catalog REST API endpoint.
+Where `token` comes from your Databricks or OSS Unity Catalog deployment, and `endpoint` is your Unity Catalog REST API endpoint. For more details see the [Databricks Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog) and [OSS Unity Catalog](https://docs.unitycatalog.io/) documentation.
 
-For more details on these deployments see the documentation of the [Databricks Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog) and the [OSS Unity Catalog](https://docs.unitycatalog.io/).
-
-To confirm correct attachment, try something like:
+### Reading
 
 ```sql
 SHOW ALL TABLES;
-SELECT * FROM test_catalog.test_schema.test_table LIMIT 10;
+SELECT * FROM my_catalog.my_schema.my_table LIMIT 10;
 ```
+
+### Writing
+
+Standard inserts are supported:
+
+```sql
+INSERT INTO my_catalog.my_schema.my_table VALUES (1, 'hello');
+INSERT INTO my_catalog.my_schema.my_table SELECT * FROM other_table;
+```
+
+### Catalog-Managed Commits
+
+Databricks Unity Catalog tables may use catalog-managed commits (Catalog-Coordinated Commits / CCv2), where commit coordination is handled by Databricks rather than written directly to the Delta log. DuckDB transparently uses this protocol when the attached table requires it — the insert syntax is identical:
+
+```sql
+INSERT INTO my_catalog.my_schema.my_catalog_managed_table VALUES (1, 'hello');
+```
+
+> Note DuckDB does not yet support `CREATE TABLE` DDL, so CMC-enabled tables must be created via Spark or the UC CLI (setting the `delta.feature.catalogManaged` table property). Once a table is CMC-enabled, DuckDB reads and writes it transparently.
 
 ## Features
 
-This extension is still experimental and work-in-progress; it supports:
+This extension supports:
 
 - Listing available tables (`SHOW ALL TABLES;`)
 - Interacting with tables using standard SQL (`SELECT * FROM <catalog>.<schema>.<table>;`)
 - Time travel (`SELECT * FROM .. AT (VERSION => ..);`)
 - Inserts (`INSERT INTO .. VALUES (..);`)
+- Checkpointing individual tables:
+
+```sql
+CALL unity_catalog_checkpoint_table('my_catalog.my_schema.my_table');
+```
 
 It does not currently support:
 

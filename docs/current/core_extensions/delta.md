@@ -2,21 +2,20 @@
 github_repository: https://github.com/duckdb/duckdb-delta
 layout: docu
 redirect_from:
-- /docs/extensions/delta
-- /docs/lts/extensions/delta
-- /docs/preview/core_extensions/delta
-- /docs/stable/core_extensions/delta
+  - /docs/extensions/delta
+  - /docs/lts/extensions/delta
+  - /docs/preview/core_extensions/delta
+  - /docs/stable/core_extensions/delta
 title: Delta Extension
 ---
 
-The `delta` extension adds support for the [Delta Lake open-source storage format](https://delta.io/). It is built using the [Delta Kernel](https://github.com/delta-incubator/delta-kernel-rs). The extension offers **read support** for Delta tables, both local and remote.
+The `delta` extension adds support for the [Delta Lake open-source storage format](https://delta.io/). It is built using the [Delta Kernel](https://github.com/delta-incubator/delta-kernel-rs). The extension offers **read and write support** for Delta tables, both local and remote.
 
 For implementation details, see the [announcement blog post]({% post_url 2024-06-10-delta %}).
 
 > Warning We are aware of a regression in Azure Onelake which appears to be a consequence of a change in `delta-kernel-rs`. You can track the issue [on GitHub](https://github.com/duckdb/duckdb-delta/issues/307).
 
-> To connect to Unity Catalog, DuckDB has the [`unity_catalog` experimental extension](https://github.com/duckdb/unity_catalog).
-> Please note that this extension is a proof-of-concept and not production-ready.
+> To connect to Unity Catalog, DuckDB has the [`unity_catalog` extension]({% link docs/current/core_extensions/unity_catalog.md %}).
 
 ## Installing and Loading
 
@@ -88,6 +87,53 @@ SELECT *
 FROM delta_scan('az://my-container/my-table-with-auth');
 ```
 
+### Reading from Google Cloud Storage
+
+To scan a Delta table in a [GCS bucket]({% link docs/current/core_extensions/httpfs/s3api.md %}), use [HMAC keys](https://console.cloud.google.com/storage/settings;tab=interoperability) and create a secret:
+
+```sql
+CREATE SECRET (
+    TYPE gcs,
+    KEY_ID '⟨hmac-key-id⟩',
+    SECRET '⟨hmac-secret⟩'
+);
+SELECT *
+FROM delta_scan('gs://my-bucket/my-delta-table');
+```
+
+### Appending Data
+
+To append rows to a Delta table, attach it and use `INSERT INTO`:
+
+```sql
+ATTACH 's3://my-bucket/my-delta-table' AS my_table (TYPE delta);
+INSERT INTO my_table SELECT * FROM other_table;
+```
+
+### Time Travel
+
+To read a specific version of a Delta table, attach it and use the `AT (VERSION => n)` clause:
+
+```sql
+ATTACH 's3://my-bucket/my-delta-table' AS my_table (TYPE delta);
+SELECT * FROM my_table AT (VERSION => 5);
+```
+
+Alternatively, pin a version at attach time:
+
+```sql
+ATTACH 's3://my-bucket/my-delta-table' AS my_table (TYPE delta, VERSION 5);
+```
+
+### Checkpointing
+
+To compact the Delta log of an attached table into a checkpoint file:
+
+```sql
+ATTACH 'path/to/my-delta-table' AS my_table (TYPE delta);
+CHECKPOINT my_table;
+```
+
 ### Credential Chains in Delta
 
 DuckDB Delta uses `delta-kernel-rs` and `object_store` for some network operations.
@@ -101,27 +147,27 @@ credential type in your production chain secrets.
 
 ## Features
 
-While the `delta` extension is still experimental, many (scanning) features and optimizations are already supported:
+The `delta` extension supports:
 
-* multithreaded scans and Parquet metadata reading
-* data skipping/filter pushdown
-    * skipping row groups in file (based on Parquet metadata)
-    * skipping complete files (based on Delta partition information)
-* projection pushdown
-* scanning tables with deletion vectors
-* all primitive types
-* structs
-* S3 support with secrets
-
-More optimizations are going to be released in the future.
+- multithreaded scans and Parquet metadata reading
+- data skipping/filter pushdown
+  - skipping row groups in file (based on Parquet metadata)
+  - skipping complete files (based on Delta partition information)
+- projection pushdown
+- scanning tables with deletion vectors
+- all primitive types
+- structs
+- VARIANT type
+- blind appends (`INSERT INTO`)
+- cloud storage (AWS S3, Azure, GCS) with secrets
 
 ## Supported Platforms
 
 The `delta` extension currently only supports the following platforms:
 
-* Linux AMD64 (x86_64 and ARM64): `linux_amd64` and `linux_arm64`
-* macOS Intel and Apple Silicon: `osx_amd64` and `osx_arm64`
-* Windows AMD64: `windows_amd64`
+- Linux AMD64 (x86_64 and ARM64): `linux_amd64` and `linux_arm64`
+- macOS Intel and Apple Silicon: `osx_amd64` and `osx_arm64`
+- Windows AMD64: `windows_amd64`
 
 Support for the [other DuckDB platforms]({% link docs/current/extensions/extension_distribution.md %}#platforms) is work-in-progress.
 
