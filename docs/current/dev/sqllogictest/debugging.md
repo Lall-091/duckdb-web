@@ -45,7 +45,7 @@ build/debug/test/unittest "*"
 ```
 
 We can run a subset of the tests using the `--start-offset` and `--end-offset` parameters.
-To run the tests 200..250:
+To run the tests 200...250:
 
 ```batch
 build/debug/test/unittest --start-offset=200 --end-offset=250

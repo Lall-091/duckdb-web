@@ -8,10 +8,10 @@ redirect_from:
 title: Loops
 ---
 
-Loops can be used in sqllogictests when it is required to execute the same query many times but with slight modifications in constant values. For example, suppose we want to fire off 100 queries that check for the presence of the values `0..100` in a table:
+Loops can be used in sqllogictests when it is required to execute the same query many times but with slight modifications in constant values. For example, suppose we want to fire off 100 queries that check for the presence of the values `0...100` in a table:
 
 ```sql
-# create the table 'integers' with values 0..100
+# create the table 'integers' with values 0...100
 statement ok
 CREATE TABLE integers AS SELECT * FROM range(0, 100, 1) t1(i);
 

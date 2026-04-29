@@ -73,20 +73,16 @@ INSERT INTO my_catalog.my_schema.my_catalog_managed_table VALUES (1, 'hello');
 
 This extension supports:
 
-- Listing available tables (`SHOW ALL TABLES;`)
-- Interacting with tables using standard SQL (`SELECT * FROM <catalog>.<schema>.<table>;`)
-- Time travel (`SELECT * FROM .. AT (VERSION => ..);`)
-- Inserts (`INSERT INTO .. VALUES (..);`)
-- Checkpointing individual tables:
-
-```sql
-CALL unity_catalog_checkpoint_table('my_catalog.my_schema.my_table');
-```
+- Listing available tables: `SHOW ALL TABLES;`{:.language-sql .highlight}
+- Interacting with tables using standard SQL: `SELECT * FROM ⟨catalog⟩.⟨schema⟩.⟨table⟩;`{:.language-sql .highlight}
+- Time travel: `SELECT * FROM ... AT (VERSION => ...);`{:.language-sql .highlight}
+- Inserts: `INSERT INTO ... VALUES (...);`{:.language-sql .highlight}
+- Checkpointing individual tables: `CALL unity_catalog_checkpoint_table('my_catalog.my_schema.my_table');`{:.language-sql .highlight}
 
 It does not currently support:
 
-- `DELETE` or `UPDATE`
-- Creation or manipulation of `TABLE`s `VIEW`s or `SCHEMA`s
+- `DELETE`{:.language-sql .highlight} or `UPDATE`{:.language-sql .highlight}
+- Creation or manipulation of tables, views or schemas
 
 ## Supported DuckDB Versions and Platforms
 
