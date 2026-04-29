@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: raster
   description: DuckDB Extension for reading and writing raster files using SQL.
-  version: 0.5.1
+  version: 0.7.0
   language: C++
   build: cmake
   excluded_platforms: "windows_amd64_mingw;wasm_mvp;wasm_eh;wasm_threads"
@@ -18,7 +18,7 @@ extension:
 
 repo:
   github: ahuarte47/duckdb-raster
-  ref: 4cce9a54748da3c48b6c8736437df67ed9a37161
+  ref: 689a24f187049ffe7c06ef334af5d0ec62bcdae0
 
 docs:
   hello_world: |
@@ -112,6 +112,59 @@ docs:
         __input
     ;
 
+    -- Or using algebraic or spatial functions of the extension:
+
+    LOAD spatial;
+    LOAD json;
+
+    COPY (
+        WITH __clip_layer AS (
+            SELECT geom FROM ST_Read('./test/data/CATAST_Pol_Township-PNA.geojson')
+        ),
+        __dataset AS (
+            SELECT
+                id, x, y, tile_x, tile_y, cols, rows, geometry, databand_1, metadata
+            FROM
+                __clip_layer,
+                RT_Read([
+                    './test/data/mosaic/SCL.tif-land-clip00.tiff',
+                    './test/data/mosaic/SCL.tif-land-clip01.tiff',
+                    './test/data/mosaic/SCL.tif-land-clip10.tiff',
+                    './test/data/mosaic/SCL.tif-land-clip11.tiff'
+                ])
+            WHERE
+                ST_Intersects(__clip_layer.geom, geometry)
+        ),
+        __clipped AS (
+            SELECT RT_CubeClip(databand_1,
+                            tile_x,
+                            tile_y,
+                            (metadata->>'blocksize_x')::INTEGER,
+                            (metadata->>'blocksize_y')::INTEGER,
+                            (metadata->>'transform')::DOUBLE[],
+                            __clip_layer.geom,
+                            (metadata->>'bands'->>0->>'nodata')::DOUBLE
+                ) AS databand, * EXCLUDE(databand_1)
+            FROM
+                __clip_layer,
+                __dataset
+        )
+        SELECT
+            geometry, databand
+        FROM
+            __clipped
+    )
+    TO '__TEST_DIR__/rastertoclipgeom.tiff'
+    WITH (
+        FORMAT RASTER,
+        DRIVER 'GTiff',
+        CREATION_OPTIONS ('COMPRESS=LZW'),
+        RESAMPLING 'nearest',
+        SRS 'EPSG:32630',
+        GEOMETRY_COLUMN 'geometry',
+        DATABAND_COLUMNS ['databand']
+    );
+
   extended_description: |
     Extension for DuckDB for reading and writing raster files using SQL.
 
@@ -182,48 +235,48 @@ LOAD {{ page.extension.name }};
 
 <div class="extension_functions_table"></div>
 
-|    function_name    | function_type |                                                 description                                                 | comment |                                       examples                                        |
-|---------------------|---------------|-------------------------------------------------------------------------------------------------------------|---------|---------------------------------------------------------------------------------------|
-| RT_Drivers          | table         | Returns the list of supported GDAL raster drivers.                                                          | NULL    | [SELECT RT_Drivers();]                                                                |
-| RT_Read             | table         | Reads a raster file and returns a table with the raster data.                                               | NULL    | [SELECT * FROM RT_Read('path/to/raster/file.tif');]                                   |
-| RT_Array2Cube       | scalar        | Transforms an array of numeric values into a databand column (BLOB).                                        | NULL    | [SELECT RT_Array2Cube(r.values, 'RAW', r.bands, r.cols, r.rows, r.no_data) FROM ...;] |
-| RT_CubeNeg          | scalar        | Negate the values in the datacube element-wise.                                                             | NULL    | [SELECT RT_CubeNeg(databand_1) FROM ...;]                                             |
-| RT_CubeAbs          | scalar        | Takes the absolute value of the values in the datacube element-wise.                                        | NULL    | [SELECT RT_CubeAbs(databand_1) FROM ...;]                                             |
-| RT_CubeSqrt         | scalar        | Takes the square root of the values in the datacube element-wise.                                           | NULL    | [SELECT RT_CubeSqrt(databand_1) FROM ...;]                                            |
-| RT_CubeLog          | scalar        | Takes the logarithm of the values in the datacube element-wise.                                             | NULL    | [SELECT RT_CubeLog(databand_1) FROM ...;]                                             |
-| RT_CubeExp          | scalar        | Takes the exponential of the values in the datacube element-wise.                                           | NULL    | [SELECT RT_CubeExp(databand_1) FROM ...;]                                             |
-| RT_CubeEqual        | scalar        | Return 1 where values in datacube_a are equal to datacube_b or a scalar value, 0 otherwise.                 | NULL    | [SELECT RT_CubeEqual(databand_1, 10) FROM ...;]                                       |
-| RT_CubeNotEqual     | scalar        | Return 1 where values in datacube_a are not equal to datacube_b or a scalar value, 0 otherwise.             | NULL    | [SELECT RT_CubeNotEqual(databand_1, 10) FROM ...;]                                    |
-| RT_CubeGreater      | scalar        | Return 1 where values in datacube_a are greater than datacube_b or a scalar value, 0 otherwise.             | NULL    | [SELECT RT_CubeGreater(databand_1, 10) FROM ...;]                                     |
-| RT_CubeGreaterEqual | scalar        | Return 1 where values in datacube_a are greater than or equal to datacube_b or a scalar value, 0 otherwise. | NULL    | [SELECT RT_CubeGreaterEqual(databand_1, 10) FROM ...;]                                |
-| RT_CubeLess         | scalar        | Return 1 where values in datacube_a are less than datacube_b or a scalar value, 0 otherwise.                | NULL    | [SELECT RT_CubeLess(databand_1, 10) FROM ...;]                                        |
-| RT_CubeLessEqual    | scalar        | Return 1 where values in datacube_a are less than or equal to datacube_b or a scalar value, 0 otherwise.    | NULL    | [SELECT RT_CubeLessEqual(databand_1, 10) FROM ...;]                                   |
-| RT_CubeAdd          | scalar        | Add the values in datacube_a to datacube_b or a scalar value element-wise.                                  | NULL    | [SELECT RT_CubeAdd(databand_1, 10) FROM ...;]                                         |
-| RT_CubeSubtract     | scalar        | Subtract datacube_b or a scalar value from the values in datacube_a element-wise.                           | NULL    | [SELECT RT_CubeSubtract(databand_1, 10) FROM ...;]                                    |
-| RT_CubeMultiply     | scalar        | Multiply the values in datacube_a by datacube_b or a scalar value element-wise.                             | NULL    | [SELECT RT_CubeMultiply(databand_1, 10) FROM ...;]                                    |
-| RT_CubeDivide       | scalar        | Divide the values in datacube_a by datacube_b or a scalar value element-wise.                               | NULL    | [SELECT RT_CubeDivide(databand_1, 10) FROM ...;]                                      |
-| RT_CubePow          | scalar        | Take the power of the values in datacube_a to datacube_b or a scalar value element-wise.                    | NULL    | [SELECT RT_CubePow(databand_1, 2) FROM ...;]                                          |
-| RT_Cube2ArrayInt32  | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_Cube2TypeUInt64  | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_Cube2TypeInt8    | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_Cube2ArrayFloat  | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_Cube2ArrayUInt32 | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_Cube2ArrayDouble | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_Cube2TypeUInt8   | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_Cube2ArrayInt64  | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_Cube2TypeUInt16  | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_Cube2TypeDouble  | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_Cube2TypeInt32   | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_Cube2TypeInt64   | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_Cube2ArrayInt16  | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_Cube2ArrayInt8   | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_Cube2ArrayUInt8  | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_CubeMod          | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_Cube2TypeFloat   | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_Cube2TypeInt16   | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_Cube2ArrayUInt16 | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_Cube2TypeUInt32  | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
-| RT_Cube2ArrayUInt64 | scalar        | NULL                                                                                                        | NULL    | NULL                                                                                  |
+|    function_name    | function_type |                                                                                                     description                                                                                                     | comment |                                       examples                                        |
+|---------------------|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|---------------------------------------------------------------------------------------|
+| RT_Drivers          | table         | Returns the list of supported GDAL raster drivers and file formats.                                                                                                                                                 | NULL    | [SELECT RT_Drivers();]                                                                |
+| RT_Read             | table         | Reads a raster file (or a mosaic of raster files) and returns a table with the raster data. Supports filter pushdown on non-BLOB columns.                                                                           | NULL    | [SELECT * FROM RT_Read('path/to/raster/file.tif');]                                   |
+| RT_Array2Cube       | scalar        | Transforms an array of numeric values into a databand column (BLOB) with the internal structure required by the raster extension. This is the inverse of RT_Cube2Array.                                             | NULL    | [SELECT RT_Array2Cube(r.values, 'RAW', r.bands, r.cols, r.rows, r.no_data) FROM ...;] |
+| RT_CubeAbs          | scalar        | Returns a data cube with the absolute value of each cell. No-data cells are preserved.                                                                                                                              | NULL    | [SELECT RT_CubeAbs(databand_1) FROM ...;]                                             |
+| RT_CubeAdd          | scalar        | Returns a data cube with each cell equal to the sum of the corresponding cells of the two inputs. Inputs can be two data cubes or a data cube and a scalar. No-data cells are preserved.                            | NULL    | [SELECT RT_CubeAdd(databand_1, 10) FROM ...;]                                         |
+| RT_CubeDivide       | scalar        | Returns a data cube with each cell equal to the left-hand cell divided by the right-hand cell. Inputs can be two data cubes or a data cube and a scalar. No-data cells are preserved.                               | NULL    | [SELECT RT_CubeDivide(databand_1, 10) FROM ...;]                                      |
+| RT_CubeEqual        | scalar        | Returns a data cube where each cell is 1 if the corresponding cells of the two inputs are equal, 0 otherwise. Inputs can be two data cubes or a data cube and a scalar. No-data cells are preserved.                | NULL    | [SELECT RT_CubeEqual(databand_1, 10) FROM ...;]                                       |
+| RT_CubeExp          | scalar        | Returns a data cube with the exponential (e^x) of each cell. No-data cells are preserved.                                                                                                                           | NULL    | [SELECT RT_CubeExp(databand_1) FROM ...;]                                             |
+| RT_CubeGreater      | scalar        | Returns a data cube where each cell is 1 if the left-hand cell is strictly greater than the right-hand cell, 0 otherwise. Inputs can be two data cubes or a data cube and a scalar. No-data cells are preserved.    | NULL    | [SELECT RT_CubeGreater(databand_1, 10) FROM ...;]                                     |
+| RT_CubeGreaterEqual | scalar        | Returns a data cube where each cell is 1 if the left-hand cell is greater than or equal to the right-hand cell, 0 otherwise. Inputs can be two data cubes or a data cube and a scalar. No-data cells are preserved. | NULL    | [SELECT RT_CubeGreaterEqual(databand_1, 10) FROM ...;]                                |
+| RT_CubeLess         | scalar        | Returns a data cube where each cell is 1 if the left-hand cell is strictly less than the right-hand cell, 0 otherwise. Inputs can be two data cubes or a data cube and a scalar. No-data cells are preserved.       | NULL    | [SELECT RT_CubeLess(databand_1, 10) FROM ...;]                                        |
+| RT_CubeLessEqual    | scalar        | Returns a data cube where each cell is 1 if the left-hand cell is less than or equal to the right-hand cell, 0 otherwise. Inputs can be two data cubes or a data cube and a scalar. No-data cells are preserved.    | NULL    | [SELECT RT_CubeLessEqual(databand_1, 10) FROM ...;]                                   |
+| RT_CubeLog          | scalar        | Returns a data cube with the natural logarithm of each cell. No-data cells are preserved.                                                                                                                           | NULL    | [SELECT RT_CubeLog(databand_1) FROM ...;]                                             |
+| RT_CubeMod          | scalar        | Returns a data cube with each cell equal to the remainder of dividing the left-hand cell by datacube_b or a scalar value element-wise. No-data cells are preserved.                                                 | NULL    | [SELECT RT_CubeMod(databand_1, 3) FROM ...;]                                          |
+| RT_CubeMultiply     | scalar        | Returns a data cube with each cell equal to the product of the corresponding cells of the two inputs. Inputs can be two data cubes or a data cube and a scalar. No-data cells are preserved.                        | NULL    | [SELECT RT_CubeMultiply(databand_1, 10) FROM ...;]                                    |
+| RT_CubeNeg          | scalar        | Returns a data cube with each cell negated (multiplied by -1). No-data cells are preserved.                                                                                                                         | NULL    | [SELECT RT_CubeNeg(databand_1) FROM ...;]                                             |
+| RT_CubeNotEqual     | scalar        | Returns a data cube where each cell is 1 if the corresponding cells of the two inputs differ, 0 otherwise. Inputs can be two data cubes or a data cube and a scalar. No-data cells are preserved.                   | NULL    | [SELECT RT_CubeNotEqual(databand_1, 10) FROM ...;]                                    |
+| RT_CubePow          | scalar        | Returns a data cube with each cell raised to the power of the corresponding right-hand cell. Inputs can be two data cubes or a data cube and a scalar. No-data cells are preserved.                                 | NULL    | [SELECT RT_CubePow(databand_1, 2) FROM ...;]                                          |
+| RT_CubeSqrt         | scalar        | Returns a data cube with the square root of each cell. No-data cells are preserved.                                                                                                                                 | NULL    | [SELECT RT_CubeSqrt(databand_1) FROM ...;]                                            |
+| RT_CubeSubtract     | scalar        | Returns a data cube with each cell equal to the left-hand cell minus the right-hand cell. Inputs can be two data cubes or a data cube and a scalar. No-data cells are preserved.                                    | NULL    | [SELECT RT_CubeSubtract(databand_1, 10) FROM ...;]                                    |
+| RT_Cube2ArrayInt32  | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
+| RT_Cube2TypeUInt64  | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
+| RT_Cube2TypeInt8    | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
+| RT_Cube2ArrayFloat  | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
+| RT_Cube2ArrayUInt32 | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
+| RT_Cube2ArrayDouble | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
+| RT_Cube2TypeUInt8   | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
+| RT_Cube2ArrayInt64  | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
+| RT_Cube2TypeUInt16  | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
+| RT_Cube2TypeDouble  | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
+| RT_Cube2TypeInt32   | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
+| RT_Cube2TypeInt64   | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
+| RT_Cube2ArrayInt16  | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
+| RT_Cube2ArrayInt8   | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
+| RT_Cube2ArrayUInt8  | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
+| RT_Cube2TypeFloat   | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
+| RT_Cube2TypeInt16   | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
+| RT_Cube2ArrayUInt16 | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
+| RT_Cube2TypeUInt32  | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
+| RT_Cube2ArrayUInt64 | scalar        | NULL                                                                                                                                                                                                                | NULL    | NULL                                                                                  |
 
 ### Overloaded Functions
 
