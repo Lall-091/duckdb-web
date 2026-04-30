@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "DuckDB: Up and Running"
-subtitle: "Fast Data Analytics and Reporting"
 author: "Wei-Meng Lee"
 thumb: "/images/library/thumbs/duckdb-up-and-running.svg"
 image: "/images/library/thumbs/duckdb-up-and-running.png"
@@ -16,4 +15,9 @@ pill: "DuckDB: Up and Running"
 </div>
 
 |-------|-------|
-| **Goodreads** | [DuckDB: Up and Running](https://www.goodreads.com/book/show/222286256-duckdb) |
+| **Author** | Wei-Meng Lee |
+| **Title** | DuckDB: Up and Running |
+| **Subtitle** | Fast Data Analytics and Reporting |
+| **Publisher** | O'Reilly |
+| **Year** | 2024 |
+| **Goodreads** | [Read the reviews](https://www.goodreads.com/book/show/222286256-duckdb) |

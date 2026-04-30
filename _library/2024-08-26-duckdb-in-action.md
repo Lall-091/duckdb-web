@@ -16,4 +16,8 @@ pill: "DuckDB in Action"
 </div>
 
 |-------|-------|
-| **Goodreads** | [DuckDB in Action](https://www.goodreads.com/book/show/210225037-duckdb-in-action) |
+| **Authors** | Mark Needham, Michael Hunger, Michael Simons |
+| **Title** | DuckDB in Action |
+| **Publisher** | Manning |
+| **Year** | 2024 |
+| **Goodreads** | [Read the reviews](https://www.goodreads.com/book/show/210225037-duckdb-in-action) |

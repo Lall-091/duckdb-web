@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Spatial Data Management with DuckDB"
-subtitle: "From SQL Basics to Advanced Geospatial Analytics"
 author: "Qiusheng Wu"
 thumb: "/images/library/thumbs/spatial-data-management-with-duckdb.svg"
 image: "/images/library/thumbs/spatial-data-management-with-duckdb.png"
@@ -16,4 +15,9 @@ pill: "Spatial Data Management with DuckDB"
 </div>
 
 |-------|-------|
-| **Goodreads** | [Spatial Data Management with DuckDB](http://goodreads.com/book/show/244019490-spatial-data-management-with-duckdb) |
+| **Author** | Qiusheng Wu |
+| **Title** | Spatial Data Management with DuckDB |
+| **Subtitle** | From SQL Basics to Advanced Geospatial Analytics |
+| **Publisher** | Independently published |
+| **Year** | 2025 |
+| **Goodreads** | [Read the reviews](http://goodreads.com/book/show/244019490-spatial-data-management-with-duckdb) |

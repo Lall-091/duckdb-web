@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Getting Started with DuckDB"
-subtitle: "A practical guide for accelerating your data science, data analytics, and data engineering workflows"
 author: "Simon Aubury, Ned Letcher"
 thumb: "/images/library/thumbs/getting-started-with-duckdb.svg"
 image: "/images/library/thumbs/getting-started-with-duckdb.png"
@@ -16,4 +15,9 @@ pill: "Getting Started with DuckDB"
 </div>
 
 |-------|-------|
-| **Goodreads** | [Getting Started with DuckDB](https://www.goodreads.com/book/show/157532594-getting-started-with-duckdb) |
+| **Authors** | Simon Aubury, Ned Letcher |
+| **Title** | Getting Started with DuckDB |
+| **Subtitle** | A practical guide for accelerating your data science, data analytics, and data engineering workflows |
+| **Publisher** | Packt Publishing |
+| **Year** | 2024 |
+| **Goodreads** | [Read the reviews](https://www.goodreads.com/book/show/157532594-getting-started-with-duckdb) |

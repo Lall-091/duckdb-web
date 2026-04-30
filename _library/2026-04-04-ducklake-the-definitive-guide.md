@@ -16,5 +16,9 @@ pill: "DuckLake: The Definitive Guide"
 </div>
 
 |-------|-------|
-| **O'Reilly** | [DuckLake: The Definitive Guide](https://www.oreilly.com/library/view/ducklake-the-definitive/0642572317607/) |
+| **Authors** | Matt Martin, Alex Monahan |
+| **Title** | DuckLake: The Definitive Guide |
+| **Publisher** | O'Reilly |
+| **Year** | 2026 |
+| **Book page** | [DuckLake: The Definitive Guide](https://www.oreilly.com/library/view/ducklake-the-definitive/0642572317607/) |
 | **Free Preview** | [Early Release Sponsored by MotherDuck](https://motherduck.com/lp/ducklake-lakehouse-table-format-book/) |
