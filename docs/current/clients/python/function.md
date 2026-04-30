@@ -254,7 +254,8 @@ print(res)
 ```
 
 ```console
-Invalid Input Error: Python exception occurred while executing the UDF: ValueError: ERROR
+Invalid Input Error:
+Python exception occurred while executing the UDF: ValueError: ERROR
 
 At:
   ...(5): will_throw

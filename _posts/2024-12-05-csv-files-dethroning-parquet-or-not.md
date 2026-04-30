@@ -95,7 +95,8 @@ Samuel L. Jackson
 In this file, the second line is missing the value for the second column.
 
 ```console
-Invalid Input Error: CSV Error on Line: 2
+Invalid Input Error:
+CSV Error on Line: 2
 Original Line: Samuel L. Jackson
 Expected Number of Columns: 2 Found: 1
 Possible fixes:

@@ -56,7 +56,8 @@ SELECT strptime('02/50/1992', '%d/%m/%Y') AS x;
 ```
 
 ```console
-Invalid Input Error: Could not parse string "02/50/1992" according to format specifier "%d/%m/%Y"
+Invalid Input Error:
+Could not parse string "02/50/1992" according to format specifier "%d/%m/%Y"
 02/50/1992
    ^
 Error: Month out of range, expected a value between 1 and 12

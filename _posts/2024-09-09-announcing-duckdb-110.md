@@ -62,8 +62,9 @@ SELECT (SELECT unnest(range(10)));
 ```
 
 ```console
-Invalid Input Error: More than one row returned by a subquery used as
-an expression - scalar subqueries can only return a single row.
+Invalid Input Error:
+More than one row returned by a subquery used as an expression -
+scalar subqueries can only return a single row.
 ```
 
 ```sql

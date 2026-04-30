@@ -39,7 +39,8 @@ SET allow_community_extensions = true;
 ```
 
 ```console
-Invalid Input Error: Cannot upgrade allow_community_extensions setting while database is running
+Invalid Input Error:
+Cannot upgrade allow_community_extensions setting while database is running
 ```
 
 ## Community Extensions

@@ -466,7 +466,8 @@ SELECT json_transform_strict(j, '{"family": "TINYINT", "coolness": "DOUBLE"}') F
 ```
 
 ```console
-Invalid Input Error: Failed to cast value: "anatidae"
+Invalid Input Error:
+Failed to cast value: "anatidae"
 ```
 
 ## JSON Table Functions
