@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "DuckDB in Research S01E02: Daniël ten Wolde"
-subtitle: "DuckPGQ: A Graph Extension Supporting SQL/PGQ"
 author: "Disseminate Podcast Series by Jack Waudby"
 thumb: "/images/library/thumbs/2025-03-21-daniel-ten-wolde-duckpgq.jpg"
 image: "/images/library/thumbs/2025-03-21-daniel-ten-wolde-duckpgq.jpg"
@@ -16,6 +15,7 @@ episode: "S01E02"
 |-------|-------|
 | **Podcast** | DuckDB in Research |
 | **Episode** | S01E02 |
+| **Topic** | DuckPGQ: A Graph Extension Supporting SQL/PGQ |
 | **Apple Podcasts** | [Listen](https://podcasts.apple.com/us/podcast/dani%C3%ABl-ten-wolde-duckpgq-a-graph-extension/id1631350873?i=1000700107280) |
 | **Spotify** | [Listen](https://open.spotify.com/episode/3e3ugp27paNzKthkN9wmUe) |
 

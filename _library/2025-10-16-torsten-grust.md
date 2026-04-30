@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "DuckDB in Research S02E01: Torsten Grust"
-subtitle: "Common Table Extensions and DuckDB in Education"
 author: "Disseminate Podcast Series by Jack Waudby"
 thumb: "/images/library/thumbs/2025-10-16-torsten-grust.jpg"
 image: "/images/library/thumbs/2025-10-16-torsten-grust.jpg"
@@ -20,6 +19,7 @@ episode: "S02E01"
 |-------|-------|
 | **Podcast** | DuckDB in Research |
 | **Episode** | S02E01 |
+| **Topic** | Common Table Extensions and DuckDB in Education |
 | **Apple Podcasts** | [Listen](https://podcasts.apple.com/us/podcast/recursive-ctes-trampolines-and-teaching-databases/id1631350873?i=1000732177402) |
 | **Spotify** | [Listen](https://open.spotify.com/episode/3MdbbJP2CzVJT7whI7l0Va?si=7a8594c2795145f1) |
 | **Acast** | [Listen](https://shows.acast.com/disseminate/episodes/torsten-grust) |

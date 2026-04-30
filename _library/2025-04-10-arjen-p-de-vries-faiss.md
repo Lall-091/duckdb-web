@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "DuckDB in Research S01E04: Arjen P. de Vries"
-subtitle: "faiss: An Extension for Vector Data & Search"
 author: "Disseminate Podcast Series by Jack Waudby"
 thumb: "/images/library/thumbs/2025-04-10-arjen-p-de-vries-faiss.jpg"
 image: "/images/library/thumbs/2025-04-10-arjen-p-de-vries-faiss.jpg"
@@ -16,6 +15,7 @@ episode: "S01E04"
 |-------|-------|
 | **Podcast** | DuckDB in Research |
 | **Episode** | S01E04 |
+| **Topic** | faiss: An Extension for Vector Data & Search |
 | **Apple Podcasts** | [Listen](https://podcasts.apple.com/us/podcast/arjen-p-de-vries-faiss-an-extension-for-vector-data-search/id1631350873?i=1000702996891) |
 | **Spotify** | [Listen](https://open.spotify.com/episode/33get9iGEZXMsgKiOZ2mml) |
 
