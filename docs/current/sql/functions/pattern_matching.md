@@ -58,7 +58,7 @@ SELECT 'a%c' LIKE 'a$%c' ESCAPE '$'; -- true
 SELECT 'azc' LIKE 'a$%c' ESCAPE '$'; -- false
 ```
 
-Case-insensitive ILIKE with ESCAPE:
+Case-insensitive `ILIKE` with `ESCAPE`:
 
 ```sql
 SELECT 'A%c' ILIKE 'a$%c' ESCAPE '$'; -- true
@@ -102,7 +102,8 @@ SELECT 'abc' NOT SIMILAR TO 'abc';   -- false
 
 DuckDB supports file name expansion, also known as globbing, for discovering files.
 DuckDB's glob syntax uses the question mark (`?`) wildcard to match any single character and the asterisk (`*`) to match zero or more characters.
-In addition, you can use the bracket syntax (`[...]`) to match any single character contained within the brackets, or within the character range specified by the brackets. An exclamation mark (`!`) may be used inside the first bracket to search for a character that is not contained within the brackets.
+In addition, you can use the bracket syntax (`[...]`) to match any single character contained within the brackets, or within the character range specified by the brackets.
+An exclamation mark (`!`) may be used inside the first bracket to search for a character that is not contained within the brackets.
 To learn more, visit the [“glob (programming)” Wikipedia page](https://en.wikipedia.org/wiki/Glob_(programming)).
 
 ### `GLOB`
