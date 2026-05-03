@@ -4,6 +4,8 @@ redirect_from:
 - /docs/preview/dev/building/overview
 - /docs/stable/dev/building/overview
 - /docs/dev/building/build_instructions
+- /build
+- /building
 title: Building DuckDB from Source
 ---
 
@@ -19,6 +21,8 @@ This page explains the steps for building DuckDB.
 
 DuckDB needs CMake and a C++11-compliant compiler (e.g., GCC, Apple-Clang, MSVC).
 Additionally, we recommend using the [Ninja build system](https://ninja-build.org/), which automatically parallelizes the build process.
+
+> Warning DuckDB v2.0 will require [C++17](https://github.com/duckdb/duckdb/pull/21310).
 
 ## Getting Started
 
