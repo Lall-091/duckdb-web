@@ -44,10 +44,10 @@ docs:
       from data embedded in the extension binary.
     - For more information, visit the [GitHub repository](https://github.com/ericmanning/duckdb-address-standardizer).
 
-extension_star_count: 2
-extension_star_count_pretty: 2
-extension_download_count: 369
-extension_download_count_pretty: 369
+extension_star_count: 3
+extension_star_count_pretty: 3
+extension_download_count: 384
+extension_download_count_pretty: 384
 image: '/images/community_extensions/social_preview/preview_community_extension_us_address_standardizer.png'
 layout: community_extension_doc
 ---

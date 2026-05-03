@@ -75,10 +75,10 @@ docs:
     - Lineage captured from Prepared Statements is less detailed
     - Requires an external OpenLineage-compatible backend for event storage
 
-extension_star_count: 61
-extension_star_count_pretty: 61
-extension_download_count: 807
-extension_download_count_pretty: 807
+extension_star_count: 62
+extension_star_count_pretty: 62
+extension_download_count: 825
+extension_download_count_pretty: 825
 image: '/images/community_extensions/social_preview/preview_community_extension_duck_lineage.png'
 layout: community_extension_doc
 ---
