@@ -107,6 +107,11 @@ body.layout_webshell {
 	}
 
 	header .headerline .headercontent .landingmenu nav {
+		max-height: none;
+		overflow: visible;
+	}
+
+	header .headerline .headercontent .landingmenu nav .submenuwrap {
 		max-height: calc(100vh - 110px);
 		overflow-y: auto;
 		overscroll-behavior: contain;
