@@ -11,6 +11,10 @@
 		document.documentElement.style.backgroundColor = '';
 		document.documentElement.style.colorScheme = '';
 	}
+	{% if page.force_dark %}
+	setDarkMode();
+	return;
+	{% endif %}
 	try {
 		var userColorSchemePref = localStorage.getItem("mode");
 		if (userColorSchemePref !== null) {
