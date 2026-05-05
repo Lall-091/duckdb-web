@@ -24,8 +24,8 @@ repo:
 
 extension_star_count: 0
 extension_star_count_pretty: 0
-extension_download_count: 125
-extension_download_count_pretty: 125
+extension_download_count: 196
+extension_download_count_pretty: 196
 image: '/images/community_extensions/social_preview/preview_community_extension_ducklake_cdc.png'
 layout: community_extension_doc
 ---
