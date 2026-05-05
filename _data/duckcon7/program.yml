@@ -2,16 +2,16 @@
   title: Wednesday, 24 June 2026
   sessions:
     - venue opens:
-      title: Venue opens
+      title: Warmup
       timetable:
-        - time: "14:00"
-          title: 
+        - time: "14:15"
+          title: Sponsor sessions (TBA)
     - first session:
       title: First session
       timetable:
         - time: "15:00"
           title: "State of the Duck"
-          speaker: "Hannes Mühleisen<br>(DuckDB Labs)"
+          speaker: "Hannes Mühleisen and Mark Raasveldt<br>(DuckDB Labs)"
         - time: "15:30"
           title: "Effortlessly modernize your legacy: SQLFrame migrates PySpark to DuckDB without code changes"
           speaker: "Nicolas Renkamp<br>(Merck KGaA)"

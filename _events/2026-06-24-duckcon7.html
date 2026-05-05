@@ -38,28 +38,15 @@ redirect_from:
         <p>2026-06-24 <br/>15:00–20:00</p>
       </div>
     </div>
-    <a class="hero-footer-button" href="#announcement"><svg class="icon"><use href="#arrow-down"></use></svg></a>
+    <a class="hero-footer-button" href="#program"><svg class="icon"><use href="#arrow-down"></use></svg></a>
   </footer>
 </section>
+
+<!--
 <section class="announcement w-large" id="announcement">
-  <!--<span class="pre-title">Save the date!</span>-->
   <p class="wrap">We're hosting DuckCon #7 in the <a href="https://www.kit.nl/about-us/">Royal Tropical Institute</a>, Amsterdam, on Wednesday, June 24.</p>
 </section>
-<section class="slider">
-  <div class="swiper js-duckcon7-slider">
-    <div class="swiper-wrapper">
-      {% for image in site.data.duckcon7.intro_slider %}
-      <div class="swiper-slide">
-        <img src="{{ image.image }}" alt="{{ image.description }}">
-        <p class="text-secondary-color">{{ image.description }}</p>
-      </div>
-      {% endfor %}
-    </div>
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-  </div>
-  <hr class="divider" />
-</section>
+-->
 
 <section class="program w-large" id="program">
   {% include duckcon7/section_header.html title="Program" description="Discover where DuckDB is headed and how our community uses it at DuckCon #7." %}
@@ -89,6 +76,22 @@ redirect_from:
       </table>
       {% endfor %}
     {% endfor %}
+  </div>
+  <hr class="divider" />
+</section>
+
+<section class="slider">
+  <div class="swiper js-duckcon7-slider">
+    <div class="swiper-wrapper">
+      {% for image in site.data.duckcon7.intro_slider %}
+      <div class="swiper-slide">
+        <img src="{{ image.image }}" alt="{{ image.description }}">
+        <p class="text-secondary-color">{{ image.description }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
   </div>
   <hr class="divider" />
 </section>
