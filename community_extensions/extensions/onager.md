@@ -47,8 +47,8 @@ docs:
 
 extension_star_count: 130
 extension_star_count_pretty: 130
-extension_download_count: 823
-extension_download_count_pretty: 823
+extension_download_count: 853
+extension_download_count_pretty: 853
 image: '/images/community_extensions/social_preview/preview_community_extension_onager.png'
 layout: community_extension_doc
 ---

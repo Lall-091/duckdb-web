@@ -41,10 +41,10 @@ repo:
   github: crazy-treyn/pbi_scanner
   ref: dcde225628f30353a26d1c60c3dfc951d12ba7a6
 
-extension_star_count: 3
-extension_star_count_pretty: 3
-extension_download_count: 147
-extension_download_count_pretty: 147
+extension_star_count: 4
+extension_star_count_pretty: 4
+extension_download_count: 271
+extension_download_count_pretty: 271
 image: '/images/community_extensions/social_preview/preview_community_extension_pbi_scanner.png'
 layout: community_extension_doc
 ---
