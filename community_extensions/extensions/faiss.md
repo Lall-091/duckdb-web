@@ -48,8 +48,8 @@ docs:
 
 extension_star_count: 31
 extension_star_count_pretty: 31
-extension_download_count: 805
-extension_download_count_pretty: 805
+extension_download_count: 815
+extension_download_count_pretty: 815
 image: '/images/community_extensions/social_preview/preview_community_extension_faiss.png'
 layout: community_extension_doc
 ---
