@@ -27,8 +27,8 @@
       title: Second session
       timetable:
         - time: "16:35"
-          title: "TBA"
-          speaker: "TBA"
+          title: "How we built a SQL layer over our user listening history for agentic access"
+          speaker: "Kian Mehrabani<br>(Spotify)"
         - time: "16:50"
           title: "Grep your lakehouse: Search-first retrieval for DuckDB-powered agents"
           speaker: "Sylvain Utard<br>(Altertable.ai)"
