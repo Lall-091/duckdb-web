@@ -296,12 +296,6 @@ CREATE TABLE distances AS
     );
 ```
 
-To make the `NULL` values visible in the command line output, we set the [`.nullvalue` dot command]({% link docs/lts/clients/cli/dot_commands.md %}) to `NULL`:
-
-```sql
-.nullvalue NULL
-```
-
 Then, using the [`DESCRIBE` statement]({% link docs/lts/guides/meta/describe.md %}), we can confirm that DuckDB has inferred the column correctly as `BIGINT`:
 
 ```sql
