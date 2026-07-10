@@ -1907,6 +1907,10 @@
                   "url": "writing_tests"
                 },
                 {
+                  "page": "Unit Tester Configuration",
+                  "url": "test_configuration"
+                },
+                {
                   "page": "Debugging",
                   "url": "debugging"
                 },

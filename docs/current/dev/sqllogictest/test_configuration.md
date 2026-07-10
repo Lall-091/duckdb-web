@@ -1,0 +1,66 @@
+---
+layout: docu
+redirect_from:
+- /dev/sqllogictest/test_configuration
+- /docs/dev/sqllogictest/test_configuration
+- /docs/preview/dev/sqllogictest/test_configuration
+- /docs/stable/dev/sqllogictest/test_configuration
+title: Unit Tester Configuration
+---
+
+Unit tests can be ran under different configurations.
+
+The following configuration options are available.
+
+| Option | Description |
+|----------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `--autoloading <none|available|all>` | Loading strategy for extensions not bundled in |
+| `--base-config <path>` | Config file to load and base initial settings on |
+| `--block-size <num>` | Block Alloction Size; must be a power of 2 |
+| `--checkpoint-on-shutdown`, `--no-checkpoint-on-shutdown` | Whether or not to checkpoint on database shutdown |
+| `--checkpoint-wal-size <num>` | Size in bytes after which to trigger automatic checkpointing |
+| `--comment <string>` | Extra free form comment line |
+| `--data-dir <path>` | Root dir for test data; default WORKING_DIR/data. Relative values resolve per test cwd; absolute/remote (e.g. `az://...`) values are used verbatim. |
+| `--database-destroy <on|off|on-success>` | default on-success: keep on failure |
+| `--description <string>` | Config description |
+| `--emit-on-skip` | print a [SKIP_TEST] marker per skipped test |
+| `--emit-test-events` | writes json with test events to stderr |
+| `--force-reload` | Force restart the database between runs |
+| `--force-restart`, `--no-force-restart` | Force restart the database between runs |
+| `--force-storage` | Test with persistent storage file |
+| `--init-script <path>` | Script to execute on init |
+| `--initial-db <path>` | Initial database path |
+| `--keep-home` | use $HOME/USERPROFILE instead of the sandboxed temp-dir home |
+| `--max-test-threads <num>` | Max threads to be used by the test runner itself (for e.g. concurrent loop) |
+| `--max-threads <num>` | Max threads to use during tests |
+| `--on-cleanup <string>` | SQL statements to execute on test end |
+| `--on-init <string>` | SQL statements to execute on init |
+| `--on-load <string>` | SQL statements to execute on explicit load |
+| `--on-new-connection <string>` | SQL statements to execute on connection |
+| `--one-initialize` | Initialize buffers with all 1; also see `--zero-initialize` |
+| `--require <extension_name>` | if the extension is missing: fail rather then skip tests that require it |
+| `--run-id <'auto'|<string>>` | override per-run identity; the [RUN_ID] path level; shared across a run's tests; auto = generate |
+| `--select-tag <string>` | Select tests which match named tag (as singleton set; multiple sets are OR'd) |
+| `--select-tag-set <comma-separated strings>` | Select tests which match _all_ named tags (multiple sets are OR'd) |
+| `--settings <list[struct]>` | Set [DuckDB configuration]({% link docs/lts/configuration/overview.md %}), struct should have keys name and value |
+| `--skip-compiled`, `--no-skip-compiled` | Skip compiled tests |
+| `--skip-error-messages <comma-separated strings>` | Skip rather then fail tests that fail with a message that contains any of these substrings |
+| `--skip-tag <string>` | Skip tests which match named tag (as singleton set; multiple sets are OR'd) |
+| `--skip-tag-set <comma-separated strings>` | Skip tests which match _all_ named tags (multiple sets are OR'd) |
+| `--sort-style <none|rowsort|valuesort>` | Default sort style if none is configured in the test |
+| `--statically-loaded-extensions <comma-separated strings>` | Extensions to be loaded (from the statically available one) |
+| `--stdin` | read a single sqllogictest script from stdin |
+| `--storage-fuzzer`, `--no-storage-fuzzer` | Run storage fuzzer tests |
+| `--storage-version <string>` | Database storage version to use by default |
+| `--summarize-failures`, `--no-summarize-failures` | Print a summary of all test failures after running |
+| `--temp-dir-base <path>` | override root of the temp-dir tree; may be local or remote (e.g. `s3://`) |
+| `--temp-dir-create <never|on-absent|always>` | default on-absent: mkdir -p, no clobber |
+| `--temp-dir-destroy <never|on-success|always>` | default on-success: keep on failure |
+| `--temp-dir-run-id <on|off>` | is RUN_ID a path level? (default on) |
+| `--temp-dir-test-id <on|off>` | is TEST_ID (the test name) a path level? (default on) |
+| `--test-config <path>` | Path to a configuration file |
+| `--test-dir <path>` | override default working directory of test runner, availabe in tests as {WORKING_DIRECTORY} |
+| `--test-env <list[struct]>` | The test variables, struct should have keys env_name and env_value |
+| `--test-memory-leaks`, `--no-test-memory-leaks` | Run memory leak tests |
+| `--verify-vector <string>` | Run vector verification for a specific vector type (options: dictionary_expression, dictionary_operator, constant_operator, sequence_operator, nested_shuffle, variant_vector) |
+| `--zero-initialize` | Initialize buffers with all 0; also see `--one-initialize` |
