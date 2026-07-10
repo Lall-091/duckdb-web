@@ -8,9 +8,77 @@ redirect_from:
 title: Unit Tester Configuration
 ---
 
-Unit tests can be ran under different configurations.
+There are three ways of setting options for the unit tester:
+* [Command Line Arguments](#command-line-arguments)
+* [Configuration File](#configuration-file)
+* [Environment Variables](#environment-variables)
 
-The following configuration options are available.
+## Command Line Arguments
+
+See the [Configuration Options List](#configuration-options-list) for all available options.
+```bash
+# booleans
+unittest --checkpoint-on-shutdown
+unittest --no-checkpoint-on-shutdown
+
+# other types
+unittest --checkpoint-wal-size 100000
+```
+
+Command line options `--settings`, `--on-init` and `--init-script` can be used to specify [DuckDB configuration]({% link docs/current/configuration/overview.md %}).
+
+## Configuration File
+
+A JSON file that can be passed in using `--test-config`.
+See the [Configuration Options List](#configuration-options-list) for all available options, replacing `-` with `_`.
+
+example:
+```json
+{
+   "checkpoint_wal_size": 100000,
+   "checkpoint_on_shutdown": "false"
+}
+```
+
+The following additional options can also be used in the configuration file:
+
+| Option | Description |
+|----------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `extends` | List of config files to extend from |
+| `inherit_skip_tests` | Path of config to inherit 'skip_tests' from |
+| `skip_tests` | Tests to be skipped |
+
+example:
+```json
+{
+    "extends": ["base_config.json"],
+    "inherit_skip_tests": "test/configs/force_storage.json",
+    "skip_tests": [
+        {
+            "reason": "Contains explicit use of the memory catalog.",
+            "paths": [
+                "test/sql/attach/attach_use_rollback.test",
+                "test/sql/function/list/lambdas/arrow/warn_deprecated_arrow.test",
+                "test/sql/cte/warn_deprecated_union_in_using_key.test"
+            ]
+        }
+    ]
+}
+```
+
+
+## Environment Variables
+
+Most [Configuration Options](#configuration-options-list) can also be set as Environment Variables, prefixed with `DUCKDB_TEST_`, upper-cased with underscores:
+
+example:
+```bash
+DUCKDB_TEST_CHECKPOINT_ON_SHUTDOWN=1 unittest
+```
+
+## Configuration Options List
+
+The following configuration options are available:
 
 | Option | Description |
 |----------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -28,9 +96,9 @@ The following configuration options are available.
 | `--force-reload` | Force restart the database between runs |
 | `--force-restart`, `--no-force-restart` | Force restart the database between runs |
 | `--force-storage` | Test with persistent storage file |
-| `--init-script <path>` | Script to execute on init |
+| `--init-script <path>` | SQL script to execute on init |
 | `--initial-db <path>` | Initial database path |
-| `--keep-home` | use $HOME/USERPROFILE instead of the sandboxed temp-dir home |
+| `--keep-home` | use `$HOME/USERPROFILE` instead of the sandboxed temp-dir home |
 | `--max-test-threads <num>` | Max threads to be used by the test runner itself (for e.g. concurrent loop) |
 | `--max-threads <num>` | Max threads to use during tests |
 | `--on-cleanup <string>` | SQL statements to execute on test end |
@@ -58,7 +126,7 @@ The following configuration options are available.
 | `--temp-dir-destroy <never|on-success|always>` | default on-success: keep on failure |
 | `--temp-dir-run-id <on|off>` | is RUN_ID a path level? (default on) |
 | `--temp-dir-test-id <on|off>` | is TEST_ID (the test name) a path level? (default on) |
-| `--test-config <path>` | Path to a configuration file |
+| `--test-config <path>` | Path to a [configuration file](#configuration-file) |
 | `--test-dir <path>` | override default working directory of test runner, availabe in tests as {WORKING_DIRECTORY} |
 | `--test-env <list[struct]>` | The test variables, struct should have keys env_name and env_value |
 | `--test-memory-leaks`, `--no-test-memory-leaks` | Run memory leak tests |
