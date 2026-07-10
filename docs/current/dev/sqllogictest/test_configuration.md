@@ -42,7 +42,7 @@ The following configuration options are available.
 | `--run-id <'auto'|<string>>` | override per-run identity; the [RUN_ID] path level; shared across a run's tests; auto = generate |
 | `--select-tag <string>` | Select tests which match named tag (as singleton set; multiple sets are OR'd) |
 | `--select-tag-set <comma-separated strings>` | Select tests which match _all_ named tags (multiple sets are OR'd) |
-| `--settings <list[struct]>` | Set [DuckDB configuration]({% link docs/lts/configuration/overview.md %}), struct should have keys name and value |
+| `--settings <list[struct]>` | Set [DuckDB configuration]({% link docs/current/configuration/overview.md %}), struct should have keys name and value |
 | `--skip-compiled`, `--no-skip-compiled` | Skip compiled tests |
 | `--skip-error-messages <comma-separated strings>` | Skip rather then fail tests that fail with a message that contains any of these substrings |
 | `--skip-tag <string>` | Skip tests which match named tag (as singleton set; multiple sets are OR'd) |
