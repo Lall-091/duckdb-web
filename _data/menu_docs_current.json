@@ -337,6 +337,10 @@
               ]
             },
             {
+              "page": "PHP",
+              "url": "php"
+            },
+            {
               "page": "Python",
               "slug": "python",
               "subsubfolderitems": [
