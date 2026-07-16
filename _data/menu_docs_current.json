@@ -1353,6 +1353,10 @@
                 {
                   "page": "SQLite Import",
                   "url": "sqlite"
+                },
+                {
+                  "page": "Amazon RDS with IAM Authentication",
+                  "url": "rds_iam"
                 }
               ]
             },
