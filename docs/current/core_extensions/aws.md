@@ -205,20 +205,20 @@ CREATE SECRET env_test (
 
 ## Amazon RDS (IAM Authentication)
 
-The `aws` extension can also create an `rds` secret, which is a template used to generate short-lived [IAM authentication tokens](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html) for connecting to Amazon RDS and Aurora databases. This secret is consumed by the [`postgres`]({% link docs/current/core_extensions/postgres/overview.md %}) and [`mysql`]({% link docs/current/core_extensions/mysql.md %}) extensions rather than by S3.
+The `aws` extension can generate short-lived [IAM authentication tokens](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html) for connecting to Amazon RDS and Aurora databases, exposed through a secret of type `rds`. It accepts the same [`credential_chain`](#credential_chain-provider) options as an `s3` secret, plus the required `RDS_USER`, `RDS_HOST`, `RDS_PORT`, and `REGION` parameters. Unlike an `s3` secret, an `rds` secret also requires an explicit `CHAIN`:
 
 ```sql
-CREATE SECRET rds_secret (
+CREATE SECRET aws_rds_secret (
     TYPE rds,
     PROVIDER credential_chain,
+    REGION '⟨eu-west-1⟩',
     RDS_USER '⟨db_user⟩',
     RDS_HOST '⟨instance⟩.⟨identifier⟩.⟨region⟩.rds.amazonaws.com',
-    RDS_PORT '5432',
-    REGION '⟨us-east-1⟩'
+    RDS_PORT '5432'
 );
 ```
 
-The `RDS_USER`, `RDS_HOST`, `RDS_PORT`, and `REGION` parameters are required.
+> The `rds` secret _type_ is registered by the [`postgres` extension]({% link docs/current/core_extensions/postgres/overview.md %}), not by `aws`, so the `postgres` extension must be installed and loaded before the statement above will run. For the complete end-to-end setup — passing the secret to a connection via `AWS_RDS_SECRET`, attaching, and querying — see the [Amazon RDS with IAM authentication guide]({% link docs/current/guides/database_integration/rds_iam.md %}) or the [Postgres secrets documentation]({% link docs/current/core_extensions/postgres/secrets.md %}#aws-rds-iam-authentication).
 
 ## Legacy Features
 

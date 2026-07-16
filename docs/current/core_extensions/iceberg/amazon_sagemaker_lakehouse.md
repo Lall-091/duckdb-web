@@ -99,4 +99,4 @@ WITH (
 );
 ```
 
-You can learn more about the `WITH` clause at [Table Properties]({% link docs/current/core_extensions/iceberg/iceberg_rest_catalogs.md %}#table-properties-functions).
+You can learn more about the `WITH` clause at [Table Properties]({% link docs/current/core_extensions/iceberg/writing.md %}#table-properties).
