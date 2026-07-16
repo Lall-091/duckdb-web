@@ -308,7 +308,7 @@
 		}
 	}
 	&:hover{
-		color: $purple;
+		color: var(--main-link-hover-color, #998B00);
 	}
 }
 

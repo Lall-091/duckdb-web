@@ -81,7 +81,7 @@ body.documentation main .wrap.frequentlyaskedquestions{
 			-o-transition: color .3s;
 			transition: color .3s;
 			&:hover{
-				color: $blue;
+				color: var(--main-link-hover-color, #998B00);
 				cursor: pointer;
 			}
 		}
