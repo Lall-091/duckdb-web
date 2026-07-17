@@ -53,6 +53,7 @@ summary a{
 	&:hover{
 		color: var(--main-link-hover-color, #998B00);
 		text-decoration-color: var(--main-link-hover-color, #998B00);
+		text-decoration-thickness: 1px;
 		cursor: pointer;
 	}
 }
