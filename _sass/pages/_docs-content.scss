@@ -154,6 +154,7 @@ body.documentation {
         &:hover {
             color: var(--main-link-hover-color, #998B00);
             text-decoration-color: var(--main-link-hover-color, #998B00);
+            text-decoration-thickness: 1px;
         }
     }
 
@@ -166,7 +167,7 @@ body.documentation {
 
         &:focus,
         &:hover {
-            text-decoration: underline;
+            text-decoration-line: underline;
         }
     }
 
@@ -338,7 +339,7 @@ body.layout_default.blog_typography {
         }
 
         a {
-            text-decoration: underline;
+            text-decoration-line: underline;
             word-wrap: normal;
             word-break: normal;
 
