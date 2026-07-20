@@ -486,7 +486,7 @@ $(document).ready(function(){
 
 	
 	// Appending Content-List of Documentation
-	if ( $('.wrap.documentation').length ) {
+	if ( $('#docusitemaphere').length ) {
 	    contentlist = $('ul.sidenav').clone()
 	    contentlist.find('svg').remove()
 	    $('#docusitemaphere').append(contentlist).find("ul").removeAttr("style")
