@@ -172,6 +172,17 @@ h1, h2, h3, h4, h5, h6 {
 	a {
 		color: inherit;
 	}
+
+	svg.anchor-icon {
+		width: 16px;
+		height: 16px;
+		margin-left: 8px;
+		fill: none;
+		stroke-width: 2;
+		color: var(--main-text-tertiary-color, #B2B2B2);
+		opacity: 0;
+		transition: opacity .3s;
+	}
 }
 
 main .wrap{
