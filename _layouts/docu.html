@@ -160,7 +160,9 @@ Page URL: <https://duckdb.org{{ page.url }}>
 			<div id="main_content_wrap">
 				
 				<div class="headlinebar">
+					{% unless page.breadcrumbs == false %}
 					<div class="breadcrumbs">{% include breadcrumbs.html %}</div>
+					{% endunless %}
 					{% unless page.copy_markdown == false %}
 					<button type="button" class="copy-markdown" data-source="https://raw.githubusercontent.com/duckdb/duckdb-web/refs/heads/main/{{ page.path }}"><svg class="icon"><use href="#copy-01"></use></svg><span>Copy Markdown</span></button>
 					{% endunless %}

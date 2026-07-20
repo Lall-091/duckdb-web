@@ -1,6 +1,7 @@
 ---
 layout: docu
 copy_markdown: false
+breadcrumbs: false
 redirect_from:
 - /docs/sitemap
 - /docs/lts/sitemap
