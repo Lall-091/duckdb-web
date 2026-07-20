@@ -95,7 +95,9 @@ def main():
     # Generate the docs-specific llms.txt and llms-full.txt files
     generate_docs_llms_files()
 
-    print("Generated docs/current/llms.txt and docs/current/llms-full.txt successfully!")
+    print(
+        "Generated docs/current/llms.txt and docs/current/llms-full.txt successfully!"
+    )
 
 
 if __name__ == '__main__':

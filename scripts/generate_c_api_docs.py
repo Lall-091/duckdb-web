@@ -207,9 +207,7 @@ def highlight_function_prototype(function_prototype, function_name):
         result += function_prototype[start:end]
         last_pos = end
     if last_pos < len(function_prototype):
-        result += process_function_part(
-            function_prototype[last_pos:], function_name
-        )
+        result += process_function_part(function_prototype[last_pos:], function_name)
     return result
 
 
