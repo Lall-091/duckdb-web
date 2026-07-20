@@ -4,11 +4,20 @@ redirect_from:
 title: PHP Client (PDO)
 ---
 
+> The PHP DuckDB PDO extension is a tertiary client and is maintained by a third-party.
+>
 > To use `pdo_duckdb`, follow the [instructions below](#installation).
 >
 > The latest version of `pdo_duckdb` supports DuckDB {{ site.current_duckdb_php_version }}.
 
 `pdo_duckdb` is a native DuckDB database driver for the [PHP Data Objects (PDO)](https://www.php.net/manual/en/book.pdo.php) interface.
+
+Any application or framework compatible with PDO can directly use `pdo_duckdb`.\
+It is thread safe and fully tested with FrankenPHP (PHP-ZTS).
+
+As a native PHP extension, it is implemented in C/C++ and does not require PHP FFI or preloading.\
+The [release packages](https://github.com/thomas-0816/pdo-duckdb-php/releases/latest) contain pre-compiled binaries for all supported platforms and DuckDB is directly included.\
+DuckDB extensions work the same way as they do in DuckDB CLI.
 
 Supported PHP versions: [8.2 or newer](https://www.php.net/supported-versions.php)
 
@@ -29,9 +38,6 @@ Packagist: [pdo-duckdb-php](https://packagist.org/packages/thomas-0816/pdo-duckd
 ```bash
 pie install thomas-0816/pdo-duckdb-php
 ```
-
-The [release packages](https://github.com/thomas-0816/pdo-duckdb-php/releases/latest) contain pre-compiled binaries for all supported platforms and DuckDB is directly included.\
-DuckDB extensions work the same way as they do in DuckDB CLI.
 
 Testing:
 

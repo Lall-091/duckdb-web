@@ -337,10 +337,6 @@
               ]
             },
             {
-              "page": "PHP",
-              "url": "php"
-            },
-            {
               "page": "Python",
               "slug": "python",
               "subsubfolderitems": [
@@ -447,6 +443,10 @@
                 {
                   "page": "PHP",
                   "url": "php"
+                },
+                {
+                  "page": "PHP (PDO)",
+                  "url": "php_pdo"
                 },
                 {
                   "page": "Swift",
