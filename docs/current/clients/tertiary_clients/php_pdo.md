@@ -1,4 +1,5 @@
 ---
+github_repository: https://github.com/thomas-0816/pdo-duckdb-php
 layout: docu
 redirect_from:
 title: PHP Client (PDO)
