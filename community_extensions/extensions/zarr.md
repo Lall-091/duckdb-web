@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: zarr
   description: Query Zarr array stores (v2 and v3) with SQL - read xarray-convention datasets as tables
-  version: 0.1.0
+  version: 0.1.1
   language: Rust
   build: cargo
   requires_toolchains: "rust;python3"
@@ -20,7 +20,7 @@ extension:
 
 repo:
   github: xqlsystems/duckdb-zarr
-  ref: v0.1.0
+  ref: v0.1.1
 
 docs:
   hello_world: |
@@ -91,10 +91,10 @@ docs:
     GROUP BY label;
     ```
 
-extension_star_count: 18
-extension_star_count_pretty: 18
-extension_download_count: 382
-extension_download_count_pretty: 382
+extension_star_count: 19
+extension_star_count_pretty: 19
+extension_download_count: 447
+extension_download_count_pretty: 447
 image: '/images/community_extensions/social_preview/preview_community_extension_zarr.png'
 layout: community_extension_doc
 ---

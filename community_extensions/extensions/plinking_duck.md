@@ -80,10 +80,10 @@ docs:
 
     For full documentation, see [plinking-duck.readthedocs.io](https://plinking-duck.readthedocs.io).
 
-extension_star_count: 3
-extension_star_count_pretty: 3
-extension_download_count: 685
-extension_download_count_pretty: 685
+extension_star_count: 4
+extension_star_count_pretty: 4
+extension_download_count: 675
+extension_download_count_pretty: 675
 image: '/images/community_extensions/social_preview/preview_community_extension_plinking_duck.png'
 layout: community_extension_doc
 ---
