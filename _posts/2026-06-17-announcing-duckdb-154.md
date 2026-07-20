@@ -23,7 +23,7 @@ To install the new version, please visit the [installation page]({% link install
 
 This version ships a number of performance improvements and bugfixes.
 
-## Correctness
+### Correctness
 
 * [#23031](https://github.com/duckdb/duckdb/pull/23031) – Fix VARIANT cast reading wrong rows under a filter
 * [#23014](https://github.com/duckdb/duckdb/pull/23014) – MERGE INTO: only consider target table when binding `WHEN NOT MATCHED` and source table when binding `WHEN NOT MATCHED BY TARGET`
@@ -33,7 +33,7 @@ This version ships a number of performance improvements and bugfixes.
 * [#23234](https://github.com/duckdb/duckdb/pull/23234) – Fix problem with re-use of cached transform data for differently shredded files
 * [#22844](https://github.com/duckdb/duckdb/pull/22844) – Window Self-Join Limits: don't apply the self-join optimisation more than once
 
-## Crashes and Internal Errors
+### Crashes and Internal Errors
 
 * [#21854](https://github.com/duckdb/duckdb/pull/21854) – Fix double free and memory leak in Arrow GeoArrow CRS serialization
 * [#22836](https://github.com/duckdb/duckdb/pull/22836) – Fix progress bar output and crash when piping SQL
@@ -42,7 +42,7 @@ This version ships a number of performance improvements and bugfixes.
 * [#23156](https://github.com/duckdb/duckdb/pull/23156) – Avoid trying to bind an expression that doesn't exist in `UNPIVOT`
 * [#23189](https://github.com/duckdb/duckdb/pull/23189) – Guard against null row group reorder stats
 
-## Generic Bugfixes
+### Generic Bugfixes
 
 * [#22855](https://github.com/duckdb/duckdb/pull/22855) – Fix json_keys with wildcard paths
 * [#23144](https://github.com/duckdb/duckdb/pull/23144) – Fix json argument order affecting result
@@ -53,12 +53,12 @@ This version ships a number of performance improvements and bugfixes.
 * [#23254](https://github.com/duckdb/duckdb/pull/23254) – Fix NULL propagation for date parts of infinite dates
 * [#23190](https://github.com/duckdb/duckdb/pull/23190) – Fix selection vector use in Arrow extension callbacks
 
-## Performance
+### Performance
 
 * [#23253](https://github.com/duckdb/duckdb/pull/23253) – Trim the system heap in the allocator flush path on jemalloc builds
 * [#23140](https://github.com/duckdb/duckdb/pull/23140) – Fix native geometry Parquet stats pruning and add `OPERATOR_ROW_GROUPS_SCANNED` to Parquet reader
 
-## Miscellaneous
+### Miscellaneous
 
 * [#23246](https://github.com/duckdb/duckdb/pull/23246) – Add explicit `-dark-mode` and `-light-mode` options to the CLI, and improve terminal background color detection
 * [#23100](https://github.com/duckdb/duckdb/pull/23100) – Add hardening to many DuckDB/Parquet decompression and deserializing paths
