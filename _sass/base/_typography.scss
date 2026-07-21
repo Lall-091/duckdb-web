@@ -7,13 +7,15 @@
 // =============================================================================
 
 
-/** External, Download and Video Links in Fließtext **/
+/** External, Download, Video and Podcast Links **/
 #main_content_wrap a.externallink,
 .singleentry .content a.externallink,
 #main_content_wrap a.downloadlink,
 .singleentry .content a.downloadlink,
 #main_content_wrap a.videolink,
-.singleentry .content a.videolink{
+.singleentry .content a.videolink,
+#main_content_wrap a.podcastlink,
+.singleentry .content a.podcastlink{
 	display: inline;
 	overflow-wrap: break-word;
 
