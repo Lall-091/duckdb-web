@@ -445,6 +445,10 @@
                   "url": "php"
                 },
                 {
+                  "page": "PHP (PDO)",
+                  "url": "php_pdo"
+                },
+                {
                   "page": "Swift",
                   "url": "swift"
                 }
