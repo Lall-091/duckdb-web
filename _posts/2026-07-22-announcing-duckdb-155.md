@@ -15,7 +15,7 @@ To install the new version, please visit the [installation page]({% link install
 
 Here are the most important fixes from the DuckDB v1.5.5 release, organized by category:
 
-### Correctness
+## Correctness
 
 * [`#23693`](https://github.com/duckdb/duckdb/pull/23693) – Fix swapped min/max for multi-row-group 128-bit `DECIMAL` in `RETURN_STATS`
 
