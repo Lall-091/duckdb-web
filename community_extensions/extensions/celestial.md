@@ -28,8 +28,8 @@ docs:
 
 extension_star_count: 2
 extension_star_count_pretty: 2
-extension_download_count: 612
-extension_download_count_pretty: 612
+extension_download_count: 978
+extension_download_count_pretty: 978
 image: '/images/community_extensions/social_preview/preview_community_extension_celestial.png'
 layout: community_extension_doc
 ---

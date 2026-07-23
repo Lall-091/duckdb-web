@@ -36,10 +36,10 @@ docs:
     └─────────────────────────────────────────┴─────────┴───────┴──────────────────────────┘
 
 
-extension_star_count: 25
-extension_star_count_pretty: 25
-extension_download_count: 27960
-extension_download_count_pretty: 28.0k
+extension_star_count: 26
+extension_star_count_pretty: 26
+extension_download_count: 26444
+extension_download_count_pretty: 26.4k
 image: '/images/community_extensions/social_preview/preview_community_extension_gcs.png'
 layout: community_extension_doc
 ---

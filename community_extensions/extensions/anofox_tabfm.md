@@ -18,7 +18,7 @@ extension:
 
 repo:
   github: DataZooDE/anofox-tabfm
-  ref: 1b4ecaf5b05489451e12ac330cb52886537ac2fe
+  ref: 8c99c624847163c68c34db8d51aa00af3201cc15
 
 docs:
   hello_world: |
@@ -100,8 +100,8 @@ docs:
 
 extension_star_count: 3
 extension_star_count_pretty: 3
-extension_download_count: 364
-extension_download_count_pretty: 364
+extension_download_count: 462
+extension_download_count_pretty: 462
 image: '/images/community_extensions/social_preview/preview_community_extension_anofox_tabfm.png'
 layout: community_extension_doc
 ---

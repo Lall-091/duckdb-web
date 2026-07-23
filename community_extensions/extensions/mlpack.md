@@ -60,7 +60,7 @@ docs:
     It uses three tables for data, parameters and results.
   
     ### General Information
-    A pair of paramaters "mlpack_verbose" (to show additional data) and "mlpack_silent" (to suppress display of minimal summaries) can also be set.
+    A pair of parameters "mlpack_verbose" (to show additional data) and "mlpack_silent" (to suppress display of minimal summaries) can also be set.
 
     The implementation still stresses the 'minimal' part of 'a (initial) MVP demo' (where MVP stands for 'minimally viable product').
     It wraps five supervised and unsupervised machine learning methods, and provides Linux and macOS builds.
@@ -71,8 +71,8 @@ docs:
 
 extension_star_count: 19
 extension_star_count_pretty: 19
-extension_download_count: 694
-extension_download_count_pretty: 694
+extension_download_count: 1217
+extension_download_count_pretty: 1.2k
 image: '/images/community_extensions/social_preview/preview_community_extension_mlpack.png'
 layout: community_extension_doc
 ---
