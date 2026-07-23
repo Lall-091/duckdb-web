@@ -8,7 +8,7 @@ excerpt: |
 extension:
   name: pdf
   description: Read text, metadata, words, lines, tables, layout elements, and markdown from PDF files (works on scanned PDFs via Tesseract OCR word boxes); chunk for retrieval; render pages; inspect outlines, attachments, form fields, annotations, revisions, and signatures; extract embedded images; merge, split, rotate, compress, encrypt, decrypt, watermark, and Bates-stamp documents via qpdf; write PDFs natively via libharu (`write_pdf` / `COPY … TO FORMAT pdf`); and convert office documents to PDF.
-  version: 0.5.1
+  version: 0.7.0
   language: C++
   build: cmake
   license: GPL-2.0-or-later
@@ -24,7 +24,7 @@ extension:
 
 repo:
   github: asubbarao/duckdb-pdf
-  ref: 177b634edbcf7e3fdbd7068f4a72455073fba67c
+  ref: c5209712bc63047dd2bee07c30b54bc177841812
 
 docs:
   hello_world: |
@@ -230,8 +230,8 @@ docs:
 
 extension_star_count: 3
 extension_star_count_pretty: 3
-extension_download_count: 380
-extension_download_count_pretty: 380
+extension_download_count: 498
+extension_download_count_pretty: 498
 image: '/images/community_extensions/social_preview/preview_community_extension_pdf.png'
 layout: community_extension_doc
 ---
@@ -265,14 +265,22 @@ LOAD {{ page.extension.name }};
 | pdf_chunks        | table         | NULL        | NULL    |          |
 | pdf_compress      | scalar        | NULL        | NULL    |          |
 | pdf_decrypt       | scalar        | NULL        | NULL    |          |
+| pdf_destinations  | table         | NULL        | NULL    |          |
 | pdf_encrypt       | scalar        | NULL        | NULL    |          |
+| pdf_fonts         | table         | NULL        | NULL    |          |
 | pdf_form_fields   | table         | NULL        | NULL    |          |
 | pdf_images        | table         | NULL        | NULL    |          |
 | pdf_info          | table         | NULL        | NULL    |          |
+| pdf_json          | scalar        | NULL        | NULL    |          |
 | pdf_merge         | scalar        | NULL        | NULL    |          |
 | pdf_outline       | table         | NULL        | NULL    |          |
+| pdf_page_images   | table         | NULL        | NULL    |          |
 | pdf_pages         | scalar        | NULL        | NULL    |          |
+| pdf_pages_info    | table         | NULL        | NULL    |          |
+| pdf_permissions   | table         | NULL        | NULL    |          |
+| pdf_qpdf_info     | table         | NULL        | NULL    |          |
 | pdf_redact        | table         | NULL        | NULL    |          |
+| pdf_repair        | scalar        | NULL        | NULL    |          |
 | pdf_revisions     | table         | NULL        | NULL    |          |
 | pdf_rotate        | scalar        | NULL        | NULL    |          |
 | pdf_sign          | table         | NULL        | NULL    |          |
